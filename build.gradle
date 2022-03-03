@@ -1,0 +1,16 @@
+buildscript {
+    ext.versions = [
+            'picocli': '4.6.3',
+            'asm': '9.2',
+            'hamcrest': '2.2',
+            'jupiter': '5.8.2',
+            'vavr': '0.10.4'
+    ]
+}
+
+plugins {
+    id 'pochi.java-conventions'
+}
+
+
+

@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+    id 'pochi.java-conventions'
+}
+
+dependencies {
+    implementation "org.ow2.asm:asm:${versions.asm}"
+
+    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
+}

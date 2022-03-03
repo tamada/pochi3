@@ -1,0 +1,31 @@
+plugins {
+  id 'java'
+}
+
+group = 'jp.cafebabe.pochi'
+version = '3.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "io.vavr:vavr:${versions.vavr}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${versions.jupiter}"
+
+  annotationProcessor "info.picocli:picocli-codegen:${versions.picocli}"
+}
+
+compileJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+    options.compilerArgs += [
+            "-Aproject=${project.name}",
+            "-Aother.resource.patterns=.*.json"
+    ]
+}
+
+test {
+    useJUnitPlatform()
+}
