@@ -1,26 +1,28 @@
 plugins {
-  id 'java'
+    id 'java'
+    id 'jacoco'
 }
 
 group = 'jp.cafebabe.pochi'
 version = '3.0.0'
 
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  implementation "io.vavr:vavr:${versions.vavr}"
+    implementation "io.vavr:vavr:${versions.vavr}"
 
-  testImplementation "org.junit.jupiter:junit-jupiter:${versions.jupiter}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${versions.jupiter}"
 
-  annotationProcessor "info.picocli:picocli-codegen:${versions.picocli}"
+    annotationProcessor "info.picocli:picocli-codegen:${versions.picocli}"
 }
 
 compileJava {
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 17
+    targetCompatibility = 17
     options.compilerArgs += [
+            "-Xlint:unchecked",
             "-Aproject=${project.name}",
             "-Aother.resource.patterns=.*.json"
     ]
@@ -28,4 +30,10 @@ compileJava {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }

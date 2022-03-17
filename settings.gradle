@@ -2,5 +2,3 @@ rootProject.name = 'pochi'
 
 include 'birthmarks'
 include 'clpond'
-include 'pochi-api'
-include 'site'
