@@ -12,19 +12,23 @@ public class ClassNameTest {
 
     @BeforeEach
     public void setUp(){
-        name1 = new ClassName("jp.cafebabe.pochi.kunai.entries.ClassNameTest");
-        name2 = new ClassName("jp.cafebabe/pochi/kunai/entries/NameTest");
+        name1 = new ClassName("jp.cafebabe.pochi.clpond.entities.ClassNameTest");
+        name2 = new ClassName("jp.cafebabe/pochi/clpond/entities/NameTest");
     }
 
     @Test
     public void testBasic(){
-        assertEquals(new Name("jp.cafebabe.pochi.kunai.entries.ClassNameTest"), name1);
-        assertNotEquals("jp.cafebabe.pochi.kunai.entries.ClassNameTest", name1);
-        assertEquals("jp.cafebabe.pochi.kunai.entries.ClassNameTest", name1.toString());
+        assertNotEquals(new Name("jp.cafebabe.pochi.clpond.entities.ClassNameTest"), name1);
+        assertNotEquals("jp.cafebabe.pochi.clpond.entities.ClassNameTest", name1);
+        assertEquals(new ClassName("jp.cafebabe.pochi.clpond.entities.ClassNameTest"), name1);
+        assertEquals("jp.cafebabe.pochi.clpond.entities.ClassNameTest", name1.fqdnName());
+        assertEquals("ClassNameTest", name1.name());
 
-        assertEquals(new Name("jp.cafebabe.pochi.kunai.entries.NameTest"), name2);
-        assertNotEquals("jp.cafebabe.pochi.kunai.entries.NameTest", name2);
-        assertEquals("jp.cafebabe.pochi.kunai.entries.NameTest", name2.toString());
+        assertNotEquals(new Name("jp.cafebabe.pochi.clpond.entities.NameTest"), name2);
+        assertNotEquals("jp.cafebabe.pochi.clpond.entities.NameTest", name2);
+        assertEquals(new ClassName("jp.cafebabe.pochi.clpond.entities.NameTest"), name2);
+        assertEquals("jp.cafebabe.pochi.clpond.entities.NameTest", name2.fqdnName());
+        assertEquals("NameTest", name2.name());
 
         assertNotEquals(name1, name2);
     }

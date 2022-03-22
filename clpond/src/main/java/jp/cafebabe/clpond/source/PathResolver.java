@@ -12,6 +12,6 @@ public interface PathResolver {
     ClassName parseClassName(Path path);
 
     default ClassName resolveClassName(Path path) throws IOException{
-        return ClassNameExtractVisitor.extractClassName(openStream(path));
+        return ClassNameExtractionVisitor.extractClassName(openStream(path));
     }
 }

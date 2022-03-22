@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+    id 'pochi.java-conventions'
+}
+
+dependencies {
+    implementation project(":clpond")
+    implementation project(":birthmarks")
+
+    implementation "org.ow2.asm:asm:${versions.asm}"
+}

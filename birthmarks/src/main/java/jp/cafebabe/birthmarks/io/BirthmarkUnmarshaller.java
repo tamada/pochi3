@@ -3,11 +3,12 @@ package jp.cafebabe.birthmarks.io;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import jp.cafebabe.birthmarks.extractors.Birthmark;
-import jp.cafebabe.birthmarks.extractors.ContainerType;
-import jp.cafebabe.birthmarks.extractors.Element;
-import jp.cafebabe.birthmarks.extractors.elements.ElementBuilder;
-import jp.cafebabe.birthmarks.extractors.impl.Builder;
+import jp.cafebabe.birthmarks.entities.Birthmark;
+import jp.cafebabe.birthmarks.entities.ContainerType;
+import jp.cafebabe.birthmarks.entities.Element;
+import jp.cafebabe.birthmarks.entities.elements.ElementBuilder;
+import jp.cafebabe.birthmarks.entities.impl.Builder;
+import jp.cafebabe.birthmarks.utils.JsonUtil;
 
 import java.net.URI;
 

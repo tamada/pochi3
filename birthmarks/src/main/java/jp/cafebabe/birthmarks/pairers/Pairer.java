@@ -1,8 +1,8 @@
 package jp.cafebabe.birthmarks.pairers;
 
-import jp.cafebabe.birthmarks.extractors.Birthmark;
-import jp.cafebabe.birthmarks.extractors.Birthmarks;
 import jp.cafebabe.birthmarks.comparators.Pair;
+import jp.cafebabe.birthmarks.entities.Birthmark;
+import jp.cafebabe.birthmarks.entities.Birthmarks;
 
 import java.util.stream.Stream;
 

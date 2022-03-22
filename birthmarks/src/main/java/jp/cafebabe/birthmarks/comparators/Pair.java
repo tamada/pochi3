@@ -29,6 +29,29 @@ public record Pair<L, R>(L left, R right) implements Serializable {
         rightAction.accept(right);
     }
 
+    public void ifAndElse(BiPredicate<L, R> predicate, BiConsumer<L, R> trueAction) {
+        ifAndElse(predicate, trueAction, (l, r) -> {});
+    }
+
+    public void ifAndElse(BiPredicate<L, R> predicate, BiConsumer<L, R> trueAction, BiConsumer<L, R> falseAction) {
+        if(predicate.test(left, right))
+            trueAction.accept(left, right);
+        else
+            falseAction.accept(left, right);
+    }
+
+    public <V> V ifAndElse(Predicate<Pair<L, R>> predicate, V trueValue, V falseValue) {
+        if(predicate.test(this))
+            return trueValue;
+        return falseValue;
+    }
+
+    public <V> V ifAndElse(BiPredicate<L, R> predicate, V trueValue, V falseValue) {
+        if(predicate.test(left, right))
+            return trueValue;
+        return falseValue;
+    }
+
     public <K> K unify(BiFunction<L, R, K> mapper) {
         return mapper.apply(left, right);
     }

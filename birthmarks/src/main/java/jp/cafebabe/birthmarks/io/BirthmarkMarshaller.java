@@ -1,18 +1,34 @@
 package jp.cafebabe.birthmarks.io;
 
-import jp.cafebabe.birthmarks.extractors.Birthmark;
-import jp.cafebabe.birthmarks.extractors.BirthmarkType;
-import jp.cafebabe.birthmarks.extractors.Element;
-import jp.cafebabe.birthmarks.extractors.Name;
-import jp.cafebabe.birthmarks.extractors.BirthmarkVisitor;
+import jp.cafebabe.birthmarks.entities.*;
+import jp.cafebabe.clpond.entities.Name;
 
+import java.io.Writer;
 import java.net.URI;
 
-class BirthmarkMarshaller implements BirthmarkVisitor {
+public class BirthmarkMarshaller implements BirthmarkVisitor {
     private Marshaller marshaller;
 
-    BirthmarkMarshaller(Marshaller marshaller) {
+    private BirthmarkMarshaller(Marshaller marshaller) {
         this.marshaller = marshaller;
+    }
+
+    public static BirthmarkMarshaller of(Writer out) {
+        return of(Marshaller.of(out));
+    }
+
+    public static BirthmarkMarshaller of(Marshaller marshaller) {
+        return new BirthmarkMarshaller(marshaller);
+    }
+
+    public void marshal(Birthmarks birthmarks) {
+        marshaller.marshal("[");
+        birthmarks.stream().forEach(birthmark -> marshal(birthmark));
+        marshaller.marshal("]");
+    }
+
+    public void marshal(Birthmark birthmark) {
+        birthmark.accept(this);
     }
 
     @Override
@@ -25,7 +41,7 @@ class BirthmarkMarshaller implements BirthmarkVisitor {
     @Override
     public void visit(Birthmark birthmark) {
         marshaller.marshal("{");
-        marshaller.marshal("container", birthmark.containerType().name().toLowerCase());
+        marshaller.marshalKeyAndValue("container", birthmark.containerType().name().toLowerCase());
     }
 
     @Override

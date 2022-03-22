@@ -1,6 +1,6 @@
 package jp.cafebabe.birthmarks.comparators;
 
-import jp.cafebabe.birthmarks.extractors.Birthmark;
+import jp.cafebabe.birthmarks.entities.Birthmark;
 
 import java.io.Serializable;
 

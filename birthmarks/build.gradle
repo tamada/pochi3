@@ -6,5 +6,6 @@ plugins {
 dependencies {
     implementation project(":clpond")
 
+    implementation "org.ow2.asm:asm:${versions.asm}"
     implementation "com.google.code.gson:gson:${versions.gson}"
 }

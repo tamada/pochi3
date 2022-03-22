@@ -1,9 +1,9 @@
 package jp.cafebabe.birthmarks.io;
 
-import com.google.gson.JsonSyntaxException;
-import jp.cafebabe.birthmarks.extractors.elements.LongElement;
-import jp.cafebabe.birthmarks.extractors.*;
-import jp.cafebabe.birthmarks.extractors.elements.StringElement;
+import jp.cafebabe.birthmarks.entities.*;
+import jp.cafebabe.birthmarks.entities.elements.LongElement;
+import jp.cafebabe.birthmarks.entities.elements.StringElement;
+import jp.cafebabe.clpond.entities.Name;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -11,33 +11,36 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BirthmarkParserTest {
     @Nested
     public class ExceptionTest {
         @Test
-        public void testUnknownContainerType() {
+        public void testUnknownContainerType() throws Exception {
             String json = """
                     [{"container":"unknown","metadata":{"name":"name1","location":".","type":"type1"},"elements":[2,3,5,7,11,13,17,19]}]
                     """.trim();
             BirthmarkParser parser = new BirthmarkParser();
-            assertThrows(JsonSyntaxException.class, () -> parser.parse(json));
+            Birthmarks birthmarks = parser.parse(json);
+            assertTrue(birthmarks.hasFailure());
+            assertEquals(1, birthmarks.failures().count());
         }
 
         @Test
-        public void testInvalidElementFormat() {
+        public void testInvalidElementFormat() throws Exception {
             String json = """
                     [{"container":"vector","metadata":{"name":"name1","location":".","type":"type1"},"elements":[2]}]
                     """.trim();
             BirthmarkParser parser = new BirthmarkParser();
-            assertThrows(JsonSyntaxException.class, () -> parser.parse(json));
+            Birthmarks birthmarks = parser.parse(json);
+            assertTrue(birthmarks.hasFailure());
+            assertEquals(1, birthmarks.failures().count());
         }
     }
 
     @Test
-    public void testParseListBirthmark() {
+    public void testParseListBirthmark() throws Exception {
         String json = """
             [{"container":"list","metadata":{"name":"name1","location":".","type":"type1"},"elements":[2,3,5,7,11,13,17,19]}]
             """.trim();
@@ -65,7 +68,7 @@ public class BirthmarkParserTest {
     }
 
     @Test
-    public void testParseVectorBirthmark() {
+    public void testParseVectorBirthmark() throws Exception {
         String json = """
             [{"container":"vector","metadata":{"name":"name1","location":".","type":"type1"},"elements":["e1=1","e2=2"]}]
             """.trim();
@@ -82,7 +85,6 @@ public class BirthmarkParserTest {
         assertEquals(2, birthmark.elementCount());
 
         List<Element> list = birthmark.stream().sorted((e1, e2) -> e1.value().compareTo(e2.value())).collect(Collectors.toList());
-        System.out.println(list);
         assertEquals("e1", list.get(0).value());
         assertEquals("e2", list.get(1).value());
         assertEquals(1, list.get(0).intValue());
@@ -90,7 +92,7 @@ public class BirthmarkParserTest {
     }
 
     @Test
-    public void testParseSetBirthmark() {
+    public void testParseSetBirthmark() throws Exception {
         String json = """
             [{"container":"set","metadata":{"name":"name1","location":".","type":"type1"},"elements":["a","b","c","a"]}]
             """.trim();

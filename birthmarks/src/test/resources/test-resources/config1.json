@@ -1,0 +1,12 @@
+{
+  "properties": {
+    "key1": "value1",
+    "key2": "value2"
+  },
+  "rules": [
+    { "type": "PREFIX", "pattern": "java." },
+    { "type": "SUFFIX", "pattern": "Test" },
+    { "type": "REGEX", "pattern": ".*Impl" },
+    { "type": "EXACT", "pattern": "Ignore" }
+  ]
+}

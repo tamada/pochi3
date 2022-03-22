@@ -3,9 +3,7 @@ package jp.cafebabe.clpond.entities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NameTest {
     private Name name;
@@ -17,20 +15,19 @@ public class NameTest {
 
     @Test
     public void testBasic(){
-        assertThat(name, is(new Name("Haruaki Tamada")));
-        assertThat(name, is(not(new Name("Nanashi no Gonbe"))));
-        assertThat(name, is(not("Haruaki Tamada")));
-        assertThat(name, is(not(new Object())));
+        assertEquals(new Name("Haruaki Tamada"), name);
+        assertNotEquals(new Name("Nanashi no Gonbe"), name);
+        assertNotEquals("Haruaki Tamada", name);
+        assertNotEquals(new Object(), name);
 
-        assertThat(name.toString(), is("Haruaki Tamada"));
-        assertThat(name.name(), is("Haruaki Tamada"));
+        assertEquals("Haruaki Tamada", name.name());
     }
 
     @Test
     public void testEquals() {
-        assertThat(name.equals(new Name("Haruaki Tamada")), is(true));
-        assertThat(name.equals(new Name("Different Name")), is(false));
-        assertThat(name.equals(new Object()), is(false));
-        assertThat(name.equals(null), is(false));
+        assertTrue(name.equals(new Name("Haruaki Tamada")));
+        assertFalse(name.equals(new Name("Different Name")));
+        assertFalse(name.equals(new Object()));
+        assertFalse(name.equals(null));
     }
 }
