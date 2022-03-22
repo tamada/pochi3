@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class KGramBuilder<T extends Serializable> {
-    private int kValue;
+    private final int kValue;
 
     public KGramBuilder(int kValue){
         this.kValue = kValue;
@@ -28,6 +28,6 @@ public class KGramBuilder<T extends Serializable> {
 
     public static KGram<Integer> from(int... values){
         return new KGram<>(IntStream.of(values)
-                .mapToObj(Integer::valueOf));
+                .boxed());
     }
 }

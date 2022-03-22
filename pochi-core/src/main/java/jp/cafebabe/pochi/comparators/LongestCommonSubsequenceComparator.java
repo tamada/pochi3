@@ -27,7 +27,7 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
     }
 
     @Override
-    protected Similarity calculate(Birthmark left, Birthmark right) throws ComparisonException {
+    protected Similarity calculate(Birthmark left, Birthmark right) {
         if(left.size() == 0 && right.size() == 0)
             return new Similarity(1d);
         var result = new LCSCalculator<Element>()

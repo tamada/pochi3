@@ -10,7 +10,7 @@ import jp.cafebabe.pochi.comparators.algorithms.EditDistanceCalculator;
 import java.util.List;
 
 public class EditDistanceComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("EditDistance");
+    private static final ComparatorType thisType = new ComparatorType("edit_distance");
 
     public static final class Builder implements ComparatorBuilder {
         @Override

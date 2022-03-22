@@ -7,7 +7,7 @@ import java.io.Writer;
 import java.net.URI;
 
 public class BirthmarkMarshaller implements BirthmarkVisitor {
-    private Marshaller marshaller;
+    private final Marshaller marshaller;
 
     private BirthmarkMarshaller(Marshaller marshaller) {
         this.marshaller = marshaller;
@@ -23,7 +23,7 @@ public class BirthmarkMarshaller implements BirthmarkVisitor {
 
     public void marshal(Birthmarks birthmarks) {
         marshaller.marshal("[");
-        birthmarks.stream().forEach(birthmark -> marshal(birthmark));
+        birthmarks.stream().forEach(this::marshal);
         marshaller.marshal("]");
     }
 

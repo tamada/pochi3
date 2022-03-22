@@ -6,7 +6,7 @@ import jp.cafebabe.birthmarks.extractors.PochiClassVisitor;
 import org.objectweb.asm.ClassVisitor;
 
 public class KGramBasedBirthmarkExtractor extends AbstractExtractor {
-    private int kValue;
+    private final int kValue;
 
     public KGramBasedBirthmarkExtractor(int kValue, Configuration config) {
         super(config);

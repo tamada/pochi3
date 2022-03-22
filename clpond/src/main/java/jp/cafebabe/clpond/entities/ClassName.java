@@ -1,8 +1,10 @@
 package jp.cafebabe.clpond.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public record ClassName(String name) implements Serializable {
+    @Serial
     private static final long serialVersionUID = -1305904437135129418L;
 
     public ClassName(Name name) {

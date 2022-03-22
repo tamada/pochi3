@@ -7,20 +7,22 @@ import jp.cafebabe.birthmarks.entities.Metadata;
 import jp.cafebabe.birthmarks.entities.elements.PairElement;
 import jp.cafebabe.birthmarks.utils.Vectorable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
 public class VectorBirthmark extends AbstractBirthmark implements Serializable, Vectorable<Element, Long> {
+    @Serial
     private static final long serialVersionUID = -7780658711069582638L;
 
-    private Map<Element, Long> frequencies;
+    private final Map<Element, Long> frequencies;
 
     VectorBirthmark(Metadata metadata, Stream<Element> stream) {
         super(metadata);
         frequencies = new HashMap<>();
-        stream.forEach(p -> frequency(p));
+        stream.forEach(this::frequency);
     }
 
     private void frequency(Element e) {
@@ -33,7 +35,8 @@ public class VectorBirthmark extends AbstractBirthmark implements Serializable, 
 
     @Override
     public Stream<Element> stream() {
-        return frequencies.entrySet().stream().map(entry -> new PairElement(entry));
+        return frequencies.entrySet()
+                .stream().map(PairElement::new);
     }
 
     @Override

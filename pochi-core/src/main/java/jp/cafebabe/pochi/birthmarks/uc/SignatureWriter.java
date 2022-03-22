@@ -4,7 +4,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureVisitor;
 
 class SignatureWriter extends SignatureVisitor {
-    private Helper helper;
+    private final Helper helper;
 
     public SignatureWriter(Helper helper){
         super(Opcodes.ASM9);

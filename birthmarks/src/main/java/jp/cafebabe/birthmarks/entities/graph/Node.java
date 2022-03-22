@@ -3,8 +3,8 @@ package jp.cafebabe.birthmarks.entities.graph;
 import java.util.stream.Stream;
 
 public class Node<E> {
-    private E element;
-    private Graph<E> graph;
+    private final E element;
+    private final Graph<E> graph;
 
     Node(E element, Graph<E> graph) {
         this.element = element;

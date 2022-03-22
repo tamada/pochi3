@@ -7,7 +7,7 @@ import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.entities.impl.VectorBirthmark;
 
 public class CosineComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("Cosine");
+    private static final ComparatorType thisType = new ComparatorType("cosine");
 
     public static final class Builder implements ComparatorBuilder {
         @Override

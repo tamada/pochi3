@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Rules implements Jsonable {
-    private List<Rule> list;
+    private final List<Rule> list;
 
     public Rules(){
         this(Stream.empty());
@@ -30,7 +30,7 @@ public class Rules implements Jsonable {
     @Override
     public String toJson() {
         return list.stream()
-                .map(rule -> rule.toJson())
+                .map(Rule::toJson)
                 .collect(Collectors.joining(",", "{", "}"));
     }
 }

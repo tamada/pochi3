@@ -24,7 +24,7 @@ public class DirectoryDataSink extends ClassFileDataSink {
 
     private void consume(InputStream in, Path path) throws IOException{
         Try.withResources(() -> Files.newOutputStream(path))
-                .of(out -> in.transferTo(out))
+                .of(in::transferTo)
                 .getOrElseThrow(e -> new IOException(e.getMessage()));
     }
 

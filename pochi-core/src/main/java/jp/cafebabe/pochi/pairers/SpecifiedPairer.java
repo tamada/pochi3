@@ -2,15 +2,13 @@ package jp.cafebabe.pochi.pairers;
 
 import jp.cafebabe.birthmarks.comparators.Pair;
 import jp.cafebabe.birthmarks.config.Configuration;
-import jp.cafebabe.birthmarks.entities.Birthmark;
-import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.pairers.Pairer;
 import jp.cafebabe.birthmarks.pairers.PairerBuilder;
 import jp.cafebabe.birthmarks.pairers.PairerType;
 import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
-import jp.cafebabe.pochi.pairers.relationers.RelationerBuilder;
+import jp.cafebabe.pochi.pairers.relationers.RelationerFactory;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,15 +24,15 @@ import java.util.stream.Stream;
  * </code></pre>
  */
 public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
-    public static final PairerType TYPE = new PairerType("Specified");
+    public static final PairerType TYPE = new PairerType("specified");
 
-    private Relationer relationer;
-    private PairList pairs;
+    private final Relationer relationer;
+    private final PairList pairs;
 
     public SpecifiedPairer(Configuration config) {
         super(config);
         this.pairs = PairListBuilder.build(config);
-        this.relationer = RelationerBuilder.build(config);
+        this.relationer = new RelationerFactory().build(config);
     }
 
     @Override
@@ -71,15 +69,15 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
         return pair(birthmarks1, birthmarks2).count();
     }
 
-    public static final class Builder implements PairerBuilder {
+    public static final class Builder<T extends Namer> implements PairerBuilder<T> {
         @Override
         public PairerType type() {
             return TYPE;
         }
 
         @Override
-        public Pairer build(Configuration config) {
-            return new SpecifiedPairer(config);
+        public Pairer<T> build(Configuration config) {
+            return new SpecifiedPairer<>(config);
         }
     }
 }

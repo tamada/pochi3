@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class AbstractExtractor implements Extractor {
-    private Configuration config;
+    private final Configuration config;
 
     public AbstractExtractor(Configuration config) {
         this.config = config;
@@ -25,7 +25,7 @@ public abstract class AbstractExtractor implements Extractor {
 
     @Override
     public Either<Throwable, Birthmark> extractEach(Entry entry) {
-        return Try.withResources(() -> entry.openStream())
+        return Try.withResources(entry::openStream)
                 .of(in -> extractImpl(entry, in))
                 .toEither();
     }

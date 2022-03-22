@@ -2,7 +2,7 @@ package jp.cafebabe.birthmarks.entities;
 
 public class Cursor {
     private int current = 0;
-    private long max;
+    private final long max;
 
     private Cursor(long max) {
         if(max < 0)

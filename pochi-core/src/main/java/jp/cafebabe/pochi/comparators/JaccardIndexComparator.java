@@ -9,7 +9,7 @@ import jp.cafebabe.birthmarks.entities.Element;
 import java.util.Set;
 
 public class JaccardIndexComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("JaccardIndex");
+    private static final ComparatorType thisType = new ComparatorType("jaccard_index");
 
     public static final class Builder implements ComparatorBuilder {
         @Override

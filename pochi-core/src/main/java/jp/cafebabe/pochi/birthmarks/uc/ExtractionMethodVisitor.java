@@ -5,9 +5,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-class ExtractionMethodVisitor<T> extends MethodVisitor {
-    private Helper helper;
-    private ExtractionVisitor visitor;
+class ExtractionMethodVisitor extends MethodVisitor {
+    private final Helper helper;
+    private final ExtractionVisitor visitor;
 
     public ExtractionMethodVisitor(MethodVisitor visitor, Helper helper, ExtractionVisitor cVisitor) {
         super(Opcodes.ASM9, visitor);

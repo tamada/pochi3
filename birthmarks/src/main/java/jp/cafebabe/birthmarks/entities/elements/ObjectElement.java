@@ -3,14 +3,16 @@ package jp.cafebabe.birthmarks.entities.elements;
 import jp.cafebabe.birthmarks.entities.Element;
 import jp.cafebabe.birthmarks.io.Marshaller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public record ObjectElement<E>(E rawValue, Stringer<E> stringer) implements Element, Serializable {
+    @Serial
     private static final long serialVersionUID = -3563473007533917216L;
 
     public ObjectElement(E value) {
-        this(value, v -> v.toString());
+        this(value, Object::toString);
     }
 
     public ObjectElement(E rawValue, Stringer<E> stringer) {

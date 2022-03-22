@@ -11,22 +11,21 @@ import java.util.Arrays;
 public interface Comparator {
     Either<Throwable, Similarity> similarity(Pair<Birthmark, Birthmark> pair);
 
+    ContainerType[] acceptableTypes();
+
     default boolean isAcceptable(ContainerType type) {
         return Arrays.stream(acceptableTypes())
-                .map(acceptableType -> type == acceptableType)
-                .reduce(false, (b1, b2) -> b1 || b2);
+                .anyMatch(acceptableType -> type == acceptableType);
     }
-
-    ContainerType[] acceptableTypes();
 
     default Comparisons compare(Birthmarks birthmarks, Pairer<Birthmark> pairer) {
         return new Comparisons(pairer.pair(birthmarks)
-                .map(pair -> compareBirthmark(pair)));
+                .map(this::compareBirthmark));
     }
 
     default Comparisons compare(Birthmarks left, Birthmarks right, Pairer<Birthmark> pairer) {
         return new Comparisons(pairer.pair(left, right)
-                .map(pair -> compareBirthmark(pair)));
+                .map(this::compareBirthmark));
     }
 
     default Either<Throwable, Comparison> compareBirthmark(Pair<Birthmark, Birthmark> pair) {

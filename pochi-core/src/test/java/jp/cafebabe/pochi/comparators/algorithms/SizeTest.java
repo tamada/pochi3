@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SizeTest {
     @Test
     public void testBasic() {
-        Index2D[] indexes = Size.of(3, 4).stream().toArray(size -> new Index2D[size]);
+        Index2D[] indexes = Size.of(3, 4).stream().toArray(Index2D[]::new);
 
         assertEquals(12, indexes.length);
         assertEquals(new Index2D(0, 0), indexes[ 0]);

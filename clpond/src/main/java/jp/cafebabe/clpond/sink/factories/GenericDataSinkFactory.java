@@ -7,8 +7,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 class GenericDataSinkFactory implements DataSinkFactory{
-    private Predicate<Path> predicate;
-    private Function<Path, DataSink> function;
+    private final Predicate<Path> predicate;
+    private final Function<Path, DataSink> function;
 
     public GenericDataSinkFactory(Predicate<Path> predicate, Function<Path, DataSink> function){
         this.predicate = predicate;

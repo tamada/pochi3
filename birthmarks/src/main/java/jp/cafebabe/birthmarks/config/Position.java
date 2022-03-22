@@ -10,7 +10,7 @@ public enum Position {
     EXACT(Objects::equals),
     REGEX(Pattern::matches);
 
-    private BiPredicate<String, String> predicate;
+    private final BiPredicate<String, String> predicate;
 
     Position(BiPredicate<String, String> predicate){
         this.predicate = predicate;

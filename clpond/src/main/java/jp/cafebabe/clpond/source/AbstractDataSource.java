@@ -3,7 +3,7 @@ package jp.cafebabe.clpond.source;
 import java.nio.file.Path;
 
 public abstract class AbstractDataSource implements DataSource {
-    private Path basePath;
+    private final Path basePath;
 
     public AbstractDataSource(Path base) {
         this.basePath = base;

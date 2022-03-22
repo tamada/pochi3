@@ -4,7 +4,7 @@ import jp.cafebabe.birthmarks.BirthmarkException;
 import jp.cafebabe.clpond.entities.Entry;
 
 public class ExtractionException extends BirthmarkException {
-    private Entry from;
+    private final Entry from;
 
     public ExtractionException(Throwable parent, Entry from) {
         super(parent);

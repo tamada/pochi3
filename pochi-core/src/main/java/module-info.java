@@ -29,7 +29,14 @@ module jp.cafebabe.pochi.core {
             RoundRobinPairer.WithSamePairBuilder,
             SpecifiedPairer.Builder;
 
+    exports jp.cafebabe.pochi.comparators;
+    exports jp.cafebabe.pochi.pairers;
+    exports jp.cafebabe.pochi.pairers.relationers;
+    exports jp.cafebabe.pochi.birthmarks;
+    exports jp.cafebabe.pochi.birthmarks.kgram;
+    exports jp.cafebabe.pochi.birthmarks.uc;
+    exports jp.cafebabe.pochi.utils;
+
     opens jp.cafebabe.pochi.comparators;
     opens jp.cafebabe.pochi.pairers;
-    opens jp.cafebabe.pochi.pairers.relationers;
 }

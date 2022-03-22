@@ -52,7 +52,8 @@ public class Converter {
 
     public static SetBirthmark toSet(VectorBirthmark birthmark) {
         return new SetBirthmark(birthmark.metadata(),
-                birthmark.stream().map(e -> (PairElement)e)
-                        .map(pe -> pe.element()));
+                birthmark.stream()
+                        .map(e -> (PairElement)e)
+                        .map(PairElement::element));
     }
 }

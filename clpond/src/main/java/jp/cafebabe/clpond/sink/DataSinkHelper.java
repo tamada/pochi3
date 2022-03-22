@@ -1,7 +1,8 @@
 package jp.cafebabe.clpond.sink;
 
+import io.vavr.control.Try;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.nio.file.FileSystem;
@@ -11,8 +12,6 @@ import java.nio.file.spi.FileSystemProvider;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import io.vavr.control.Try;
 
 class DataSinkHelper {
     public static FileSystem buildFileSystem(Path path){

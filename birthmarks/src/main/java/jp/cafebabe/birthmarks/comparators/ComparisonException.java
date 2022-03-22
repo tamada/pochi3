@@ -4,7 +4,7 @@ import jp.cafebabe.birthmarks.BirthmarkException;
 import jp.cafebabe.birthmarks.entities.Birthmark;
 
 public class ComparisonException extends BirthmarkException {
-    private Pair<Birthmark, Birthmark> pair;
+    private final Pair<Birthmark, Birthmark> pair;
 
     public ComparisonException(Birthmark left, Birthmark right) {
         super();

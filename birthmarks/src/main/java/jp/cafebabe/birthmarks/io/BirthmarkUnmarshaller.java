@@ -44,7 +44,7 @@ class BirthmarkUnmarshaller {
         var items = element.split("=");
         if(items.length != 2)
             throw new IllegalArgumentException(element + ": invalid vector element format");
-        return ElementBuilder.build(items[0], Long.valueOf(items[1]));
+        return ElementBuilder.build(items[0], Long.parseLong(items[1]));
     }
 
     private ContainerType parseContainerType(String type) {

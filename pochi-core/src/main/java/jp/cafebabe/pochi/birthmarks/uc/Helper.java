@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 class Helper {
-    private Names names = new Names();
-    private Configuration context;
+    private final Names names = new Names();
+    private final Configuration context;
 
     public Helper(Configuration context){
         this.context = context;
@@ -21,12 +21,6 @@ class Helper {
     public void addAll(String[] names){
         if(names != null)
             Arrays.stream(names)
-            .forEach(this::add);
-    }
-
-    public void addAll(Type[] types){
-        if(types != null)
-            Arrays.stream(types)
             .forEach(this::add);
     }
 

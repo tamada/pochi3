@@ -1,12 +1,14 @@
 package jp.cafebabe.pochi.birthmarks.kgram;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public record KGram<T extends Serializable>(List<T> values) implements Serializable{
+public record KGram<T extends Serializable>(List<T> values) implements Serializable {
+    @Serial
     private static final long serialVersionUID = 171133658354079736L;
 
     public KGram(Stream<T> stream){

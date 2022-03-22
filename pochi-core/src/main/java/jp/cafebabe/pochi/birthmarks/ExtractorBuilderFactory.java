@@ -6,18 +6,18 @@ import jp.cafebabe.pochi.birthmarks.kgram.KGramBasedExtractorBuilder;
 import jp.cafebabe.pochi.birthmarks.uc.UsedClassesExtractorBuilder;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ExtractorBuilderFactory {
-    private List<String> availableTypes = List.of("uc");
+    private final List<String> availableTypes = List.of("uc");
 
     public Optional<ExtractorBuilder> builder(String type) {
         if(isKGramType(type))
             return Optional.of(new KGramBasedExtractorBuilder(findKValue(type)));
-        return switch(type) {
-            case "uc" -> Optional.of(new UsedClassesExtractorBuilder());
-            default -> Optional.empty();
-        };
+        else if(Objects.equals("uc", type))
+            return Optional.of(new UsedClassesExtractorBuilder());
+        return Optional.empty();
     }
 
     private int findKValue(String type) {

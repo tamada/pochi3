@@ -42,11 +42,11 @@ public class EditDistanceCalculator<T> {
 
     private int minimum(int... array) {
         return IntStream.of(array)
-                .reduce(BIG_NUMBER, (p, n) -> Math.min(p, n));
+                .reduce(BIG_NUMBER, Math::min);
     }
 
     private int tableValue(Table table, Optional<Index2D> optionalIndex) {
-        return optionalIndex.map(index -> table.get(index))
+        return optionalIndex.map(table::get)
                 .orElse(BIG_NUMBER);
     }
 

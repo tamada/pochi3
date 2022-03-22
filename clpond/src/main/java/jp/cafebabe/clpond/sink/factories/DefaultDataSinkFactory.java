@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 class DefaultDataSinkFactory implements DataSinkFactory{
-    private List<DataSinkFactory> factories = new ArrayList<>();
+    private final List<DataSinkFactory> factories = new ArrayList<>();
 
     public DefaultDataSinkFactory(){
-        register(new GenericDataSinkFactory(path -> PathHelper.endsWith(path, ".jar"), path -> new JarFileDataSink(path)));
-        register(new GenericDataSinkFactory(path -> PathHelper.endsWith(path, ".war"),   path -> new WarFileDataSink(path)));
-        register(new GenericDataSinkFactory(path -> PathHelper.endsWith(path, ".class"), path -> new ClassFileDataSink(path)));
-        register(new GenericDataSinkFactory(path -> true,                                path -> new DirectoryDataSink(path)));
+        register(new GenericDataSinkFactory(path -> PathHelper.endsWith(path, ".jar"), JarFileDataSink::new));
+        register(new GenericDataSinkFactory(path -> PathHelper.endsWith(path, ".war"),   WarFileDataSink::new));
+        register(new GenericDataSinkFactory(path -> PathHelper.endsWith(path, ".class"), ClassFileDataSink::new));
+        register(new GenericDataSinkFactory(path -> true,                                DirectoryDataSink::new));
     }
 
     public boolean isTarget(Path path){

@@ -13,7 +13,7 @@ public interface Marshaller {
 
     default boolean marshalArray(String... values) {
         return Arrays.stream(values)
-                .map(v -> marshal(v))
+                .map(this::marshal)
                 .reduce(true, (a, b) -> a && b);
     }
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class AbstractComparator implements Comparator {
-    private Configuration config;
+    private final Configuration config;
 
     public AbstractComparator(Configuration config) {
         this.config = config;

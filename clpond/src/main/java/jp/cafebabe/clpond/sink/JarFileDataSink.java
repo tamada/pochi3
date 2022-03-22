@@ -9,8 +9,8 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 
 public class JarFileDataSink extends AbstractDataSink {
-    private FileSystem system;
-    private Path base;
+    private final FileSystem system;
+    private final Path base;
 
     public JarFileDataSink(Path path){
         this.system = DataSinkHelper.buildFileSystem(path);
@@ -28,15 +28,15 @@ public class JarFileDataSink extends AbstractDataSink {
     }
 
     @Override
-    public void consume(InputStream in, Entry entry) throws IOException {
+    public void consume(InputStream in, Entry entry) {
         Path outputPath = base.resolve(createPath(entry));
         DirectoryMaker.mkdirs(outputPath.getParent(), system);
         consume(in, outputPath);
     }
 
-    private void consume(InputStream in, Path path) throws IOException{
+    private void consume(InputStream in, Path path) {
         Try.withResources(() -> DataSinkHelper.newOutputStream(system, path))
-                .of(out -> in.transferTo(out));
+                .of(in::transferTo);
     }
 
     private Path createPath(Entry entry){

@@ -9,7 +9,7 @@ import jp.cafebabe.birthmarks.entities.Element;
 import java.util.Set;
 
 public class DiceIndexComparator extends AbstractComparator {
-    private static ComparatorType thisType = new ComparatorType("DiceIndex");
+    private static final ComparatorType thisType = new ComparatorType("dice_index");
 
     public DiceIndexComparator(Configuration config){
         super(config);

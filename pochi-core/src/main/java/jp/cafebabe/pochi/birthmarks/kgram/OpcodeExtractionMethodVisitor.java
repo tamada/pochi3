@@ -7,12 +7,8 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-/**
- * 
- * @author Haruaki TAMADA
- */
 public class OpcodeExtractionMethodVisitor extends MethodVisitor{
-    private List<Integer> opcodes;
+    private final List<Integer> opcodes;
 
     public OpcodeExtractionMethodVisitor(MethodVisitor visitor,
             List<Integer> opcodes){

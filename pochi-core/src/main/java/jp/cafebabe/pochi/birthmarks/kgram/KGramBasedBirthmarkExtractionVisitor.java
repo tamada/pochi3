@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class KGramBasedBirthmarkExtractionVisitor extends PochiClassVisitor {
-    private Map<String, List<Integer>> opcodes = new LinkedHashMap<>();
-    private KGramBuilder<Integer> builder;
+    private final Map<String, List<Integer>> opcodes = new LinkedHashMap<>();
+    private final KGramBuilder<Integer> builder;
 
     public KGramBasedBirthmarkExtractionVisitor(ClassVisitor parent, Configuration context, int kValue) {
         super(parent, context);
@@ -52,7 +52,7 @@ public class KGramBasedBirthmarkExtractionVisitor extends PochiClassVisitor {
 
     private Stream<Element> buildElements(Map<String, List<Integer>> map) {
         return map.values()
-                .stream().flatMap(list -> builder.build(list))
-                .map(kGram -> new ObjectElement<>(kGram));
+                .stream().flatMap(builder::build)
+                .map(ObjectElement::new);
     }
 }

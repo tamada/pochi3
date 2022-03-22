@@ -37,7 +37,7 @@ public class ElementBuilder {
     }
 
     public static <E> Element build(E value) {
-        return build(value, e -> e.toString());
+        return build(value, Object::toString);
     }
 
     public static <E> Element build(E value, Stringer<E> stringer) {
@@ -48,6 +48,6 @@ public class ElementBuilder {
         } else if(value instanceof String string) {
             return build(string);
         }
-        return new ObjectElement<E>(value, stringer);
+        return new ObjectElement<>(value, stringer);
     }
 }

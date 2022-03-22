@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GraphBuilder<E> {
-    private List<E> elements;
-    private int[][] relations;
+    private final List<E> elements;
+    private final int[][] relations;
 
     public GraphBuilder(Stream<E> stream) {
         this.elements = stream.collect(Collectors.toList());

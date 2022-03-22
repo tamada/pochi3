@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class Configuration implements Jsonable {
-    private Map<String, String> properties;
-    private Rules rules;
+    private final Map<String, String> properties;
+    private final Rules rules;
 
     Configuration(Rules rules, Map<String, String> props) {
         this.rules = rules;

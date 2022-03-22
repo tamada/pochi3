@@ -3,8 +3,8 @@ package jp.cafebabe.pochi.comparators.algorithms;
 import java.util.stream.Stream;
 
 class Table {
-    private int[] table;
-    private Size max;
+    private final int[] table;
+    private final Size max;
 
     public Table(int width, int height) {
         table = new int[width * height];

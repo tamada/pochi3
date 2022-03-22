@@ -18,23 +18,23 @@ import java.util.stream.Stream;
 class PairListBuilder implements Serializable {
     public static final String CONFIG_KEY = "pairer.list";
 
-    public static final PairList build(Configuration config) {
+    public static PairList build(Configuration config) {
         return new PairListBuilder().buildImpl(ResourceFinder.find(config.value(CONFIG_KEY, null)));
     }
 
-    private PairList buildImpl(Optional<URL> path) {
-        return new PairList(readPairs(path));
+    private PairList buildImpl(Optional<URL> url) {
+        return new PairList(readPairs(url));
     }
 
     private Map<String, List<String>> readPairs(Optional<URL> path) {
-        return path.map(p -> readPairs(p))
-                .orElseGet(() -> new HashMap<>());
+        return path.map(this::readPairs)
+                .orElseGet(HashMap::new);
     }
 
     private Map<String, List<String>> readPairs(URL url) {
         return Try.withResources(() -> new BufferedReader(new InputStreamReader(url.openStream())))
-                .of(in -> readPairsImpl(in))
-                .getOrElse(() -> new HashMap<>());
+                .of(this::readPairsImpl)
+                .getOrElse(HashMap::new);
     }
 
     private Map<String, List<String>> readPairsImpl(BufferedReader in) {
@@ -42,7 +42,7 @@ class PairListBuilder implements Serializable {
                 .filter(line -> !line.trim().startsWith("#"))
                 .map(line -> line.split(","))
                 .collect(Collectors.toMap(items -> items[0], items -> List.of(items[1]),
-                        (before, after) -> merge(before, after)));
+                        this::merge));
     }
 
     private List<String> merge(List<String> before, List<String> after) {

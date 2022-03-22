@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 record Size(int width, int height) {
     public Stream<Index2D> stream() {
         return IntStream.range(0, width())
-                .mapToObj(x -> Integer.valueOf(x))
-                .flatMap(x -> yStream(x));
+                .boxed()
+                .flatMap(this::yStream);
     }
 
     private Stream<Index2D> yStream(int x) {

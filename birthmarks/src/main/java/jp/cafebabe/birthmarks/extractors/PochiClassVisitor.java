@@ -7,7 +7,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
 public abstract class PochiClassVisitor extends ClassVisitor {
-    private Configuration context;
+    private final Configuration context;
 
     public PochiClassVisitor(ClassVisitor parent, Configuration config) {
         super(Opcodes.ASM9, parent);

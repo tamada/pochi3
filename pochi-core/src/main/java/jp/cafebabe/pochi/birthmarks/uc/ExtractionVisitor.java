@@ -14,10 +14,6 @@ import org.objectweb.asm.signature.SignatureReader;
 
 import java.util.Arrays;
 
-/**
- *
- * @author Haruaki TAMADA
- */
 class ExtractionVisitor extends PochiClassVisitor {
     protected Helper helper;
 
@@ -56,7 +52,7 @@ class ExtractionVisitor extends PochiClassVisitor {
         helper.addAll(exceptions);
         addMethodDescriptor(desc);
         addSignatureClass(signature);
-        return new ExtractionMethodVisitor<>(
+        return new ExtractionMethodVisitor(
                 super.visitMethod(access, name, desc, signature, exceptions), helper, this);
     }
 

@@ -12,8 +12,8 @@ import java.util.stream.Stream;
  * @author Haruaki Tamada
  */
 class FilteredDataSource extends AbstractDataSource {
-    private DataSource source;
-    private Predicate<Entry> predicate;
+    private final DataSource source;
+    private final Predicate<Entry> predicate;
 
     public FilteredDataSource(DataSource source, Predicate<Entry> predicate) {
         super(source.base());

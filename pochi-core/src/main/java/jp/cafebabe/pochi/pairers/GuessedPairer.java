@@ -8,19 +8,19 @@ import jp.cafebabe.birthmarks.pairers.PairerType;
 import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
-import jp.cafebabe.pochi.pairers.relationers.RelationerBuilder;
+import jp.cafebabe.pochi.pairers.relationers.RelationerFactory;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
-    public static final PairerType TYPE = new PairerType("Guessed");
+    public static final PairerType TYPE = new PairerType("guessed");
 
-    private Relationer relationer;
+    private final Relationer relationer;
 
     private GuessedPairer(Configuration config) {
         super(config);
-        this.relationer = RelationerBuilder.build(config);
+        this.relationer = new RelationerFactory().build(config);
     }
 
     public long count(Streamable<T> target1, Streamable<T> target2) {
@@ -40,8 +40,8 @@ public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
     public Stream<Pair<T, T>> pair(Streamable<T> target1, Streamable<T> target2) {
         return target1.stream()
                 .map(item1 -> createPair(item1, target2))
-                .filter(optional -> optional.isPresent())
-                .map(pair -> pair.get());
+                .filter(Optional::isPresent)
+                .map(Optional::get);
     }
 
     private Optional<Pair<T, T>> createPair(T item1, Streamable<T> target) {
@@ -50,15 +50,15 @@ public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
                 .findFirst();
     }
 
-    public static final class Builder implements PairerBuilder {
+    public static final class Builder<T extends Namer> implements PairerBuilder<T> {
         @Override
         public PairerType type() {
             return TYPE;
         }
 
         @Override
-        public Pairer build(Configuration config) {
-            return new GuessedPairer(config);
+        public Pairer<T> build(Configuration config) {
+            return new GuessedPairer<>(config);
         }
     }
 }

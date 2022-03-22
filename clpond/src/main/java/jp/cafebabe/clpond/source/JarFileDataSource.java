@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class JarFileDataSource extends AbstractDataSource implements PathResolver{
-    private FileSystem system;
+    private final FileSystem system;
 
     public JarFileDataSource(Path path, FileSystem system) {
         super(path);
@@ -24,7 +24,7 @@ public class JarFileDataSource extends AbstractDataSource implements PathResolve
     public Stream<Entry> stream(){
         List<Path> list = getAllFilesFromPaths(getRootPaths());
         return list.stream()
-                .map(path -> toEntry(path));
+                .map(this::toEntry);
     }
 
     private List<Path> getAllFilesFromPaths(Path[] paths){
@@ -36,7 +36,7 @@ public class JarFileDataSource extends AbstractDataSource implements PathResolve
     private Path[] getRootPaths(){
         return StreamHelper
                 .stream(system.getRootDirectories())
-                .toArray(size -> new Path[size]);
+                .toArray(Path[]::new);
     }
 
     @Override

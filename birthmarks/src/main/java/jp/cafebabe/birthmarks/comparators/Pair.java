@@ -1,10 +1,12 @@
 package jp.cafebabe.birthmarks.comparators;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.*;
 
 public record Pair<L, R>(L left, R right) implements Serializable {
+    @Serial
     private static final long serialVersionUID = 8512733686835549454L;
 
     public Pair(L left, R right) {
@@ -74,8 +76,7 @@ public record Pair<L, R>(L left, R right) implements Serializable {
     }
 
     public Pair<Boolean, Boolean> test(Predicate<L> leftPredicate, Predicate<R> rightPredicate) {
-        return map(l -> leftPredicate.test(l),
-                r -> rightPredicate.test(r));
+        return map(leftPredicate::test, rightPredicate::test);
     }
 
     @Override

@@ -6,7 +6,7 @@ import jp.cafebabe.birthmarks.extractors.Extractor;
 import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
 
 public class KGramBasedExtractorBuilder implements ExtractorBuilder {
-    private int kValue;
+    private final int kValue;
 
     public KGramBasedExtractorBuilder() {
         this(3);

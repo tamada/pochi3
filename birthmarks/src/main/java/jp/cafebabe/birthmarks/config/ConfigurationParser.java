@@ -42,7 +42,7 @@ public class ConfigurationParser implements Parser<Configuration> {
     }
 
     public static Configuration defaultConfiguration() throws IOException {
-        return new ConfigurationParser().parse(ConfigurationParser.class
+        return new ConfigurationParser().parse(Configuration.class
                 .getResource("/resources/config.json"));
     }
 }

@@ -7,7 +7,7 @@ import jp.cafebabe.birthmarks.utils.BiSupplier;
 import org.objectweb.asm.ClassVisitor;
 
 public class VisitorBirthmarkExtractor extends AbstractExtractor {
-    private BiSupplier<ClassVisitor, Configuration, PochiClassVisitor> supplier;
+    private final BiSupplier<ClassVisitor, Configuration, PochiClassVisitor> supplier;
 
     public VisitorBirthmarkExtractor(Configuration config,
                                      BiSupplier<ClassVisitor, Configuration, PochiClassVisitor> supplier) {

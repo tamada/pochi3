@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DataSourceFactories{
-    private List<DataSourceFactory> factories = new ArrayList<>();
+    private final List<DataSourceFactory> factories = new ArrayList<>();
 
     public DataSourceFactories(){
         factories.add(new JarFileDataSourceFactory());
@@ -36,7 +36,7 @@ public class DataSourceFactories{
     }
 
     private Optional<DataSourceFactory> find(Path path, FileSystem system,
-            BasicFileAttributes attr) throws IOException{
+            BasicFileAttributes attr) {
         return factories.stream()
                 .filter(factory -> factory.isTarget(path, system, attr))
                 .findFirst();

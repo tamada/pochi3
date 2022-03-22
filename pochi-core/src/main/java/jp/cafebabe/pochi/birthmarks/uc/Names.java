@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 class Names {
-    private List<String> list = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
 
     public void add(String name){
         list.add(name);

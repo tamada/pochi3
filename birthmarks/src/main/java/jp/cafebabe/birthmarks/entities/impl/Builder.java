@@ -9,7 +9,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Builder {
@@ -59,7 +58,7 @@ public class Builder {
         if(location == null) errors.add("location");
         if(errors.size() != 0)
             throw new IllegalStateException(String.format("%s: must not null",
-                    errors.stream().collect(Collectors.joining(", "))));
+                    String.join(", ", errors)));
     }
 
     public <E> Birthmark build(Stream<E> stream, ContainerType type) {
@@ -68,7 +67,6 @@ public class Builder {
             case Set -> set(stream);
             case Vector -> vector(stream);
             case Graph -> null;
-            default -> null;
         };
     }
 

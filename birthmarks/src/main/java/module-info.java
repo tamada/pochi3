@@ -4,6 +4,7 @@ module jp.cafebabe.pochi.birthmarks {
     requires com.google.gson;
     requires jp.cafebabe.pochi.clpond;
 
+    exports jp.cafebabe.birthmarks;
     exports jp.cafebabe.birthmarks.comparators;
     exports jp.cafebabe.birthmarks.config;
     exports jp.cafebabe.birthmarks.extractors;

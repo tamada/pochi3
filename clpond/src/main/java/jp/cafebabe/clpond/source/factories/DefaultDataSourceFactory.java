@@ -9,7 +9,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
 class DefaultDataSourceFactory implements DataSourceFactory{
-    private DataSourceFactories factories = new DataSourceFactories();
+    private final DataSourceFactories factories = new DataSourceFactories();
 
     @Override
     public DataSource build(Path path, FileSystem system) throws IOException {

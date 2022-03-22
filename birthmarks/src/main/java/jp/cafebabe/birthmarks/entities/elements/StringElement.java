@@ -3,10 +3,12 @@ package jp.cafebabe.birthmarks.entities.elements;
 import jp.cafebabe.birthmarks.entities.Element;
 import jp.cafebabe.birthmarks.io.Marshaller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public record StringElement(String value) implements Element, Comparable<StringElement>, Serializable {
+    @Serial
     private static final long serialVersionUID = 5050804023307026236L;
 
     public StringElement(String value) {

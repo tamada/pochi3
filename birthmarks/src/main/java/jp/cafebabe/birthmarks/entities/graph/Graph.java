@@ -2,16 +2,18 @@ package jp.cafebabe.birthmarks.entities.graph;
 
 import jp.cafebabe.birthmarks.comparators.Pair;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public class Graph<E> implements Serializable {
+    @Serial
     private static final long serialVersionUID = -7264502399177421550L;
 
-    private List<E> elements;
-    private int[][] relations;
+    private final List<E> elements;
+    private final int[][] relations;
 
     Graph(List<E> elements, int[][] relations) {
         this.elements = elements;

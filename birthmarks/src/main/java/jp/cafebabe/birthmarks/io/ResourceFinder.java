@@ -42,7 +42,7 @@ public class ResourceFinder {
     public static <T, P extends Parser<T>> Either<Throwable, T> parse(String from, P parser) {
         return find(from)
                 .map(url -> parse(url, parser))
-                .get();
+                .orElseGet(() -> Either.left(new IllegalArgumentException("from was null")));
     }
 
     private static <T, P extends Parser<T>> Either<Throwable, T> parse(URL url, P parser) {

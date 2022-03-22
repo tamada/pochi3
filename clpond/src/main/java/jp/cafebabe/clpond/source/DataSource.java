@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * This interface shows DataSource, which is the source of the some data.
+ * This interface shows DataSource, which is the source of some data.
  * 
  * @author Haruaki Tamada
  */

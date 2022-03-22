@@ -1,5 +1,6 @@
 package jp.cafebabe.clpond.source;
 
+import io.vavr.control.Try;
 import jp.cafebabe.clpond.entities.PathHelper;
 
 import java.nio.file.DirectoryStream;
@@ -8,11 +9,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.spi.FileSystemProvider;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 class DirectoryTraverser {
     private static final DirectoryStream.Filter<Path> FILTER = new EveryFileAcceptFilter();
@@ -28,14 +25,16 @@ class DirectoryTraverser {
 
     private List<Path> traverse(FileSystemProvider provider, List<Path> list, Path... paths){
         Arrays.stream(paths)
-        .forEach(path -> traverse(provider, list, path));
+                .forEach(path -> traverse(provider, list, path));
         return Collections.unmodifiableList(list);
     }
 
     private List<Path> traverse(FileSystemProvider provider, List<Path> list, Path path){
-        try(DirectoryStream<Path> stream = provider.newDirectoryStream(path, FILTER)){
-            stream.forEach(p -> traverseDirectory(provider, list, p));
-        } catch (Exception e){ }
+        Try.withResources(() -> provider.newDirectoryStream(path, FILTER))
+                .of(stream -> {
+                    stream.forEach(p -> traverseDirectory(provider, list, p));
+                    return false;
+                });
         return list;
     }
 
@@ -45,10 +44,9 @@ class DirectoryTraverser {
     }
 
     private void doTraverse(FileSystemProvider provider, List<Path> list, Path path, BasicFileAttributes attr){
-        if(attr.isDirectory()){
+        if(attr.isDirectory())
             traverse(provider, list, path);
-            return;
-        }
-        list.add(path);
+        else
+            list.add(path);
     }
 }

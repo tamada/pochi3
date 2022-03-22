@@ -1,5 +1,6 @@
 package jp.cafebabe.clpond.sink;
 
+import io.vavr.control.Try;
 import jp.cafebabe.clpond.entities.Entry;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ClassFileDataSink extends AbstractDataSink {
-    private Path path;
+    private final Path path;
 
     public ClassFileDataSink(Path path){
         this.path = path;
@@ -20,17 +21,18 @@ public class ClassFileDataSink extends AbstractDataSink {
 
     @Override
     public void consume(InputStream in, Entry entry) throws IOException {
-        createDirectories(path().getParent());
-        Files.copy(in, path());
+        if(createDirectories(path().getParent()))
+            Files.copy(in, path());
     }
 
-    protected void createDirectories(Path path){
+    protected boolean createDirectories(Path path){
         if(!Files.exists(path))
-            createDirectoriesImpl(path);
+            return createDirectoriesImpl(path);
+        return false;
     }
 
-    private void createDirectoriesImpl(Path path){
-        try{ Files.createDirectories(path); }
-        catch(IOException e){ }
+    private boolean createDirectoriesImpl(Path path){
+        return Try.of(() -> Files.createDirectories(path))
+                .isSuccess();
     }
 }

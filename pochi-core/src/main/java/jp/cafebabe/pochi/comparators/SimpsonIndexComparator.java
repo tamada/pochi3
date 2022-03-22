@@ -9,7 +9,7 @@ import jp.cafebabe.birthmarks.entities.Element;
 import java.util.Set;
 
 public class SimpsonIndexComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("SimpsonIndex");
+    private static final ComparatorType thisType = new ComparatorType("simpson_index");
 
     public static final class Builder implements ComparatorBuilder {
         @Override

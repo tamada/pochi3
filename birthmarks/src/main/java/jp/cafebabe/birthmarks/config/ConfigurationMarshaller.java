@@ -7,7 +7,7 @@ import java.io.Writer;
 import java.util.stream.Stream;
 
 public class ConfigurationMarshaller {
-    private Marshaller marshaller;
+    private final Marshaller marshaller;
 
     private ConfigurationMarshaller(Marshaller marshaller) {
         this.marshaller = marshaller;
@@ -22,11 +22,11 @@ public class ConfigurationMarshaller {
     }
 
     public boolean marshal(Configuration config) {
-        marshaller.marshal("{\"properties\":{");
-        marshalProperties(config.properties());
-        marshaller.marshal("},\"rules\":");
-        marshalRules(config.rules());
-        return marshaller.marshal("}");
+        return Stream.of(marshaller.marshal("{\"properties\":{"),
+            marshalProperties(config.properties()),
+            marshaller.marshal("},\"rules\":"),
+            marshalRules(config.rules()), marshaller.marshal("}"))
+                .reduce(true, (a, b) -> a && b);
     }
 
     private boolean marshalRules(Stream<Rule> stream) {
@@ -37,8 +37,8 @@ public class ConfigurationMarshaller {
         return marshaller.marshal(rule.toJson());
     }
 
-    private void marshalProperties(Stream<Pair<String, String>> stream) {
-        marshaller.marshalStream(stream, pair ->
+    private boolean marshalProperties(Stream<Pair<String, String>> stream) {
+        return marshaller.marshalStream(stream, pair ->
                 marshaller.marshalKeyAndValue(pair.left(), pair.right()));
     }
 }

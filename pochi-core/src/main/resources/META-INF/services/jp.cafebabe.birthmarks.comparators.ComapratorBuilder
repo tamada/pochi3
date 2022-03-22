@@ -1,5 +1,0 @@
-jp.cafebabe.pochi.birthmarks.comparators.CosineComparator.Builder
-jp.cafebabe.pochi.birthmarks.comparators.DiceIndexComparator.Builder
-jp.cafebabe.pochi.birthmarks.comparators.EditDistanceComparator.Builder
-jp.cafebabe.pochi.birthmarks.comparators.JaccardIndexComparator.Builder
-jp.cafebabe.pochi.birthmarks.comparators.SimpsonIndexComparator.Builder

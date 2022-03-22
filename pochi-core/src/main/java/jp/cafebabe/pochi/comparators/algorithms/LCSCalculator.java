@@ -7,8 +7,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LCSCalculator<T> {
-    private Table table;
-
     public double compute(List<T> list1, List<T> list2) {
         var table = new Table(list1.size() + 1, list2.size() + 1);
         computeCosts(table, list1, list2);
@@ -45,7 +43,7 @@ public class LCSCalculator<T> {
     }
 
     private int tableValue(Table table, Optional<Index2D> index) {
-        return index.map(i -> table.get(i))
-                .orElseGet(() -> 0);
+        return index.map(table::get)
+                .orElse(0);
     }
 }
