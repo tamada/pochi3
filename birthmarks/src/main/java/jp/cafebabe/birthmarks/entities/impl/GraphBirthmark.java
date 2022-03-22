@@ -29,7 +29,7 @@ public class GraphBirthmark extends AbstractBirthmark implements Serializable {
     }
 
     @Override
-    public int elementCount() {
+    public long size() {
         return graph.size();
     }
 }

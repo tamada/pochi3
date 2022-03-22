@@ -38,16 +38,16 @@ public class SimpsonIndexComparator extends AbstractComparator {
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        if (left.elementCount() == 0 && right.elementCount() == 0)
+        if (left.size() == 0 && right.size() == 0)
             return new Similarity(1d);
-        else if (left.elementCount() == 0 || right.elementCount() == 0)
+        else if (left.size() == 0 || right.size() == 0)
             return new Similarity(0d);
         return calculateImpl(left, right);
     }
 
     private Similarity calculateImpl(Birthmark left, Birthmark right) {
         Set<Element> intersection = SetUtils.intersect(left, right);
-        int denominator = Math.min(left.elementCount(), right.elementCount());
+        long denominator = Math.min(left.size(), right.size());
         return new Similarity(1.0 * intersection.size() / denominator);
     }
 }

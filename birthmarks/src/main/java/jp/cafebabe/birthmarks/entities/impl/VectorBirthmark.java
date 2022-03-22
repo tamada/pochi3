@@ -42,7 +42,7 @@ public class VectorBirthmark extends AbstractBirthmark implements Serializable, 
     }
 
     @Override
-    public int elementCount() {
+    public long size() {
         return frequencies.size();
     }
 

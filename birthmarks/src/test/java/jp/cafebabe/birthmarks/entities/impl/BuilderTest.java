@@ -28,7 +28,7 @@ public class BuilderTest {
             assertEquals(ContainerType.List, birthmark.containerType());
             assertEquals(new BirthmarkType("type1"), birthmark.type());
             assertEquals(here, birthmark.location());
-            assertEquals(2, birthmark.elementCount());
+            assertEquals(2, birthmark.size());
             assertArrayEquals(new StringElement[] {
                     new StringElement("e1"),
                     new StringElement("e2"),
@@ -41,7 +41,7 @@ public class BuilderTest {
             Birthmark birthmark = new Builder().type("type1")
                     .name("name1").location(here)
                     .list(Stream.of("e1", 2, 3.0, now), e -> ElementBuilder.build(e));
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             assertArrayEquals(new Element[] {
                     new StringElement("e1"),
                     new LongElement(2),
@@ -54,7 +54,7 @@ public class BuilderTest {
         public void testSetBirthmark() {
             Birthmark birthmark = new Builder().metadata("name1", here, "type1")
                     .set(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             assertEquals(ContainerType.Set, birthmark.containerType());
             assertArrayEquals(Arrays.stream(new String[] {"e1", "e2", "e3", "e4"})
                             .map(ElementBuilder::build).toArray(),
@@ -66,7 +66,7 @@ public class BuilderTest {
             Birthmark birthmark = new Builder().metadata("name1", here, "type1")
                     .vector(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             assertEquals(ContainerType.Vector, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             PairElement[] elements = birthmark.stream().sorted((e1, e2) -> e1.value().compareTo(e2.value())).toArray(size -> new PairElement[size]);
             assertEquals(1, elements[0].count());
             assertEquals(2, elements[1].count());

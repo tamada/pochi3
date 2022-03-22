@@ -37,7 +37,7 @@ public class JaccardIndexComparator extends AbstractComparator {
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        if(left.elementCount() == 0 && right.elementCount() == 0)
+        if(left.size() == 0 && right.size() == 0)
             return new Similarity(1d);
         Set<Element> intersection = SetUtils.intersect(left, right);
         Set<Element> union = SetUtils.union(left, right);

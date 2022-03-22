@@ -2,18 +2,18 @@ package jp.cafebabe.pochi.pairers;
 
 import jp.cafebabe.birthmarks.comparators.Pair;
 import jp.cafebabe.birthmarks.config.Configuration;
-import jp.cafebabe.birthmarks.entities.Birthmark;
-import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.pairers.Pairer;
 import jp.cafebabe.birthmarks.pairers.PairerBuilder;
 import jp.cafebabe.birthmarks.pairers.PairerType;
 import jp.cafebabe.birthmarks.pairers.Relationer;
+import jp.cafebabe.birthmarks.utils.Namer;
+import jp.cafebabe.birthmarks.utils.Streamable;
 import jp.cafebabe.pochi.pairers.relationers.RelationerBuilder;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class GuessedPairer extends AbstractPairer {
+public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
     public static final PairerType TYPE = new PairerType("Guessed");
 
     private Relationer relationer;
@@ -23,28 +23,28 @@ public class GuessedPairer extends AbstractPairer {
         this.relationer = RelationerBuilder.build(config);
     }
 
-    @Override
-    public Stream<Pair<Birthmark, Birthmark>> pair(Birthmarks target) {
-        return pair(target, target);
-    }
-
-    public long count(Birthmarks target1, Birthmarks target2) {
+    public long count(Streamable<T> target1, Streamable<T> target2) {
         return pair(target1, target2).count();
     }
 
-    public long count(Birthmarks target) {
+    public long count(Streamable<T> target) {
         return pair(target).count();
     }
 
     @Override
-    public Stream<Pair<Birthmark, Birthmark>> pair(Birthmarks target1, Birthmarks target2) {
+    public Stream<Pair<T, T>> pair(Streamable<T> target) {
+        return pair(target, target);
+    }
+
+    @Override
+    public Stream<Pair<T, T>> pair(Streamable<T> target1, Streamable<T> target2) {
         return target1.stream()
                 .map(item1 -> createPair(item1, target2))
                 .filter(optional -> optional.isPresent())
                 .map(pair -> pair.get());
     }
 
-    private Optional<Pair<Birthmark, Birthmark>> createPair(Birthmark item1, Birthmarks target) {
+    private Optional<Pair<T, T>> createPair(T item1, Streamable<T> target) {
         return target.stream().filter(item2 -> relationer.isRelate(item1, item2))
                 .map(item2 -> new Pair<>(item1, item2))
                 .findFirst();

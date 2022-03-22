@@ -1,6 +1,6 @@
 package jp.cafebabe.birthmarks.pairers;
 
-import jp.cafebabe.birthmarks.entities.Birthmark;
+import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.clpond.entities.Name;
 
 @FunctionalInterface
@@ -11,7 +11,7 @@ public interface Relationer {
         return isRelate(name1.name(), name2.name());
     }
 
-    default boolean isRelate(String name1, Birthmark b2) {
+    default boolean isRelate(String name1, Namer b2) {
         return isRelate(name1, b2.name());
     }
 
@@ -19,7 +19,7 @@ public interface Relationer {
         return isRelate(name1, b2.name());
     }
 
-    default boolean isRelate(Birthmark b1, Birthmark b2) {
+    default boolean isRelate(Namer b1, Namer b2) {
         return isRelate(b1.name(), b2.name());
     }
 }

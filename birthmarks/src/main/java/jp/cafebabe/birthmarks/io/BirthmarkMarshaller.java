@@ -45,7 +45,7 @@ public class BirthmarkMarshaller implements BirthmarkVisitor {
     }
 
     @Override
-    public void visitElementCount(int max) {
+    public void visitElementCount(long max) {
         marshaller.marshal(",\"elements\":[");
     }
 

@@ -30,7 +30,7 @@ public class SetBirthmark extends AbstractBirthmark implements Serializable {
     }
 
     @Override
-    public int elementCount() {
+    public long size() {
         return set.size();
     }
 }

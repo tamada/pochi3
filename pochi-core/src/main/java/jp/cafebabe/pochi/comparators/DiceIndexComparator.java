@@ -17,10 +17,10 @@ public class DiceIndexComparator extends AbstractComparator {
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        if(left.elementCount() == 0 && right.elementCount() == 0)
+        if(left.size() == 0 && right.size() == 0)
             return new Similarity(1d);
         Set<Element> intersection = SetUtils.intersect(left, right);
-        int denominator = left.elementCount() + right.elementCount();
+        long denominator = left.size() + right.size();
         return new Similarity(2.0 * intersection.size() / denominator);
     }
 

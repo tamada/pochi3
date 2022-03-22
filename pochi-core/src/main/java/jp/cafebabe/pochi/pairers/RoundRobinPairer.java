@@ -7,10 +7,12 @@ import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.pairers.Pairer;
 import jp.cafebabe.birthmarks.pairers.PairerBuilder;
 import jp.cafebabe.birthmarks.pairers.PairerType;
+import jp.cafebabe.birthmarks.utils.Namer;
+import jp.cafebabe.birthmarks.utils.Streamable;
 
 import java.util.stream.Stream;
 
-public class RoundRobinPairer extends AbstractPairer {
+public class RoundRobinPairer<T extends Namer> extends AbstractPairer<T> {
     public static final PairerType TYPE = new PairerType("RoundRobin");
     public static final PairerType SAME_PAIR_TYPE = new PairerType("RoundRobinWithSamePair");
 
@@ -52,31 +54,31 @@ public class RoundRobinPairer extends AbstractPairer {
         return 1;
     }
 
-    public long count(Birthmarks target1, Birthmarks target2) {
+    public long count(Streamable<T> target1, Streamable<T> target2) {
         return target1.size() * target2.size();
     }
 
-    public long count(Birthmarks target) {
+    public long count(Streamable<T> target) {
         long size = target.size();
         size = includeSamePair? size: size - 1;
         return (size + 1) * size / 2;
     }
 
     @Override
-    public Stream<Pair<Birthmark, Birthmark>> pair(Birthmarks target) {
+    public Stream<Pair<T, T>> pair(Streamable<T> target) {
         var value = firstIndex();
         return target.stream()
                 .flatMap(item1 -> matchPair(item1, value, target));
     }
 
     @Override
-    public Stream<Pair<Birthmark, Birthmark>> pair(Birthmarks target1, Birthmarks target2) {
+    public Stream<Pair<T, T>> pair(Streamable<T> target1, Streamable<T> target2) {
         return target1.stream()
                 .flatMap(left -> target2.stream()
                         .map(right -> new Pair<>(left, right)));
     }
 
-    private Stream<Pair<Birthmark, Birthmark>> matchPair(Birthmark baseTarget, int index, Birthmarks list){
+    private Stream<Pair<T, T>> matchPair(T baseTarget, int index, Streamable<T> list){
         return list.stream()
                 .skip(index)
                 .map(target -> new Pair<>(baseTarget, target));

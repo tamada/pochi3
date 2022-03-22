@@ -1,5 +1,6 @@
 package jp.cafebabe.birthmarks.entities;
 
+import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
 import jp.cafebabe.clpond.entities.Name;
 
@@ -7,14 +8,14 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.stream.Stream;
 
-public interface Birthmark extends Serializable, Streamable<Element> {
+public interface Birthmark extends Serializable, Streamable<Element>, Namer {
     Metadata metadata();
 
     Stream<Element> stream();
 
     ContainerType containerType();
 
-    int elementCount();
+    long size();
 
     default BirthmarkType type() {
         return metadata().type();
@@ -31,8 +32,8 @@ public interface Birthmark extends Serializable, Streamable<Element> {
     default void accept(BirthmarkVisitor visitor) {
         visitor.visit(this);
         metadata().accept(visitor);
-        visitor.visitElementCount(elementCount());
-        var index = Cursor.of(elementCount());
+        visitor.visitElementCount(size());
+        var index = Cursor.of(size());
         stream().forEach(element -> visitor.visitElement(element, index.incrementIsLast()));
         visitor.visitEnd();
     }

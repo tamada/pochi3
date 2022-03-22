@@ -19,12 +19,12 @@ public interface Comparator {
 
     ContainerType[] acceptableTypes();
 
-    default Comparisons compare(Birthmarks birthmarks, Pairer pairer) {
+    default Comparisons compare(Birthmarks birthmarks, Pairer<Birthmark> pairer) {
         return new Comparisons(pairer.pair(birthmarks)
                 .map(pair -> compareBirthmark(pair)));
     }
 
-    default Comparisons compare(Birthmarks left, Birthmarks right, Pairer pairer) {
+    default Comparisons compare(Birthmarks left, Birthmarks right, Pairer<Birthmark> pairer) {
         return new Comparisons(pairer.pair(left, right)
                 .map(pair -> compareBirthmark(pair)));
     }

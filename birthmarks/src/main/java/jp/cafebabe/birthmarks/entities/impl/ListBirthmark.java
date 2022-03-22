@@ -30,7 +30,7 @@ public class ListBirthmark extends AbstractBirthmark implements Serializable {
     }
 
     @Override
-    public int elementCount() {
+    public long size() {
         return elements.size();
     }
 }

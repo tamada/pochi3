@@ -2,19 +2,19 @@ package jp.cafebabe.birthmarks.entities;
 
 public class Cursor {
     private int current = 0;
-    private int max;
+    private long max;
 
-    private Cursor(int max) {
+    private Cursor(long max) {
         if(max < 0)
             throw new IllegalArgumentException(String.format("%d: must be positive value", max));
         this.max = max;
     }
 
-    public static Cursor of(int max) {
+    public static Cursor of(long max) {
         return new Cursor(max);
     }
 
-    public int max() {
+    public long max() {
         return max;
     }
 

@@ -54,7 +54,7 @@ public class BirthmarkParserTest {
         assertEquals(URI.create("."), birthmark.location());
         assertEquals(new BirthmarkType("type1"), birthmark.type());
         assertEquals(ContainerType.List, birthmark.containerType());
-        assertEquals(8, birthmark.elementCount());
+        assertEquals(8, birthmark.size());
 
         List<Element> list = birthmark.stream().collect(Collectors.toList());
         assertEquals(new LongElement( 2), list.get(0));
@@ -82,7 +82,7 @@ public class BirthmarkParserTest {
         assertEquals(URI.create("."), birthmark.location());
         assertEquals(new BirthmarkType("type1"), birthmark.type());
         assertEquals(ContainerType.Vector, birthmark.containerType());
-        assertEquals(2, birthmark.elementCount());
+        assertEquals(2, birthmark.size());
 
         List<Element> list = birthmark.stream().sorted((e1, e2) -> e1.value().compareTo(e2.value())).collect(Collectors.toList());
         assertEquals("e1", list.get(0).value());
@@ -106,7 +106,7 @@ public class BirthmarkParserTest {
         assertEquals(URI.create("."), birthmark.location());
         assertEquals(new BirthmarkType("type1"), birthmark.type());
         assertEquals(ContainerType.Set, birthmark.containerType());
-        assertEquals(3, birthmark.elementCount());
+        assertEquals(3, birthmark.size());
 
         List<Element> list = birthmark.stream().sorted().collect(Collectors.toList());
         assertEquals(new StringElement("a"), list.get(0));

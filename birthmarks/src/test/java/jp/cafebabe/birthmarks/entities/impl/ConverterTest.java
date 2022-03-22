@@ -25,7 +25,7 @@ public class ConverterTest {
                     .list(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toList(from);
             assertEquals(ContainerType.List, birthmark.containerType());
-            assertEquals(10, birthmark.elementCount());
+            assertEquals(10, birthmark.size());
             String[] values = birthmark.stream().map(e -> e.value()).toArray(String[]::new);
             assertArrayEquals(new String[] { "e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4" },
                     values);
@@ -37,7 +37,7 @@ public class ConverterTest {
                     .set(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toList(from);
             assertEquals(ContainerType.List, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             String[] values = birthmark.stream().map(e -> e.value()).sorted().toArray(String[]::new);
             assertArrayEquals(new String[] { "e1", "e2", "e3", "e4" },
                     values);
@@ -49,7 +49,7 @@ public class ConverterTest {
                     .vector(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toList(from);
             assertEquals(ContainerType.List, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             String[] values = birthmark.stream().map(e -> e.value()).sorted().toArray(String[]::new);
             assertArrayEquals(new String[] { "e1", "e2", "e3", "e4" },
                     values);
@@ -65,7 +65,7 @@ public class ConverterTest {
                     .list(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toList(from, comparator);
             assertEquals(ContainerType.List, birthmark.containerType());
-            assertEquals(10, birthmark.elementCount());
+            assertEquals(10, birthmark.size());
             String[] values = birthmark.stream().map(e -> e.value()).toArray(String[]::new);
             assertArrayEquals(new String[] { "e4", "e4", "e4", "e4", "e3", "e3", "e3", "e2", "e2", "e1" },
                     values);
@@ -77,7 +77,7 @@ public class ConverterTest {
                     .set(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toList(from, comparator);
             assertEquals(ContainerType.List, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             String[] values = birthmark.stream().map(e -> e.value()).toArray(String[]::new);
             assertArrayEquals(new String[] { "e4", "e3", "e2", "e1" },
                     values);
@@ -89,7 +89,7 @@ public class ConverterTest {
                     .vector(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toList(from, comparator);
             assertEquals(ContainerType.List, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
             String[] values = birthmark.stream().map(e -> e.value()).toArray(String[]::new);
             assertArrayEquals(new String[] { "e4", "e3", "e2", "e1" },
                     values);
@@ -104,7 +104,7 @@ public class ConverterTest {
                     .list(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toSet(from);
             assertEquals(ContainerType.Set, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
 
             Element[] elements = birthmark.stream().sorted().toArray(Element[]::new);
             assertEquals("e1", elements[0].value());
@@ -119,7 +119,7 @@ public class ConverterTest {
                     .set(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toSet(from);
             assertEquals(ContainerType.Set, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
 
             Element[] elements = birthmark.stream().sorted().toArray(Element[]::new);
             assertEquals("e1", elements[0].value());
@@ -134,7 +134,7 @@ public class ConverterTest {
                     .vector(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toSet(from);
             assertEquals(ContainerType.Set, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
 
             Element[] elements = birthmark.stream().sorted().toArray(Element[]::new);
             assertEquals("e1", elements[0].value());
@@ -154,7 +154,7 @@ public class ConverterTest {
                     .list(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toFrequency(from);
             assertEquals(ContainerType.Vector, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
 
             PairElement[] elements = birthmark.stream().sorted(comparator).toArray(PairElement[]::new);
             assertEquals("e1", elements[0].value());
@@ -174,7 +174,7 @@ public class ConverterTest {
                     .set(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toFrequency(from);
             assertEquals(ContainerType.Vector, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
 
             PairElement[] elements = birthmark.stream().sorted(comparator).toArray(PairElement[]::new);
             assertEquals("e1", elements[0].value());
@@ -194,7 +194,7 @@ public class ConverterTest {
                     .vector(Stream.of("e1", "e4", "e2", "e3", "e2", "e4", "e4", "e3", "e3", "e4"));
             Birthmark birthmark = Converter.toFrequency(from);
             assertEquals(ContainerType.Vector, birthmark.containerType());
-            assertEquals(4, birthmark.elementCount());
+            assertEquals(4, birthmark.size());
 
             PairElement[] elements = birthmark.stream().sorted(comparator).toArray(PairElement[]::new);
             assertEquals("e1", elements[0].value());

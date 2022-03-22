@@ -9,7 +9,7 @@ public interface BirthmarkVisitor {
 
     void visit(Birthmark birthmark);
 
-    void visitElementCount(int max);
+    void visitElementCount(long max);
 
     void visitElement(Element element, boolean isLast);
 
