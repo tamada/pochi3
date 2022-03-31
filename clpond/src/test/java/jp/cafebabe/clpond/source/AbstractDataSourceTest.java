@@ -4,19 +4,18 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AbstractDataSourceTest{
     @Test
     public void testBasic() throws Exception{
         try(PlainFileDataSource source = new PlainFileDataSource(Paths.get("target/test-classes/dummy.class/emptyfile"))){
-            assertThat(source.getStartIndex("/hoge.class"), is(1));
-            assertThat(source.getStartIndex("hoge.class"), is(0));
-            assertThat(source.trimName("/hoge.class", 1, 5), is("hoge"));
-            assertThat(source.trimName("aaa", -1, 1), is("aaa"));
-            assertThat(source.trimName("aaa", 2, 1), is("aaa"));
-            assertThat(source.trimName("aaa", 0, 1), is("a"));
+            assertEquals(1, source.getStartIndex("/hoge.class"));
+            assertEquals(0, source.getStartIndex("hoge.class"));
+            assertEquals("hoge", source.trimName("/hoge.class", 1, 5));
+            assertEquals("aaa", source.trimName("aaa", -1, 1));
+            assertEquals("aaa", source.trimName("aaa", 2, 1));
+            assertEquals("a", source.trimName("aaa", 0, 1));
         }
     }
 

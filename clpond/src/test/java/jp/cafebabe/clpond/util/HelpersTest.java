@@ -4,19 +4,18 @@ import jp.cafebabe.clpond.entities.PathHelper;
 import jp.cafebabe.clpond.sink.DirectoryMaker;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelpersTest {
     @Test
-    public void testMeaninglessPathsHelper() throws Exception{
+    public void testMeaninglessPathsHelper() {
         PathHelper helper = new PathHelper();
-        assertThat(helper, is(not(nullValue())));
+        assertTrue(helper != null);
     }
 
     @Test
-    public void testMeaninglessDirectoryMaker() throws Exception{
+    public void testMeaninglessDirectoryMaker() {
         DirectoryMaker maker = new DirectoryMaker();
-        assertThat(maker, is(not(nullValue())));
+        assertTrue(maker != null);
     }
 }

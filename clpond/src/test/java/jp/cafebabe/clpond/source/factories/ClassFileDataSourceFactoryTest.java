@@ -6,17 +6,16 @@ import jp.cafebabe.clpond.source.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class ClassFileDataSourceFactoryTest {
     private Path path;
     private Path dummyPath;
-    private ClassFileDataSourceFactory factory = new ClassFileDataSourceFactory();
+    private final ClassFileDataSourceFactory factory = new ClassFileDataSourceFactory();
 
     @BeforeEach
     public void setUp(){
@@ -26,14 +25,14 @@ public class ClassFileDataSourceFactoryTest {
 
     @Test
     public void testBasic() throws Exception{
-        assertThat(factory.isTarget(path), is(true));
-        assertThat(factory.isTarget(dummyPath), is(false));
+        assertTrue(factory.isTarget(path));
+        assertFalse(factory.isTarget(dummyPath));
 
         DataSource source = factory.build(new File(path.toString()));
-        Entry[] entries = source.stream().toArray(size -> new Entry[size]);
+        Entry[] entries = source.stream().toArray(Entry[]::new);
 
-        assertThat(entries.length, is(1));
-        assertThat(entries[0].className(), is(new ClassName("sample.hello.HelloWorld")));
-        assertThat(entries[0].isClass(), is(true));
+        assertEquals(1, entries.length);
+        assertEquals(new ClassName("sample.hello.HelloWorld"), entries[0].className());
+        assertTrue(entries[0].isClass());
     }
 }

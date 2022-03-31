@@ -13,8 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DirectoryDataSinkTest {
     @BeforeEach
@@ -31,13 +30,13 @@ public class DirectoryDataSinkTest {
         DataSource source = DataSourceFactory.instance().build(Paths.get("dir"));
 
         List<Entry> list = new ArrayList<>();
-        source.forEach(entry -> list.add(entry));
+        source.forEach(list::add);
 
-        assertThat(list.size(), is(2));
+        assertEquals(2, list.size());
     }
 
     @AfterEach
-    public void tearDown() throws Exception{
+    public void tearDown() {
         PathHelper.deleteAll(Paths.get("dir"));
     }
 }

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FilteredDataSourceTest {
     private Path path;
@@ -27,12 +27,12 @@ public class FilteredDataSourceTest {
         try(DataSource source = factory.build(path).filter(entry -> entry.endsWith("World.class"))){
             Entry[] entries = source.stream()
                     .sorted(new EntryComparator())
-                    .toArray(count -> new Entry[count]);
-            assertThat(entries.length, is(1));
+                    .toArray(Entry[]::new);
+            assertEquals(1, entries.length);
 
-            assertThat(entries[0].isName("sample/hello/HelloWorld.class"), is(true));
-            assertThat(entries[0].isClass(), is(true));
-            assertThat(entries[0].className(), is(new ClassName("sample.hello.HelloWorld")));
+            assertTrue(entries[0].isName("sample/hello/HelloWorld.class"));
+            assertTrue(entries[0].isClass());
+            assertEquals(new ClassName("sample.hello.HelloWorld"), entries[0].className());
         }
     }
 }

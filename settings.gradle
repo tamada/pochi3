@@ -3,4 +3,5 @@ rootProject.name = 'pochi'
 include 'birthmarks'
 include 'clpond'
 include 'pochi-core'
+include 'pochi-cli'
 

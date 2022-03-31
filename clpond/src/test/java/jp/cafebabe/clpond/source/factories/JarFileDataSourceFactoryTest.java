@@ -8,13 +8,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static jp.cafebabe.clpond.util.AssertHelper.assertThrows;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JarFileDataSourceFactoryTest {
     private Path jarfile;
     private Path directory;
-    private JarFileDataSourceFactory factory = new JarFileDataSourceFactory();
+    private final JarFileDataSourceFactory factory = new JarFileDataSourceFactory();
 
     @BeforeEach
     public void setUp(){
@@ -24,14 +24,14 @@ public class JarFileDataSourceFactoryTest {
 
     @Test
     public void testBasic() throws Exception{
-        assertThat(factory.isTarget(jarfile), is(true));
-        assertThat(factory.isTarget(directory), is(false));
+        assertTrue(factory.isTarget(jarfile));
+        assertFalse(factory.isTarget(directory));
 
         factory.build(new File(jarfile.toString()));
     }
 
     @Test
-    public void testThrows() throws Exception{
+    public void testThrows() {
         assertThrows(UnsupportedDataSourceException.class, 
                 () -> factory.build(directory));
     }

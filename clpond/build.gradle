@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation "org.ow2.asm:asm:${versions.asm}"
-
-    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
 }
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14

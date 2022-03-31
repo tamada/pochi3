@@ -8,31 +8,29 @@ import jp.cafebabe.clpond.sink.WarFileDataSink;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class DefaultDataSinkFactoryTest {
-    private DataSinkFactory factory = new DefaultDataSinkFactory();
+    private final DataSinkFactory factory = new DefaultDataSinkFactory();
 
     @Test
     public void testBasic(){
-        assertThat(factory.isTarget(Paths.get("hoge.jar")), is(true));
-        assertThat(factory.isTarget(Paths.get("hoge.war")), is(true));
-        assertThat(factory.isTarget(Paths.get("hoge.class")), is(true));
-        assertThat(factory.isTarget(Paths.get("dir")), is(true));
-        assertThat(factory.isTarget(null), is(false));
+        assertTrue(factory.isTarget(Paths.get("hoge.jar")));
+        assertTrue(factory.isTarget(Paths.get("hoge.war")));
+        assertTrue(factory.isTarget(Paths.get("hoge.class")));
+        assertTrue(factory.isTarget(Paths.get("dir")));
+        assertFalse(factory.isTarget(null));
     }
 
     @Test
-    public void testBuiltDataSink() throws Exception{
-        assertThat(factory.create(Paths.get("hoge.jar")),   is(instanceOf(JarFileDataSink.class)));
-        assertThat(factory.create(Paths.get("hoge.war")),   is(instanceOf(WarFileDataSink.class)));
-        assertThat(factory.create(Paths.get("hoge.class")), is(instanceOf(ClassFileDataSink.class)));
-        assertThat(factory.create(Paths.get("dir")),        is(instanceOf(DirectoryDataSink.class)));
+    public void testBuiltDataSink() {
+        assertInstanceOf(JarFileDataSink.class, factory.create(Paths.get("hoge.jar")));
+        assertInstanceOf(WarFileDataSink.class, factory.create(Paths.get("hoge.war")));
+        assertInstanceOf(ClassFileDataSink.class, factory.create(Paths.get("hoge.class")));
+        assertInstanceOf(DirectoryDataSink.class, factory.create(Paths.get("dir")));
     }
 
     @AfterEach

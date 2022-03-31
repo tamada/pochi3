@@ -12,8 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JarFileDataSinkTest {
     @Test
@@ -27,9 +26,9 @@ public class JarFileDataSinkTest {
         DataSource source = DataSourceFactory.instance().build(Paths.get("hoge.jar"));
 
         List<Entry> list = new ArrayList<>();
-        source.forEach(entry -> list.add(entry));
+        source.forEach(list::add);
 
-        assertThat(list.size(), is(2));
+        assertEquals(2, list.size());
     }
 
     @Test
@@ -43,9 +42,9 @@ public class JarFileDataSinkTest {
         DataSource source = DataSourceFactory.instance().build(Paths.get("hoge.jar"));
 
         List<Entry> list = new ArrayList<>();
-        source.forEach(entry -> list.add(entry));
+        source.forEach(list::add);
 
-        assertThat(list.size(), is(5));
+        assertEquals(5, list.size());
     }
 
     @AfterEach

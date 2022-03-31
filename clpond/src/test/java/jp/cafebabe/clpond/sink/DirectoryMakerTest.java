@@ -4,13 +4,13 @@ import jp.cafebabe.clpond.entities.PathHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DirectoryMakerTest {
     @Test
@@ -18,12 +18,12 @@ public class DirectoryMakerTest {
         FileSystem system = FileSystems.getDefault();
         DirectoryMaker.mkdirs(Paths.get("a/b/c"), system);
 
-        assertThat(Files.isDirectory(Paths.get("a/b/c")), is(true));
-        assertThat(Files.exists(Paths.get("a/b/c/d")), is(false));
+        assertTrue(Files.isDirectory(Paths.get("a/b/c")));
+        assertFalse(Files.exists(Paths.get("a/b/c/d")));
         
         DirectoryMaker.mkdirs(Paths.get("a/b/c/d/e"), system);
         
-        assertThat(Files.isDirectory(Paths.get("a/b/c/d/e")), is(true));
+        assertTrue(Files.isDirectory(Paths.get("a/b/c/d/e")));
     }
 
     @AfterEach

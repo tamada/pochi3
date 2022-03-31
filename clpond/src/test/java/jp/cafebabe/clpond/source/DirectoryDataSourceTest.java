@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DirectoryDataSourceTest {
     private Path path;
@@ -24,21 +24,21 @@ public class DirectoryDataSourceTest {
     public void testDataSource() throws Exception{
         DataSourceFactory factory = DataSourceFactory.instance();
 
-        assertThat(factory.isTarget(path), is(true));
+        assertTrue(factory.isTarget(path));
 
         try(DataSource source = factory.build(path)){
             Entry[] entries = source.stream()
                     .sorted(new EntryComparator())
-                    .toArray(count -> new Entry[count]);
-            assertThat(entries.length, is(2));
+                    .toArray(Entry[]::new);
+            assertEquals(2, entries.length);
 
-            assertThat(entries[0].isName("sample/hello/HelloWorld.class"), is(true));
-            assertThat(entries[0].isClass(), is(true));
-            assertThat(entries[0].className(), is(new ClassName("sample.hello.HelloWorld")));
+            assertTrue(entries[0].isName("sample/hello/HelloWorld.class"));
+            assertTrue(entries[0].isClass());
+            assertEquals(new ClassName("sample.hello.HelloWorld"), entries[0].className());
 
-            assertThat(entries[1].isName("sample/hello/Launcher.class"), is(true));
-            assertThat(entries[1].isClass(), is(true));
-            assertThat(entries[1].className(), is(new ClassName("sample.hello.Launcher")));
+            assertTrue(entries[1].isName("sample/hello/Launcher.class"));
+            assertTrue(entries[1].isClass());
+            assertEquals(new ClassName("sample.hello.Launcher"), entries[1].className());
         }
     }
 }

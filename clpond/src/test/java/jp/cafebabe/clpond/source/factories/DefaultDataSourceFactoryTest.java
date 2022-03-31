@@ -5,21 +5,21 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DefaultDataSourceFactoryTest {
-    private DataSourceFactory factory = new DefaultDataSourceFactory();
-    private Path path = Paths.get("src/test/resources/hello/target/classes");
+    private final DataSourceFactory factory = new DefaultDataSourceFactory();
+    private final Path path = Paths.get("src/test/resources/hello/target/classes");
 
     @Test
     public void testBasic() throws Exception{
-        assertThat(factory.isTarget(path), is(true));
-        assertThat(factory.isTarget(null, null, null), is(false));
+        assertTrue(factory.isTarget(path));
+        assertFalse(factory.isTarget(null, null, null));
     }
 
     @Test
-    public void testBasic2() throws Exception{
-        assertThat(factory.isTarget(null), is(false));        
+    public void testBasic2() {
+        assertFalse(factory.isTarget(null));
     }
 }
