@@ -21,6 +21,7 @@ module jp.cafebabe.pochi.core {
             EditDistanceComparator.Builder,
             JaccardIndexComparator.Builder,
             LongestCommonSubsequenceComparator.Builder,
+            OverlapCoefficientComparator.Builder,
             SimpsonIndexComparator.Builder;
 
     provides jp.cafebabe.birthmarks.pairers.PairerBuilder with

@@ -15,4 +15,8 @@ module jp.cafebabe.pochi.birthmarks {
     exports jp.cafebabe.birthmarks.pairers;
     exports jp.cafebabe.birthmarks.utils;
     exports jp.cafebabe.birthmarks.entities;
+
+    uses jp.cafebabe.birthmarks.comparators.ComparatorBuilder;
+    uses jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
+    uses jp.cafebabe.birthmarks.pairers.PairerBuilder;
 }

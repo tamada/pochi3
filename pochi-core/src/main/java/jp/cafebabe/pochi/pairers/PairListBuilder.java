@@ -19,7 +19,8 @@ class PairListBuilder implements Serializable {
     public static final String CONFIG_KEY = "pairer.list";
 
     public static PairList build(Configuration config) {
-        return new PairListBuilder().buildImpl(ResourceFinder.find(config.value(CONFIG_KEY, null)));
+        return new PairListBuilder().buildImpl(ResourceFinder
+                .find(config.value(CONFIG_KEY, null)));
     }
 
     private PairList buildImpl(Optional<URL> url) {

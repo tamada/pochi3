@@ -5,7 +5,7 @@ import jp.cafebabe.birthmarks.config.Configuration;
 
 import java.util.Objects;
 
-public interface ComparatorBuilder extends TaskBuilder<Comparator> {
+public interface ComparatorBuilder extends TaskBuilder<Comparator, ComparatorType> {
     ComparatorType type();
 
     Comparator build(Configuration config);

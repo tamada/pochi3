@@ -5,12 +5,12 @@ import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.Birthmark;
 import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.entities.Element;
-import jp.cafebabe.pochi.comparators.algorithms.EditDistanceCalculator;
+import jp.cafebabe.birthmarks.entities.impl.Converter;
 
-import java.util.List;
+import java.util.Set;
 
-public class EditDistanceComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("edit_distance");
+public class OverlapCoefficientComparator extends AbstractComparator {
+    private static final ComparatorType thisType = new ComparatorType("jaccard_index");
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -20,11 +20,10 @@ public class EditDistanceComparator extends AbstractComparator {
 
         @Override
         public Comparator build(Configuration config) {
-            return new EditDistanceComparator(config);
+            return new OverlapCoefficientComparator(config);
         }
     }
-
-    public EditDistanceComparator(Configuration config){
+    public OverlapCoefficientComparator(Configuration config){
         super(config);
     }
 
@@ -33,19 +32,16 @@ public class EditDistanceComparator extends AbstractComparator {
         return new ContainerType[] {
                 ContainerType.Set,
                 ContainerType.List,
+                ContainerType.Vector,
         };
     }
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        List<Element> leftList = SetUtils.list(left);
-        List<Element> rightList = SetUtils.list(right);
-        return new Similarity(calculate(leftList, rightList));
-    }
-
-    private double calculate(List<Element> left, List<Element> right){
-        int distance = new EditDistanceCalculator<Element>()
-                .compute(left, right);
-        return 1d - (1.0 * distance / Math.max(left.size(), right.size()));
+        if(left.size() == 0 && right.size() == 0)
+            return new Similarity(1d);
+        Set<Element> intersection = SetUtils.intersect(left, right);
+        var denominator = Math.min(Converter.toSet(left).size(), Converter.toSet(right).size());
+        return new Similarity((1.0 * intersection.size()) / denominator);
     }
 }

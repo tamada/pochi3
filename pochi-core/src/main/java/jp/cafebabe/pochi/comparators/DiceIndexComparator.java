@@ -5,6 +5,7 @@ import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.Birthmark;
 import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.entities.Element;
+import jp.cafebabe.birthmarks.entities.impl.Converter;
 
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class DiceIndexComparator extends AbstractComparator {
         if(left.size() == 0 && right.size() == 0)
             return new Similarity(1d);
         Set<Element> intersection = SetUtils.intersect(left, right);
-        long denominator = left.size() + right.size();
+        long denominator = Converter.toSet(left).size() + Converter.toSet(right).size();
         return new Similarity(2.0 * intersection.size() / denominator);
     }
 

@@ -29,10 +29,10 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
     private final Relationer relationer;
     private final PairList pairs;
 
-    public SpecifiedPairer(Configuration config) {
+    public SpecifiedPairer(Configuration config, Relationer relationer) {
         super(config);
         this.pairs = PairListBuilder.build(config);
-        this.relationer = new RelationerFactory().build(config);
+        this.relationer = relationer;
     }
 
     @Override
@@ -77,7 +77,12 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public Pairer<T> build(Configuration config) {
-            return new SpecifiedPairer<>(config);
+            return build(config, new RelationerFactory().build(config));
+        }
+
+        @Override
+        public Pairer<T> build(Configuration config, Relationer relationer) {
+            return new SpecifiedPairer<>(config, relationer);
         }
     }
 }

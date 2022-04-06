@@ -31,12 +31,8 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
         if(left.size() == 0 && right.size() == 0)
             return new Similarity(1d);
         var result = new LCSCalculator<Element>()
-                .compute(toList(left), toList(right));
+                .compute(SetUtils.list(left), SetUtils.list(right));
         return new Similarity(result);
-    }
-
-    private List<Element> toList(Birthmark birthmark) {
-        return birthmark.stream().toList();
     }
 
     @Override

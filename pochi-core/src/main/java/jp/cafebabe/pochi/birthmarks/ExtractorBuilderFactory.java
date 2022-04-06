@@ -1,6 +1,7 @@
 package jp.cafebabe.pochi.birthmarks;
 
 import io.vavr.control.Try;
+import jp.cafebabe.birthmarks.entities.BirthmarkType;
 import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
 import jp.cafebabe.pochi.birthmarks.kgram.KGramBasedExtractorBuilder;
 import jp.cafebabe.pochi.birthmarks.uc.UsedClassesExtractorBuilder;
@@ -8,6 +9,7 @@ import jp.cafebabe.pochi.birthmarks.uc.UsedClassesExtractorBuilder;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ExtractorBuilderFactory {
     private final List<String> availableTypes = List.of("uc");
@@ -18,6 +20,10 @@ public class ExtractorBuilderFactory {
         else if(Objects.equals("uc", type))
             return Optional.of(new UsedClassesExtractorBuilder());
         return Optional.empty();
+    }
+
+    public Stream<BirthmarkType> availables() {
+        return Stream.of(BirthmarkType.of("k-gram"), BirthmarkType.of("uc"));
     }
 
     private int findKValue(String type) {

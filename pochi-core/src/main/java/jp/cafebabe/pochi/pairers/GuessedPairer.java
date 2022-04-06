@@ -18,9 +18,9 @@ public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
 
     private final Relationer relationer;
 
-    private GuessedPairer(Configuration config) {
+    private GuessedPairer(Configuration config, Relationer relationer) {
         super(config);
-        this.relationer = new RelationerFactory().build(config);
+        this.relationer = relationer;
     }
 
     public long count(Streamable<T> target1, Streamable<T> target2) {
@@ -58,7 +58,11 @@ public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public Pairer<T> build(Configuration config) {
-            return new GuessedPairer<>(config);
+            return build(config, new RelationerFactory().build(config));
+        }
+
+        public Pairer<T> build(Configuration config, Relationer relationer) {
+            return new GuessedPairer<>(config, relationer);
         }
     }
 }

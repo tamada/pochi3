@@ -4,6 +4,7 @@ import jp.cafebabe.birthmarks.utils.Streamable;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,5 +21,10 @@ public class SetUtils {
         return left.stream()
                 .filter(rightSet::contains)
                 .collect(Collectors.toSet());
+    }
+
+    public static <E> List<E> list(Streamable<E> streamable) {
+        return streamable.stream()
+                .collect(Collectors.toList());
     }
 }
