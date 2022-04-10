@@ -1,6 +1,7 @@
 package jp.cafebabe.pochi.birthmarks;
 
 import io.vavr.control.Try;
+import jp.cafebabe.birthmarks.BuilderFactory;
 import jp.cafebabe.birthmarks.entities.BirthmarkType;
 import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
 import jp.cafebabe.pochi.birthmarks.kgram.KGramBasedExtractorBuilder;
@@ -9,9 +10,10 @@ import jp.cafebabe.pochi.birthmarks.uc.UsedClassesExtractorBuilder;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class ExtractorBuilderFactory {
+public class ExtractorBuilderFactory implements BuilderFactory<ExtractorBuilder, BirthmarkType> {
     private final List<String> availableTypes = List.of("uc");
 
     public Optional<ExtractorBuilder> builder(String type) {
@@ -20,6 +22,12 @@ public class ExtractorBuilderFactory {
         else if(Objects.equals("uc", type))
             return Optional.of(new UsedClassesExtractorBuilder());
         return Optional.empty();
+    }
+
+    public Stream<ExtractorBuilder> builders() {
+        return Stream.concat(IntStream.rangeClosed(1, 6)
+                .mapToObj(KGramBasedExtractorBuilder::new),
+                Stream.of(new UsedClassesExtractorBuilder()));
     }
 
     public Stream<BirthmarkType> availables() {

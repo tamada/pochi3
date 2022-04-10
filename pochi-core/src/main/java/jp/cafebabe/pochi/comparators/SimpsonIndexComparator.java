@@ -22,6 +22,11 @@ public class SimpsonIndexComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new SimpsonIndexComparator(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
 
     public SimpsonIndexComparator(Configuration config){

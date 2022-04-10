@@ -1,7 +1,6 @@
 package jp.cafebabe.pochi.utils;
 
-import jp.cafebabe.birthmarks.comparators.ComparatorBuilder;
-import jp.cafebabe.birthmarks.pairers.PairerBuilder;
+import jp.cafebabe.birthmarks.utils.Stringer;
 import jp.cafebabe.pochi.utils.spi.NoImplementationService;
 import jp.cafebabe.pochi.utils.spi.Service;
 import org.junit.jupiter.api.Test;
@@ -16,13 +15,13 @@ public class ServiceBuilderFactoryTest {
         assertEquals(3, list.size());
 
         assertEquals("jp.cafebabe.pochi.utils.spi.ServiceImpl1", list.get(0).getClass().getName());
-        assertEquals("service1", list.get(0).type());
+        assertEquals("service1", list.get(0).type().string());
 
         assertEquals("jp.cafebabe.pochi.utils.spi.ServiceImpl2", list.get(1).getClass().getName());
-        assertEquals("service2", list.get(1).type());
+        assertEquals("service2", list.get(1).type().string());
 
         assertEquals("jp.cafebabe.pochi.utils.spi.ServiceImpl3", list.get(2).getClass().getName());
-        assertEquals("service3", list.get(2).type());
+        assertEquals("service3", list.get(2).type().string());
 
         assertEquals(3, builder.availables().count());
     }

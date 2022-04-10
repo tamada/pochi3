@@ -9,3 +9,11 @@ dependencies {
 
     implementation "org.ow2.asm:asm:${versions.asm}"
 }
+
+jar {
+    manifest.attributes(
+            'Class-Path': configurations.compileClasspath.files.collect { it.name }.join(' ')
+    )
+}
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16

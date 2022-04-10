@@ -2,7 +2,12 @@ package jp.cafebabe.pochi.utils.spi;
 
 public class ServiceImpl2 implements Service {
     @Override
-    public String type() {
-        return "service2";
+    public Service.Type type() {
+        return Service.Type.of("service2");
+    }
+
+    @Override
+    public String description() {
+        return "";
     }
 }

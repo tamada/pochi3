@@ -2,6 +2,8 @@ package jp.cafebabe.birthmarks.entities.elements;
 
 import jp.cafebabe.birthmarks.entities.Element;
 
+import java.util.function.Function;
+
 public class ElementBuilder {
     public static Element build(Number number) {
         return switch(number.getClass().getName()) {
@@ -40,7 +42,7 @@ public class ElementBuilder {
         return build(value, Object::toString);
     }
 
-    public static <E> Element build(E value, Stringer<E> stringer) {
+    public static <E> Element build(E value, Function<E, String> stringer) {
         if(value instanceof Element e) {
             return e;
         } else if(value instanceof Number number) {

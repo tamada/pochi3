@@ -44,5 +44,10 @@ public class DiceIndexComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new DiceIndexComparator(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
 }

@@ -36,4 +36,15 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
 }
 
+// https://discuss.gradle.org/t/how-to-aggregate-subproject-jars-distributions-in-a-root-project-with-base-plugin-only/9798
+task copyFiles(type: Copy) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    subprojects {
+        from configurations.compileClasspath
+    }
+    from subprojects.collect { it.tasks.withType(Jar) }
+    into "$buildDir/libs"
+    // eachFile { System.out.printf("copy: %s%n", it.file) }
+}
 
+build.finalizedBy copyFiles

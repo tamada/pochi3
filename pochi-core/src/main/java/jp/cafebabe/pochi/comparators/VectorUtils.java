@@ -4,7 +4,7 @@ import jp.cafebabe.birthmarks.utils.Vectorable;
 
 import java.util.stream.Stream;
 
-public class VectorUtils {
+class VectorUtils {
     public static <K, V extends Number> double norm(Vectorable<K, V> v) {
         return Math.sqrt(v.valueStream()
                 .mapToDouble(n -> n.doubleValue() * n.doubleValue())

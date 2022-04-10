@@ -8,7 +8,8 @@ import jp.cafebabe.birthmarks.pairers.PairerType;
 import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
-import jp.cafebabe.pochi.pairers.relationers.RelationerFactory;
+import jp.cafebabe.pochi.pairers.relationers.FullyMatchRelationer;
+import jp.cafebabe.pochi.pairers.relationers.RelationerBuilderFactory;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -76,8 +77,16 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
         }
 
         @Override
+        public String description() {
+            return "";
+        }
+
+        @Override
         public Pairer<T> build(Configuration config) {
-            return build(config, new RelationerFactory().build(config));
+            return build(config,
+                    new RelationerBuilderFactory().builder(config)
+                            .orElseGet(() -> new FullyMatchRelationer.Builder())
+                            .build(config));
         }
 
         @Override

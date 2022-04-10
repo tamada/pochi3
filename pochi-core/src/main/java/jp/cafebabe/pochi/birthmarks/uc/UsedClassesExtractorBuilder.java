@@ -17,4 +17,9 @@ public class UsedClassesExtractorBuilder implements ExtractorBuilder {
     public Extractor build(Configuration config) {
         return new VisitorBirthmarkExtractor(config, ExtractionVisitor::new);
     }
+
+    @Override
+    public String description() {
+        return "Used classes birthmarks";
+    }
 }

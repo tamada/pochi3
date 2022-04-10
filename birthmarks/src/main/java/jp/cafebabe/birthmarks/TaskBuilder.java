@@ -1,11 +1,18 @@
 package jp.cafebabe.birthmarks;
 
 import jp.cafebabe.birthmarks.config.Configuration;
+import jp.cafebabe.birthmarks.utils.Stringer;
 
-public interface TaskBuilder<T, K> {
-    K type();
+import java.util.Objects;
 
-    T build(Configuration config);
+public interface TaskBuilder<B, T extends Stringer> {
+    T type();
 
-    boolean matchType(String name);
+    String description();
+
+    B build(Configuration config);
+
+    default boolean matchType(String name) {
+        return Objects.equals(type().string(), name);
+    }
 }

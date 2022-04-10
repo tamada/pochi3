@@ -6,8 +6,9 @@ import jp.cafebabe.birthmarks.io.Marshaller;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.function.Function;
 
-public record ObjectElement<E>(E rawValue, Stringer<E> stringer) implements Element, Serializable {
+public record ObjectElement<E>(E rawValue, Function<E, String> stringer) implements Element, Serializable {
     @Serial
     private static final long serialVersionUID = -3563473007533917216L;
 
@@ -15,7 +16,7 @@ public record ObjectElement<E>(E rawValue, Stringer<E> stringer) implements Elem
         this(value, Object::toString);
     }
 
-    public ObjectElement(E rawValue, Stringer<E> stringer) {
+    public ObjectElement(E rawValue, Function<E, String> stringer) {
         this.rawValue = Objects.requireNonNull(rawValue);
         this.stringer = Objects.requireNonNull(stringer);
     }
@@ -27,7 +28,7 @@ public record ObjectElement<E>(E rawValue, Stringer<E> stringer) implements Elem
 
     @Override
     public String value() {
-        return stringer.toString(rawValue);
+        return stringer.apply(rawValue);
     }
 
     @Override

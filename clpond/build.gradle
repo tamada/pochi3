@@ -6,5 +6,12 @@ plugins {
 dependencies {
     implementation "org.ow2.asm:asm:${versions.asm}"
 }
+
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
+
+jar {
+    manifest.attributes(
+            'Class-Path': configurations.compileClasspath.files.collect { it.name }.join(' ')
+    )
+}

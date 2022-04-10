@@ -2,14 +2,15 @@ package jp.cafebabe.pochi.pairers.relationers;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RelationerFactoryTest {
-    private RelationerFactory factory = new RelationerFactory();
+public class RelationerBuilderFactoryTest {
+    private RelationerBuilderFactory factory = new RelationerBuilderFactory();
     @Test
     public void testFully() {
-        var relationer = factory.build("fully");
+        var relationer = factory.builder("fully")
+                .orElseGet(() -> new FullyMatchRelationer.Builder()).build(null);
+        assertEquals("jp.cafebabe.pochi.pairers.relationers.FullyMatchRelationer", relationer.getClass().getName());
         assertTrue(relationer.isRelate("SomeClassName", "SomeClassName"));
         assertTrue(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.cafebabe.pochi.SomeClassName"));
         assertFalse(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.otherpackage.SomeClassName"));
@@ -18,7 +19,9 @@ public class RelationerFactoryTest {
 
     @Test
     public void testClassName() {
-        var relationer = factory.build("classname");
+        var relationer = factory.builder("classname")
+                .orElseGet(() -> new ClassNameRelationer.Builder()).build(null);
+        assertEquals("jp.cafebabe.pochi.pairers.relationers.ClassNameRelationer", relationer.getClass().getName());
         assertTrue(relationer.isRelate("SomeClassName", "SomeClassName"));
         assertTrue(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.cafebabe.pochi.SomeClassName"));
         assertTrue(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.otherpackage.SomeClassName"));
@@ -27,7 +30,9 @@ public class RelationerFactoryTest {
 
     @Test
     public void testOther() {
-        var relationer = factory.build("other");
+        var relationer = factory.builder("other")
+                .get().build(null);
+        assertEquals("jp.cafebabe.pochi.pairers.relationers.NeverRelationer", relationer.getClass().getName());
         assertFalse(relationer.isRelate("SomeClassName", "SomeClassName"));
         assertFalse(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.cafebabe.pochi.SomeClassName"));
         assertFalse(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.otherpackage.SomeClassName"));

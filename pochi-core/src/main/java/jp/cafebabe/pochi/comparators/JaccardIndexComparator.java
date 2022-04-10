@@ -21,7 +21,13 @@ public class JaccardIndexComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new JaccardIndexComparator(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
+
     public JaccardIndexComparator(Configuration config){
         super(config);
     }

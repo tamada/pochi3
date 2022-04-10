@@ -10,7 +10,7 @@ import jp.cafebabe.birthmarks.entities.impl.Converter;
 import java.util.Set;
 
 public class OverlapCoefficientComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("jaccard_index");
+    private static final ComparatorType thisType = new ComparatorType("overlap_coefficient");
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -22,7 +22,12 @@ public class OverlapCoefficientComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new OverlapCoefficientComparator(config);
         }
+        @Override
+        public String description() {
+            return "";
+        }
     }
+
     public OverlapCoefficientComparator(Configuration config){
         super(config);
     }

@@ -19,6 +19,11 @@ public class CosineComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new CosineComparator(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
 
     public CosineComparator(Configuration config) {

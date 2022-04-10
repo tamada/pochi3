@@ -25,4 +25,9 @@ public class KGramBasedExtractorBuilder implements ExtractorBuilder {
     public Extractor build(Configuration config) {
         return new KGramBasedBirthmarkExtractor(kValue, config);
     }
+
+    @Override
+    public String description() {
+        return String.format("opcodes' %d-gram based birthmark", kValue);
+    }
 }

@@ -22,6 +22,11 @@ public class EditDistanceComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new EditDistanceComparator(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
 
     public EditDistanceComparator(Configuration config){

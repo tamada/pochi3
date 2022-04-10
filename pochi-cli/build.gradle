@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'pochi.java-conventions'
+}
+
+dependencies {
+    implementation project(":clpond")
+    implementation project(":birthmarks")
+    implementation project(":pochi-core")
+
+    implementation 'de.vandermeer:asciitable:0.3.2'
+    implementation "info.picocli:picocli:${versions.picocli}"
+    implementation "org.ow2.asm:asm:${versions.asm}"
+}
+
+jar {
+    System.out.println("pochi-cli jar")
+    manifest {
+        attributes(
+            "Main-Class": "jp.cafebabe.pochi.cli.Main" ,
+            "Class-Path": configurations.compileClasspath.files.collect { it.getName() }.join(' ')
+        )
+    }
+}

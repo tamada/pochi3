@@ -8,7 +8,6 @@ import jp.cafebabe.birthmarks.pairers.PairerType;
 import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
-import jp.cafebabe.pochi.pairers.relationers.RelationerFactory;
 
 import java.util.stream.Stream;
 
@@ -33,6 +32,11 @@ public class RoundRobinPairer<T extends Namer> extends AbstractPairer<T> {
         public Pairer<T> build(Configuration config, Relationer relationer) {
             return build(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
 
     public static final class WithSamePairBuilder<T extends Namer> implements PairerBuilder<T> {
@@ -49,6 +53,11 @@ public class RoundRobinPairer<T extends Namer> extends AbstractPairer<T> {
         @Override
         public Pairer<T> build(Configuration config, Relationer relationer) {
             return build(config);
+        }
+
+        @Override
+        public String description() {
+            return "";
         }
     }
 

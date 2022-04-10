@@ -20,6 +20,11 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
         public Comparator build(Configuration config) {
             return new LongestCommonSubsequenceComparator(config);
         }
+
+        @Override
+        public String description() {
+            return "";
+        }
     }
 
     public LongestCommonSubsequenceComparator(Configuration config) {

@@ -1,7 +1,7 @@
 package jp.cafebabe.pochi.utils.spi;
 
 public abstract class NoDefaultConstructorService {
-    private String string;
+    private final String string;
 
     public NoDefaultConstructorService(String string){
         this.string = string;

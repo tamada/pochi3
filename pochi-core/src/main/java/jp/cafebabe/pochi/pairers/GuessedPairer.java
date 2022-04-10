@@ -8,7 +8,8 @@ import jp.cafebabe.birthmarks.pairers.PairerType;
 import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
-import jp.cafebabe.pochi.pairers.relationers.RelationerFactory;
+import jp.cafebabe.pochi.pairers.relationers.FullyMatchRelationer;
+import jp.cafebabe.pochi.pairers.relationers.RelationerBuilderFactory;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -58,11 +59,18 @@ public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public Pairer<T> build(Configuration config) {
-            return build(config, new RelationerFactory().build(config));
+            var builder = new RelationerBuilderFactory().builder(config);
+            return build(config,
+                    builder.orElseGet(() -> new FullyMatchRelationer.Builder()).build(config));
         }
 
         public Pairer<T> build(Configuration config, Relationer relationer) {
             return new GuessedPairer<>(config, relationer);
+        }
+
+        @Override
+        public String description() {
+            return "pairs by the names with Relationer";
         }
     }
 }

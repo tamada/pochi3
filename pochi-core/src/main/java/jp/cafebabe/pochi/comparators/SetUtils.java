@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SetUtils {
+class SetUtils {
     public static <E> Set<E> union(Streamable<E> left, Streamable<E> right) {
         Set<E> union = new HashSet<>();
         left.stream().forEach(union::add);

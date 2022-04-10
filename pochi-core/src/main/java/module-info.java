@@ -11,10 +11,7 @@ module jp.cafebabe.pochi.core {
     requires jp.cafebabe.pochi.clpond;
     requires jp.cafebabe.pochi.birthmarks;
 
-    provides jp.cafebabe.birthmarks.extractors.ExtractorBuilder with
-            KGramBasedExtractorBuilder,
-            UsedClassesExtractorBuilder;
-
+    uses jp.cafebabe.birthmarks.comparators.ComparatorBuilder;
     provides jp.cafebabe.birthmarks.comparators.ComparatorBuilder with
             CosineComparator.Builder,
             DiceIndexComparator.Builder,
@@ -24,20 +21,23 @@ module jp.cafebabe.pochi.core {
             OverlapCoefficientComparator.Builder,
             SimpsonIndexComparator.Builder;
 
+    uses jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
+    provides jp.cafebabe.birthmarks.extractors.ExtractorBuilder with
+            KGramBasedExtractorBuilder,
+            UsedClassesExtractorBuilder;
+
+    uses jp.cafebabe.birthmarks.pairers.PairerBuilder;
     provides jp.cafebabe.birthmarks.pairers.PairerBuilder with
             GuessedPairer.Builder,
             RoundRobinPairer.Builder,
             RoundRobinPairer.WithSamePairBuilder,
             SpecifiedPairer.Builder;
 
-    exports jp.cafebabe.pochi.comparators;
-    exports jp.cafebabe.pochi.pairers;
-    exports jp.cafebabe.pochi.pairers.relationers;
     exports jp.cafebabe.pochi.birthmarks;
     exports jp.cafebabe.pochi.birthmarks.kgram;
     exports jp.cafebabe.pochi.birthmarks.uc;
+    exports jp.cafebabe.pochi.comparators;
+    exports jp.cafebabe.pochi.pairers;
+    exports jp.cafebabe.pochi.pairers.relationers;
     exports jp.cafebabe.pochi.utils;
-
-    opens jp.cafebabe.pochi.comparators;
-    opens jp.cafebabe.pochi.pairers;
 }
