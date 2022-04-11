@@ -12,10 +12,10 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ClassFileDataSourceFactoryTest {
+public class ClassFileDataSourceBuilderTest {
     private Path path;
     private Path dummyPath;
-    private final ClassFileDataSourceFactory factory = new ClassFileDataSourceFactory();
+    private final ClassFileDataSourceBuilder factory = new ClassFileDataSourceBuilder();
 
     @BeforeEach
     public void setUp(){

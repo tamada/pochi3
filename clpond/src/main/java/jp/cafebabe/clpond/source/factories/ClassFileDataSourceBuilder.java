@@ -1,25 +1,27 @@
 package jp.cafebabe.clpond.source.factories;
 
 
+import jp.cafebabe.clpond.entities.PathHelper;
+import jp.cafebabe.clpond.source.ClassFileDataSource;
 import jp.cafebabe.clpond.source.DataSource;
-import jp.cafebabe.clpond.source.PlainFileDataSource;
 
 import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
-class PlainFileDataSourceFactory implements DataSourceFactory{
-    public PlainFileDataSourceFactory(){
+class ClassFileDataSourceBuilder implements DataSourceBuilder {
+    public ClassFileDataSourceBuilder(){
     }
 
     @Override
     public boolean isTarget(Path path, FileSystem system, BasicFileAttributes attributes){
-        return attributes.isRegularFile();
+        return PathHelper.endsWith(path, ".class")
+                && attributes.isRegularFile();
     }
 
     @Override
     public DataSource build(Path path, FileSystem system) throws IOException {
-        return new PlainFileDataSource(path);
+        return new ClassFileDataSource(path);
     }
 }

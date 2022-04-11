@@ -10,8 +10,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
-class JarFileDataSourceFactory implements DataSourceFactory{
-    public JarFileDataSourceFactory(){
+class JarFileDataSourceBuilder implements DataSourceBuilder {
+    public JarFileDataSourceBuilder(){
     }
 
     @Override

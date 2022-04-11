@@ -2,7 +2,7 @@ package jp.cafebabe.clpond.source;
 
 import jp.cafebabe.clpond.entities.ClassName;
 import jp.cafebabe.clpond.entities.Entry;
-import jp.cafebabe.clpond.source.factories.DataSourceFactory;
+import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class ClassFileDataSourceTest {
 
     @Test
     public void testDataSource() throws Exception{
-        DataSourceFactory factory = DataSourceFactory.instance();
+        DataSourceBuilder factory = DataSourceBuilder.instance();
 
         assertTrue(factory.isTarget(path));
 

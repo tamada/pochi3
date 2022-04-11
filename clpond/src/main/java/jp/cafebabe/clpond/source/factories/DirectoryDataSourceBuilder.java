@@ -8,8 +8,8 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
-class DirectoryDataSourceFactory implements DataSourceFactory{
-    public DirectoryDataSourceFactory(){
+class DirectoryDataSourceBuilder implements DataSourceBuilder {
+    public DirectoryDataSourceBuilder(){
     }
 
     @Override

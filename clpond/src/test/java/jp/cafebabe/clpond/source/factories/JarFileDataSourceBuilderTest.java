@@ -11,10 +11,10 @@ import static jp.cafebabe.clpond.util.AssertHelper.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DirectoryDataSourceFactoryTest {
+public class JarFileDataSourceBuilderTest {
     private Path jarfile;
     private Path directory;
-    private final DataSourceFactory factory = new DirectoryDataSourceFactory();
+    private final JarFileDataSourceBuilder factory = new JarFileDataSourceBuilder();
 
     @BeforeEach
     public void setUp(){
@@ -24,15 +24,15 @@ public class DirectoryDataSourceFactoryTest {
 
     @Test
     public void testBasic() throws Exception{
-        assertTrue(factory.isTarget(directory));
-        assertFalse(factory.isTarget(jarfile));
+        assertTrue(factory.isTarget(jarfile));
+        assertFalse(factory.isTarget(directory));
 
-        factory.build(new File(directory.toString()));
+        factory.build(new File(jarfile.toString()));
     }
 
     @Test
     public void testThrows() {
         assertThrows(UnsupportedDataSourceException.class, 
-                () -> factory.build(jarfile));
+                () -> factory.build(directory));
     }
 }

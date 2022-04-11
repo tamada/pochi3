@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DefaultDataSourceFactoryTest {
-    private final DataSourceFactory factory = new DefaultDataSourceFactory();
+public class DefaultDataSourceBuilderTest {
+    private final DataSourceBuilder factory = new DefaultDataSourceBuilder();
     private final Path path = Paths.get("src/test/resources/hello/target/classes");
 
     @Test

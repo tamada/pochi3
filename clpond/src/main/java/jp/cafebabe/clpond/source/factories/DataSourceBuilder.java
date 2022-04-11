@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
-public interface DataSourceFactory {
+public interface DataSourceBuilder {
     boolean isTarget(Path path, FileSystem system, BasicFileAttributes attributes);
 
     default boolean isTarget(Path path, FileSystem system){
@@ -36,7 +36,7 @@ public interface DataSourceFactory {
         return build(file.toPath());
     }
 
-    static DataSourceFactory instance() {
-        return new DefaultDataSourceFactory();
+    static DataSourceBuilder instance() {
+        return new DefaultDataSourceBuilder();
     }
 }

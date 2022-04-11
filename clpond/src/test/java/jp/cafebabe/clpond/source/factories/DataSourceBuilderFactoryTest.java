@@ -11,23 +11,23 @@ import static jp.cafebabe.clpond.util.AssertHelper.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DataSourceFactoriesTest {
-    private final DataSourceFactories factories = new DataSourceFactories();
+public class DataSourceBuilderFactoryTest {
+    private final DataSourceBuilderFactory factories = new DataSourceBuilderFactory();
 
     @Test
     public void testDirectory() throws Exception{
-        Optional<DataSourceFactory> factory = factories.find(Paths.get("src/test/resources"), FileSystems.getDefault());
+        Optional<DataSourceBuilder> factory = factories.find(Paths.get("src/test/resources"), FileSystems.getDefault());
 
         assertTrue(factory.isPresent());
-        assertInstanceOf(DirectoryDataSourceFactory.class, factory.get());
+        assertInstanceOf(DirectoryDataSourceBuilder.class, factory.get());
     }
 
     @Test
     public void testJar() throws Exception{
-        Optional<DataSourceFactory> factory = factories.find(Paths.get("src/test/resources/hello/target/hello-1.0-SNAPSHOT.jar"));
+        Optional<DataSourceBuilder> factory = factories.find(Paths.get("src/test/resources/hello/target/hello-1.0-SNAPSHOT.jar"));
 
         assertTrue(factory.isPresent());
-        assertInstanceOf(JarFileDataSourceFactory.class, factory.get());
+        assertInstanceOf(JarFileDataSourceBuilder.class, factory.get());
     }
 
     @Test

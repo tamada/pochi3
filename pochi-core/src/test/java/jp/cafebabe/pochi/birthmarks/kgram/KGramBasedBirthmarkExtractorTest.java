@@ -8,7 +8,7 @@ import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
 import jp.cafebabe.birthmarks.io.ResourceFinder;
 import jp.cafebabe.clpond.entities.Name;
 import jp.cafebabe.clpond.source.DataSource;
-import jp.cafebabe.clpond.source.factories.DataSourceFactory;
+import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
@@ -26,7 +26,7 @@ public class KGramBasedBirthmarkExtractorTest {
         URL location = getClass().getResource(path);
         var config = ResourceFinder.parse("/resources/config.json", new ConfigurationParser()).get();
         ExtractorBuilder builder = new ExtractorBuilderFactory().builder(type).get();
-        DataSource source = DataSourceFactory.instance().build(Paths.get(location.toURI()));
+        DataSource source = DataSourceBuilder.instance().build(Paths.get(location.toURI()));
         Extractor extractor = builder.build(config);
         return extractor.extract(source);
     }

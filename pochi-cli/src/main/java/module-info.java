@@ -4,7 +4,6 @@ module jp.cafebabe.pochi.cli {
     requires info.picocli;
     requires jp.cafebabe.pochi.core;
     requires jp.cafebabe.pochi.birthmarks;
-    requires asciitable;
 
     opens jp.cafebabe.pochi.cli to info.picocli;
 }

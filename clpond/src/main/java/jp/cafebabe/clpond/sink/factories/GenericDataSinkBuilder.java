@@ -6,11 +6,11 @@ import java.nio.file.Path;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-class GenericDataSinkFactory implements DataSinkFactory{
+class GenericDataSinkBuilder implements DataSinkBuilder {
     private final Predicate<Path> predicate;
     private final Function<Path, DataSink> function;
 
-    public GenericDataSinkFactory(Predicate<Path> predicate, Function<Path, DataSink> function){
+    public GenericDataSinkBuilder(Predicate<Path> predicate, Function<Path, DataSink> function){
         this.predicate = predicate;
         this.function = function;
     }
@@ -21,7 +21,7 @@ class GenericDataSinkFactory implements DataSinkFactory{
     }
 
     @Override
-    public DataSink create(Path path){
+    public DataSink build(Path path){
         return function.apply(path);
     }
 }

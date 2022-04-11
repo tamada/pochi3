@@ -1,19 +1,16 @@
 package jp.cafebabe.pochi.birthmarks.uc;
 
 import jp.cafebabe.birthmarks.config.ConfigurationParser;
-import jp.cafebabe.birthmarks.entities.Birthmark;
 import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.extractors.Extractor;
 import jp.cafebabe.birthmarks.io.ResourceFinder;
 import jp.cafebabe.clpond.entities.Name;
 import jp.cafebabe.clpond.source.DataSource;
-import jp.cafebabe.clpond.source.factories.DataSourceFactory;
+import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,7 +20,7 @@ public class UCBirthmarkExtractorTest {
     public Birthmarks extract(String path) throws Exception{
         URL location = getClass().getResource(path);
         var config = ResourceFinder.parse("/resources/config.json", new ConfigurationParser()).get();
-        DataSource source = DataSourceFactory.instance().build(Paths.get(location.toURI()));
+        DataSource source = DataSourceBuilder.instance().build(Paths.get(location.toURI()));
         Extractor extractor = new UsedClassesExtractorBuilder().build(config);
         return extractor.extract(source);
     }

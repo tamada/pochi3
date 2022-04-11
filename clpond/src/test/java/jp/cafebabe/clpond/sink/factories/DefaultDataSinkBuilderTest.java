@@ -13,8 +13,8 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DefaultDataSinkFactoryTest {
-    private final DataSinkFactory factory = new DefaultDataSinkFactory();
+public class DefaultDataSinkBuilderTest {
+    private final DataSinkBuilder factory = new DefaultDataSinkBuilder();
 
     @Test
     public void testBasic(){
@@ -27,10 +27,10 @@ public class DefaultDataSinkFactoryTest {
 
     @Test
     public void testBuiltDataSink() {
-        assertInstanceOf(JarFileDataSink.class, factory.create(Paths.get("hoge.jar")));
-        assertInstanceOf(WarFileDataSink.class, factory.create(Paths.get("hoge.war")));
-        assertInstanceOf(ClassFileDataSink.class, factory.create(Paths.get("hoge.class")));
-        assertInstanceOf(DirectoryDataSink.class, factory.create(Paths.get("dir")));
+        assertInstanceOf(JarFileDataSink.class, factory.build(Paths.get("hoge.jar")));
+        assertInstanceOf(WarFileDataSink.class, factory.build(Paths.get("hoge.war")));
+        assertInstanceOf(ClassFileDataSink.class, factory.build(Paths.get("hoge.class")));
+        assertInstanceOf(DirectoryDataSink.class, factory.build(Paths.get("dir")));
     }
 
     @AfterEach

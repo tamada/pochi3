@@ -8,8 +8,8 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
-class WarFileDataSourceFactory extends JarFileDataSourceFactory{
-    public WarFileDataSourceFactory(){
+class WarFileDataSourceBuilder extends JarFileDataSourceBuilder {
+    public WarFileDataSourceBuilder(){
     }
 
     @Override

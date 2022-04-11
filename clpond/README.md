@@ -9,8 +9,8 @@ clpond implemented for Java 17 and used streaming API.
 ```java
 // Reading
 Path sourcePath = Paths.get("path/of/source/file/or/directory");
-DataSourceFactory sourceFactory = DataSourceFactory.instance();
-try(DataSource source = sourceFactory.build(sourcePath)){
+DataSourceBuilder builder = DataSourceBuilder.instance();
+try(DataSource source = builder.build(sourcePath)){
     // Storing
     Path outputPath = Paths.get("path/of/output/file.jar");
     DataSinkFactory sinkFactory = DataSinkFactory.instance();

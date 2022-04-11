@@ -3,7 +3,7 @@ package jp.cafebabe.clpond.sink;
 import jp.cafebabe.clpond.entities.Entry;
 import jp.cafebabe.clpond.entities.PathHelper;
 import jp.cafebabe.clpond.source.DataSource;
-import jp.cafebabe.clpond.source.factories.DataSourceFactory;
+import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ public class DirectoryDataSinkTest {
     @BeforeEach
     public void setUp() throws Exception{
         Path path = Paths.get("src/test/resources/hello/target/hello-1.0-SNAPSHOT.jar");
-        try(DataSource source = DataSourceFactory.instance().build(path);
+        try(DataSource source = DataSourceBuilder.instance().build(path);
             DataSink sink = new DirectoryDataSink(Paths.get("dir"))){
                 sink.consume(source);
         }
@@ -27,7 +27,7 @@ public class DirectoryDataSinkTest {
 
     @Test
     public void testCreatedDirectory() throws Exception{
-        DataSource source = DataSourceFactory.instance().build(Paths.get("dir"));
+        DataSource source = DataSourceBuilder.instance().build(Paths.get("dir"));
 
         List<Entry> list = new ArrayList<>();
         source.forEach(list::add);

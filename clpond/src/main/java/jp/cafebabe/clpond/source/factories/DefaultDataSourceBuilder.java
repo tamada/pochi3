@@ -8,15 +8,15 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
-class DefaultDataSourceFactory implements DataSourceFactory{
-    private final DataSourceFactories factories = new DataSourceFactories();
+class DefaultDataSourceBuilder implements DataSourceBuilder {
+    private final DataSourceBuilderFactory factories = new DataSourceBuilderFactory();
 
     @Override
     public DataSource build(Path path, FileSystem system) throws IOException {
          return build(factories.find(path, system), path);
     }
 
-    private DataSource build(Optional<DataSourceFactory> source, Path path) throws IOException{
+    private DataSource build(Optional<DataSourceBuilder> source, Path path) throws IOException{
         return source.orElseThrow(
                 () -> new UnsupportedDataSourceException(path.toString()))
                 .build(path);
