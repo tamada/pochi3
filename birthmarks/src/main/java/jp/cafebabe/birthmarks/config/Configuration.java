@@ -1,5 +1,6 @@
 package jp.cafebabe.birthmarks.config;
 
+import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.comparators.Pair;
 import jp.cafebabe.birthmarks.utils.Jsonable;
 
@@ -42,5 +43,11 @@ public class Configuration implements Jsonable {
         StringWriter out = new StringWriter();
         ConfigurationMarshaller.of(out).marshal(this);
         return out.toString();
+    }
+
+    public static Configuration defaultConfig() {
+        return Try.of(() -> new ConfigurationParser()
+                        .parse(Configuration.class.getResourceAsStream("/resources/config.json")))
+                .get();
     }
 }

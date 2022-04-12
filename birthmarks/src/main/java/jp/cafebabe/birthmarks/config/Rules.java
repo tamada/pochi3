@@ -29,8 +29,8 @@ public class Rules implements Jsonable {
 
     @Override
     public String toJson() {
-        return list.stream()
+        return String.format("[%s]", list.stream()
                 .map(Rule::toJson)
-                .collect(Collectors.joining(",", "{", "}"));
+                .collect(Collectors.joining(",")));
     }
 }

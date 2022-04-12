@@ -23,6 +23,14 @@ public class CompareCommand extends AbstractCommand {
     @Parameters(paramLabel = "BIRTHMARKs...", arity = "1..*")
     private List<Path> birthmarks;
 
+    public CompareCommand() {
+        this(new GlobalOptions());
+    }
+
+    public CompareCommand(GlobalOptions globalOptions) {
+        super(globalOptions);
+    }
+
     public PrintWriter dest() {
         return DestCreator.createDest(dest)
                 .peekLeft(message -> push(message))

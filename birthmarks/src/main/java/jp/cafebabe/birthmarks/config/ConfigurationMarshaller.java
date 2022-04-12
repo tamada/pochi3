@@ -24,8 +24,8 @@ public class ConfigurationMarshaller {
     public boolean marshal(Configuration config) {
         return Stream.of(marshaller.marshal("{\"properties\":{"),
             marshalProperties(config.properties()),
-            marshaller.marshal("},\"rules\":"),
-            marshalRules(config.rules()), marshaller.marshal("}"))
+            marshaller.marshal("},\"rules\":["),
+            marshalRules(config.rules()), marshaller.marshal("]}"))
                 .reduce(true, (a, b) -> a && b);
     }
 

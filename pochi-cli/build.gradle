@@ -8,7 +8,7 @@ dependencies {
     implementation project(":birthmarks")
     implementation project(":pochi-core")
 
-    implementation 'de.vandermeer:asciitable:0.3.2'
+    implementation "com.google.code.gson:gson:${versions.gson}"
     implementation "info.picocli:picocli:${versions.picocli}"
     implementation "org.ow2.asm:asm:${versions.asm}"
 }

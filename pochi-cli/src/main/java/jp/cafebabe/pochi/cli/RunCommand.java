@@ -15,6 +15,14 @@ public class RunCommand extends AbstractCommand {
     @Parameters(paramLabel = "SCRIPTs...", arity = "1..*", description = "script files for birthmarking")
     private List<Path> scripts;
 
+    public RunCommand() {
+        this(new GlobalOptions());
+    }
+
+    public RunCommand(GlobalOptions globalOptions) {
+        super(globalOptions);
+    }
+
     @Override
     public Integer call() {
         System.out.println("run");

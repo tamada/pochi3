@@ -8,6 +8,14 @@ public class ShellCommand extends AbstractCommand {
     @Option(names = {"--runtime"}, description = "specify the runtime environment.  Available: ruby, python, javascript, kotlin, scala.", required = true)
     private String runtime;
 
+    public ShellCommand() {
+        this(new GlobalOptions());
+    }
+
+    public ShellCommand(GlobalOptions globalOptions) {
+        super(globalOptions);
+    }
+
     @Override
     public Integer call() {
         System.out.println("shell");

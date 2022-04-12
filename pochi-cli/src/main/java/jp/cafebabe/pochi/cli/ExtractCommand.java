@@ -1,12 +1,17 @@
 package jp.cafebabe.pochi.cli;
 
+import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.entities.ContainerType;
-import jp.cafebabe.pochi.cli.time.Watch;
+import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
+import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
+import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
+import jp.cafebabe.pochi.cli.messages.AnsiColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -25,14 +30,57 @@ public class ExtractCommand extends AbstractCommand {
     @Parameters(paramLabel = "CLASS|ZIP|JAR|WAR_FILEs...", arity = "1..*", description = "targets of birthmark extraction")
     private List<Path> targets;
 
+    public ExtractCommand() {
+        this(new GlobalOptions());
+    }
+
+    public ExtractCommand(GlobalOptions globalOptions) {
+        super(globalOptions);
+    }
+
     public PrintWriter dest() {
         return DestCreator.createDest(dest)
                 .peekLeft(message -> push(message))
                 .get();
     }
 
+    private boolean validateOptions(ExtractorBuilderFactory factory) {
+        boolean result = false;
+        if(!factory.available(birthmarkType)){
+            push(AnsiColors.RED_BOLD.decoratef("Error: %s: birthmark type not found", birthmarkType));
+            result = true;
+        }
+        return result || targets.stream()
+                .filter(this::hasSomeError)
+                .peek(this::pushErrorMessage)
+                .count() > 0;
+    }
+
+    private boolean hasSomeError(Path path) {
+        return !Files.exists(path);
+    }
+
+    private void pushErrorMessage(Path path) {
+        push(AnsiColors.RED_BOLD.decoratef("Error: %s: file not found", path));
+    }
+
+    private int perform(ExtractorBuilder builder) {
+        DataSourceBuilder dsBuilder = DataSourceBuilder.instance();
+        return 0;
+    }
+
+    private Birthmarks performEach(Path target, DataSourceBuilder dsBuilder, ExtractorBuilder builder) {
+        return null;
+    }
+
     @Override
     public Integer call() {
-        return 0;
+        ExtractorBuilderFactory factory = new ExtractorBuilderFactory();
+        if(!validateOptions(factory)) {
+            return 1;
+        }
+        return factory.builder(birthmarkType)
+                .map(this::perform)
+                .orElse(2);
     }
 }
