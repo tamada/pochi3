@@ -16,12 +16,14 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.PrintWriter;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @Command(name = "compare", description = "compares the given birthmarks by a round-robin")
@@ -36,7 +38,7 @@ public class CompareCommand extends AbstractCommand {
     private boolean overwrite;
 
     @Parameters(paramLabel = "BIRTHMARKs...", arity = "0..*", description = "birthmarks in json format. If parameters were empty or dash (\"-\"), read from stdin")
-    private List<Path> birthmarks;
+    private List<Path> birthmarks = new ArrayList<>();
 
     public CompareCommand() {
         this(new GlobalOptions());
@@ -48,17 +50,26 @@ public class CompareCommand extends AbstractCommand {
 
     private Birthmarks loadBirthmarks() {
         BirthmarkParser parser = new BirthmarkParser();
-        if(birthmarks.size() == 0 || birthmarks.size() == 1 && birthmarks.get(0).equals(Path.of("-")))
-            constructFromStdin(parser);
-        return birthmarks.stream()
-                .map(p -> readJson(parser, p))
-                .reduce(new Birthmarks(Stream.empty()), (b1, b2) -> b1.merge(b2));
+        if (isReadFromStdin())
+            return readFromStdin(parser);
+        return readFromPaths(parser);
     }
 
-    private Birthmarks constructFromStdin(BirthmarkParser parser) {
+    private boolean isReadFromStdin() {
+        return birthmarks.size() == 0 ||
+                (birthmarks.size() == 1 && birthmarks.contains(Path.of("-")));
+    }
+
+    private Birthmarks readFromStdin(BirthmarkParser parser) {
         return Try.of(() -> parser.parse(System.in))
                 .onFailure(this::push)
                 .get();
+    }
+
+    private Birthmarks readFromPaths(BirthmarkParser parser) {
+        return birthmarks.stream()
+                .map(p -> readJson(parser, p))
+                .reduce(new Birthmarks(Stream.empty()), (b1, b2) -> b1.merge(b2));
     }
 
     private Birthmarks readJson(BirthmarkParser parser, Path path) {
