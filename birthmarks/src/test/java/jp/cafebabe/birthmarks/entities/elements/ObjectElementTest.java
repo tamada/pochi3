@@ -31,7 +31,7 @@ public class ObjectElementTest {
         @Test
         public void testMarshal() {
             StringWriter out = new StringWriter();
-            element.marshal(Marshaller.of(out));
+            element.marshal(out);
             assertEquals("\"value\"", out.toString());
         }
 

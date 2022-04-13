@@ -2,10 +2,11 @@ package jp.cafebabe.pochi.cli;
 
 import jp.cafebabe.pochi.cli.messages.AnsiColors;
 import jp.cafebabe.pochi.cli.messages.MessageCenter;
+import jp.cafebabe.pochi.cli.messages.Publisher;
 
 import java.util.concurrent.Callable;
 
-public abstract class AbstractCommand implements Callable<Integer> {
+public abstract class AbstractCommand implements Callable<Integer>, Publisher<String> {
     private MessageCenter center = new MessageCenter();
     GlobalOptions globalOptions;
 

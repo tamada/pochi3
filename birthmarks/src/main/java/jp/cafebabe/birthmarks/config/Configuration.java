@@ -2,13 +2,12 @@ package jp.cafebabe.birthmarks.config;
 
 import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.comparators.Pair;
-import jp.cafebabe.birthmarks.utils.Jsonable;
 
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class Configuration implements Jsonable {
+public class Configuration {
     private final Map<String, String> properties;
     private final Rules rules;
 
@@ -36,13 +35,6 @@ public class Configuration implements Jsonable {
 
     public String value(String key, String defaultValue) {
         return properties.getOrDefault(key, defaultValue);
-    }
-
-    @Override
-    public String toJson() {
-        StringWriter out = new StringWriter();
-        ConfigurationMarshaller.of(out).marshal(this);
-        return out.toString();
     }
 
     public static Configuration defaultConfig() {

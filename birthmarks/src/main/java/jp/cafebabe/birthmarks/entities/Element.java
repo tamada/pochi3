@@ -1,8 +1,7 @@
 package jp.cafebabe.birthmarks.entities;
 
-import jp.cafebabe.birthmarks.io.Marshaller;
-
 import java.io.Serializable;
+import java.io.Writer;
 
 public interface Element extends Serializable {
     long intValue();
@@ -11,5 +10,5 @@ public interface Element extends Serializable {
 
     double doubleValue();
 
-    void marshal(Marshaller out);
+    void marshal(Writer out);
 }

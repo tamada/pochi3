@@ -4,6 +4,7 @@ import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.extractors.Extractor;
+import jp.cafebabe.birthmarks.io.BirthmarksJsonier;
 import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
 import jp.cafebabe.pochi.cli.messages.AnsiColors;
@@ -28,7 +29,7 @@ public class ExtractCommand extends AbstractCommand {
     @Option(names = {"-c", "--container"}, paramLabel = "CONTAINER", description = "specify the container type. Available: list, set, vector, graph. Default: list")
     private ContainerType type = ContainerType.List;
 
-    @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), the results outputs to stdout.")
+    @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), output to stdout.")
     private Optional<String> dest = Optional.empty();
 
     @Parameters(paramLabel = "CLASS|ZIP|JAR|WAR_FILEs...", arity = "1..*", description = "targets of birthmark extraction")
@@ -40,18 +41,6 @@ public class ExtractCommand extends AbstractCommand {
 
     public ExtractCommand(GlobalOptions globalOptions) {
         super(globalOptions);
-    }
-
-    public PrintWriter dest() {
-        return DestCreator.createDest(dest)
-                .peekLeft(message -> push(message))
-                .get();
-    }
-
-    private void dest(Consumer<PrintWriter> action) {
-        var d = dest();
-        action.accept(d);
-        d.flush();
     }
 
     private boolean isValidOptions(ExtractorBuilderFactory factory) {
@@ -72,7 +61,8 @@ public class ExtractCommand extends AbstractCommand {
 
     private int perform(Extractor extractor) {
         var birthmarks = extractImpl(extractor);
-        dest(p -> p.println(birthmarks.toJson()));
+        new DestCreator(this)
+                .dest(dest, p -> p.println(new BirthmarksJsonier().toJson(birthmarks)));
         if(birthmarks.hasFailure())
             printFailures(birthmarks.failures());
         return printAll();

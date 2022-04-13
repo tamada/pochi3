@@ -20,13 +20,10 @@ public class MarshallerTest {
 
         @Test
         public void testMarshalStringElements() {
-            StringWriter out = new StringWriter();
-            var marshaller = new BirthmarkMarshaller(out);
-            marshaller.marshal(birthmark);
             String wontResult = """
                     {"container":"list","metadata":{"name":"name1","location":".","type":"type1"},"elements":["e1","e2","e3","e4","e5","e6"]}
                     """.trim();
-            assertEquals(wontResult, out.toString());
+            assertEquals(wontResult, new BirthmarkJsonier().toJson(birthmark));
         }
     }
 
@@ -37,13 +34,10 @@ public class MarshallerTest {
 
         @Test
         public void testMarshalStringElements() {
-            StringWriter out = new StringWriter();
-            var marshaller = new BirthmarkMarshaller(out);
-            marshaller.marshal(birthmark);
             String wontResult = """
                     {"container":"list","metadata":{"name":"name1","location":".","type":"type1"},"elements":[2,3,5,7,11,13,17,19]}
                     """.trim();
-            assertEquals(wontResult, out.toString());
+            assertEquals(wontResult, new BirthmarkJsonier().toJson(birthmark));
         }
     }
 
@@ -54,13 +48,10 @@ public class MarshallerTest {
 
         @Test
         public void testMarshalStringElements() {
-            StringWriter out = new StringWriter();
-            var marshaller = new BirthmarkMarshaller(out);
-            marshaller.marshal(birthmark);
             String wontResult = """
                     {"container":"list","metadata":{"name":"name1","location":".","type":"type1"},"elements":[1.1,1.2,1.3,1.4]}
                     """.trim();
-            assertEquals(wontResult, out.toString());
+            assertEquals(wontResult, new BirthmarkJsonier().toJson(birthmark));
         }
     }
 }

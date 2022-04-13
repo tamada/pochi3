@@ -1,10 +1,12 @@
 package jp.cafebabe.birthmarks.entities.elements;
 
+import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.entities.Element;
 import jp.cafebabe.birthmarks.io.Marshaller;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.io.Writer;
 
 public record LongElement(long intValue) implements Element, Comparable<LongElement>, Serializable {
     @Serial
@@ -21,8 +23,9 @@ public record LongElement(long intValue) implements Element, Comparable<LongElem
     }
 
     @Override
-    public void marshal(Marshaller out) {
-        out.marshal(String.valueOf(intValue()));
+    public void marshal(Writer out) {
+        Try.run(() -> out.write(String.format("%d", intValue())))
+                .getOrElseThrow(() -> new InternalError("some error on marshaling"));
     }
 
     @Override

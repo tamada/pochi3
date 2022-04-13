@@ -17,6 +17,6 @@ public class ConfigurationTest {
     @Test
     public void testToJsonEmptyConfig() {
         var config = new Configuration(new Rules(), Map.of());
-        assertEquals("{\"properties\":{},\"rules\":[]}", config.toJson());
+        assertEquals("{\"properties\":{},\"rules\":[]}", new ConfigurationJsonier().toJson(config));
     }
 }

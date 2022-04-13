@@ -22,7 +22,7 @@ public class PairElementTest {
         @Test
         public void testMarshal() {
             StringWriter out = new StringWriter();
-            element.marshal(Marshaller.of(out));
+            element.marshal(out);
             assertEquals("\"value=10\"", out.toString());
         }
 

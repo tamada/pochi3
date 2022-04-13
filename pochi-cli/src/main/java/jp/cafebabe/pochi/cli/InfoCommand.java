@@ -28,7 +28,7 @@ public class InfoCommand extends AbstractCommand {
     public Integer call() {
         printTypes("Extractors", new ExtractorBuilderFactory());
         printPairerTypes();
-        printTypes("Comparators", new ServiceBuilderFactory<>(ComparatorBuilder.class));
+        printTypes("Algorithms", new ServiceBuilderFactory<>(ComparatorBuilder.class));
         printTypes("Relationers", new RelationerBuilderFactory());
         printConfig();
         return printAll();

@@ -1,12 +1,10 @@
 package jp.cafebabe.birthmarks.config;
 
-import jp.cafebabe.birthmarks.utils.Jsonable;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Rules implements Jsonable {
+public class Rules {
     private final List<Rule> list;
 
     public Rules(){
@@ -25,12 +23,5 @@ public class Rules implements Jsonable {
 
     public Stream<Rule> stream(){
         return list.stream();
-    }
-
-    @Override
-    public String toJson() {
-        return String.format("[%s]", list.stream()
-                .map(Rule::toJson)
-                .collect(Collectors.joining(",")));
     }
 }

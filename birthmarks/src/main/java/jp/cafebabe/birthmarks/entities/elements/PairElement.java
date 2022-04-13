@@ -1,10 +1,12 @@
 package jp.cafebabe.birthmarks.entities.elements;
 
+import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.entities.Element;
 import jp.cafebabe.birthmarks.io.Marshaller;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.io.Writer;
 import java.util.Map;
 
 public record PairElement(Element element, long count) implements Element, Serializable {
@@ -35,7 +37,8 @@ public record PairElement(Element element, long count) implements Element, Seria
     }
 
     @Override
-    public void marshal(Marshaller out) {
-        out.marshal(String.format("\"%s=%d\"", value(), intValue()));
+    public void marshal(Writer out) {
+        Try.run(() -> out.write(String.format("\"%s=%d\"", value(), intValue())))
+                .getOrElseThrow(() -> new InternalError("some error on marshaling"));
     }
 }
