@@ -1,6 +1,5 @@
 package jp.cafebabe.pochi.cli;
 
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 

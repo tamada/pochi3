@@ -28,7 +28,7 @@ public class ExtractCommand extends AbstractCommand {
     @Option(names = {"-c", "--container"}, paramLabel = "CONTAINER", description = "specify the container type. Available: list, set, vector, graph. Default: list")
     private ContainerType type = ContainerType.List;
 
-    @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent, the results outputs to stdout.")
+    @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), the results outputs to stdout.")
     private Optional<String> dest = Optional.empty();
 
     @Parameters(paramLabel = "CLASS|ZIP|JAR|WAR_FILEs...", arity = "1..*", description = "targets of birthmark extraction")

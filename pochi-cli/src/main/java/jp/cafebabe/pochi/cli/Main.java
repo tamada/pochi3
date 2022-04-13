@@ -2,7 +2,6 @@ package jp.cafebabe.pochi.cli;
 
 import picocli.CommandLine;
 import picocli.CommandLine.HelpCommand;
-import picocli.CommandLine.Model.ParserSpec;
 import picocli.CommandLine.Mixin;
 
 public class Main {
@@ -18,6 +17,7 @@ public class Main {
                 .addSubcommand("info", new InfoCommand(pochi.globalOpts))
                 .addSubcommand("run", new RunCommand(pochi.globalOpts))
                 .addSubcommand("shell", new ShellCommand(pochi.globalOpts))
+                .setCaseInsensitiveEnumValuesAllowed(true)
                 .execute(args);
     }
 
