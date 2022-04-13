@@ -46,7 +46,6 @@ public class GlobalOptions {
     }
 
     private Optional<Configuration> openConfig() {
-        System.out.printf("configPath(%s)%n", configPath());
         return configPath()
                 .flatMap(this::openStream)
                 .flatMap(in -> Try.of(() -> new ConfigurationParser().parse(in))

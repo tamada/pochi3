@@ -12,7 +12,7 @@ public class Pochi implements Callable<Integer> {
     GlobalOptions globalOpts = new GlobalOptions();
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         return 0;
     }
 }

@@ -1,7 +1,8 @@
 package jp.cafebabe.pochi.cli;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
+import picocli.CommandLine.Model.ParserSpec;
 import picocli.CommandLine.Mixin;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
     public int run(String[] args) {
         var pochi = new Pochi();
         return new CommandLine(pochi)
-                .addSubcommand("help", new CommandLine.HelpCommand())
+                .addSubcommand("help", new HelpCommand())
                 .addSubcommand("compare", new CompareCommand(pochi.globalOpts))
                 .addSubcommand("extract", new ExtractCommand(pochi.globalOpts))
                 .addSubcommand("info", new InfoCommand(pochi.globalOpts))

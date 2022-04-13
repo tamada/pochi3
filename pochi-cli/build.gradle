@@ -14,7 +14,6 @@ dependencies {
 }
 
 jar {
-    System.out.println("pochi-cli jar")
     manifest {
         attributes(
             "Main-Class": "jp.cafebabe.pochi.cli.Main" ,

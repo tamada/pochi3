@@ -1,10 +1,12 @@
 package jp.cafebabe.birthmarks.entities;
 
+import jp.cafebabe.birthmarks.io.BirthmarkMarshaller;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
 import jp.cafebabe.clpond.entities.Name;
 
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.net.URI;
 import java.util.stream.Stream;
 
@@ -36,5 +38,11 @@ public interface Birthmark extends Serializable, Streamable<Element>, Namer {
         var index = Cursor.of(size());
         stream().forEach(element -> visitor.visitElement(element, index.incrementIsLast()));
         visitor.visitEnd();
+    }
+
+    default String toJson() {
+        var sw = new StringWriter();
+        new BirthmarkMarshaller(sw).marshal(this);
+        return sw.toString();
     }
 }

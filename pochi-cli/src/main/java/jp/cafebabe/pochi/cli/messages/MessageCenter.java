@@ -12,15 +12,15 @@ public class MessageCenter implements Publisher<String> {
         messages.add(message);
     }
 
-    public void push(String message, AnsiColors color) {
+    public void push(AnsiColors color, String message) {
         messages.add(color.decorate(message));
     }
 
     public void push(Throwable t) {
-        push(t, AnsiColors.RED_BOLD);
+        push(AnsiColors.RED_BOLD, t);
     }
 
-    public void push(Throwable t, AnsiColors color) {
+    public void push(AnsiColors color, Throwable t) {
         messages.add(color.decoratef("Error: %s (%s)", t.getMessage(), t.getClass().getName()));
     }
 

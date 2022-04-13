@@ -31,7 +31,6 @@ public class PathUtils {
         var pochiHome = Optional.ofNullable(System.getenv("POCHI_HOME"));
         var home = pochiHome.or(() -> Optional.ofNullable(System.getProperty("pochi.home")))
                 .map(Path::of);
-        System.out.println(home);
         return home;
     }
 }

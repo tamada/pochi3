@@ -1,12 +1,14 @@
 package jp.cafebabe.pochi.cli;
 
+import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.entities.ContainerType;
-import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
+import jp.cafebabe.birthmarks.extractors.Extractor;
 import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
 import jp.cafebabe.pochi.cli.messages.AnsiColors;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Help.Visibility;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
@@ -15,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 @Command(name = "extract", description = "extract the birthmarks from given targets")
 public class ExtractCommand extends AbstractCommand {
@@ -44,43 +48,63 @@ public class ExtractCommand extends AbstractCommand {
                 .get();
     }
 
-    private boolean validateOptions(ExtractorBuilderFactory factory) {
-        boolean result = false;
+    private void dest(Consumer<PrintWriter> action) {
+        var d = dest();
+        action.accept(d);
+        d.flush();
+    }
+
+    private boolean isValidOptions(ExtractorBuilderFactory factory) {
+        boolean result = true;
         if(!factory.available(birthmarkType)){
-            push(AnsiColors.RED_BOLD.decoratef("Error: %s: birthmark type not found", birthmarkType));
-            result = true;
+            pushf(AnsiColors.RED_BOLD, "Error: %s: birthmark type not found", birthmarkType);
+            result = false;
         }
-        return result || targets.stream()
-                .filter(this::hasSomeError)
+        return result & targets.stream()
+                .filter(p -> !Files.exists(p))
                 .peek(this::pushErrorMessage)
                 .count() > 0;
     }
 
-    private boolean hasSomeError(Path path) {
-        return !Files.exists(path);
-    }
-
     private void pushErrorMessage(Path path) {
-        push(AnsiColors.RED_BOLD.decoratef("Error: %s: file not found", path));
+        pushf(AnsiColors.RED_BOLD, "Error: %s: file not found", path);
     }
 
-    private int perform(ExtractorBuilder builder) {
+    private int perform(Extractor extractor) {
+        var birthmarks = extractImpl(extractor);
+        dest(p -> p.println(birthmarks.toJson()));
+        if(birthmarks.hasFailure())
+            printFailures(birthmarks.failures());
+        return printAll();
+    }
+
+    private void printFailures(Stream<Throwable> stream) {
+        push(AnsiColors.RED_BOLD, "========== Errors ==========");
+        stream.forEach(t -> push(t));
+    }
+
+    private Birthmarks extractImpl(Extractor extractor) {
         DataSourceBuilder dsBuilder = DataSourceBuilder.instance();
-        return 0;
+        return targets.stream()
+                .map(path -> performEach(path, dsBuilder, extractor))
+                .reduce(new Birthmarks(Stream.empty()), (b1, b2) -> b1.merge(b2));
     }
 
-    private Birthmarks performEach(Path target, DataSourceBuilder dsBuilder, ExtractorBuilder builder) {
-        return null;
+    private Birthmarks performEach(Path target, DataSourceBuilder dsBuilder, Extractor extractor) {
+        return Try.of(() -> dsBuilder.build(target))
+                .map(source -> extractor.extract(source, type))
+                .onFailure(t -> push(t))
+                .get();
     }
 
     @Override
     public Integer call() {
         ExtractorBuilderFactory factory = new ExtractorBuilderFactory();
-        if(!validateOptions(factory)) {
-            return 1;
-        }
+        if(isValidOptions(factory))
+            return printAll(1);
+        var config = globalOptions.config();
         return factory.builder(birthmarkType)
-                .map(this::perform)
+                .map(builder -> perform(builder.build(config)))
                 .orElse(2);
     }
 }

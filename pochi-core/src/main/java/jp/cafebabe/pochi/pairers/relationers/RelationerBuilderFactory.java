@@ -22,7 +22,6 @@ public class RelationerBuilderFactory implements BuilderFactory<TaskBuilder<Rela
 
     @Override
     public Optional<TaskBuilder<Relationer, RelationerType>> builder(String type) {
-        System.out.println(builders().filter(tb -> tb.matchType(type)).toList());
         return builders().filter(tb -> tb.matchType(type))
                 .findFirst()
                 .or(() -> Optional.of(new NeverRelationer.Builder()));

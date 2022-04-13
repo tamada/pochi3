@@ -1,34 +1,27 @@
 package jp.cafebabe.birthmarks.io;
 
-import jp.cafebabe.birthmarks.entities.*;
+import jp.cafebabe.birthmarks.entities.Birthmark;
+import jp.cafebabe.birthmarks.entities.BirthmarkType;
+import jp.cafebabe.birthmarks.entities.BirthmarkVisitor;
+import jp.cafebabe.birthmarks.entities.Element;
 import jp.cafebabe.clpond.entities.Name;
 
 import java.io.Writer;
 import java.net.URI;
 
 public class BirthmarkMarshaller implements BirthmarkVisitor {
-    private final Marshaller marshaller;
+    private Marshaller marshaller;
 
-    private BirthmarkMarshaller(Marshaller marshaller) {
+    public BirthmarkMarshaller(Writer out) {
+        this(Marshaller.of(out));
+    }
+
+    public BirthmarkMarshaller(Marshaller marshaller) {
         this.marshaller = marshaller;
     }
 
-    public static BirthmarkMarshaller of(Writer out) {
-        return of(Marshaller.of(out));
-    }
-
-    public static BirthmarkMarshaller of(Marshaller marshaller) {
-        return new BirthmarkMarshaller(marshaller);
-    }
-
-    public void marshal(Birthmarks birthmarks) {
-        marshaller.marshal("[");
-        birthmarks.stream().forEach(this::marshal);
-        marshaller.marshal("]");
-    }
-
-    public void marshal(Birthmark birthmark) {
-        birthmark.accept(this);
+    public void marshal(Birthmark b) {
+        b.accept(this);
     }
 
     @Override

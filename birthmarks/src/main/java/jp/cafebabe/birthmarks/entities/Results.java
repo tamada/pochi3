@@ -6,6 +6,8 @@ import jp.cafebabe.birthmarks.utils.Streamable;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -42,5 +44,11 @@ public class Results<L extends Throwable, R> implements Serializable, Streamable
     public boolean hasFailure() {
         return list.stream()
                 .anyMatch(Either::isLeft);
+    }
+
+    protected Stream<Either<L, R>> mergedStream(Results<L, R> other) {
+        if(other != null)
+            return Stream.concat(list.stream(), other.list.stream());
+        return list.stream();
     }
 }
