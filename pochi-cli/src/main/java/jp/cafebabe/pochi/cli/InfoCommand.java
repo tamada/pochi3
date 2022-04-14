@@ -10,19 +10,16 @@ import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
 import jp.cafebabe.pochi.cli.messages.AnsiColors;
 import jp.cafebabe.pochi.pairers.relationers.RelationerBuilderFactory;
 import jp.cafebabe.pochi.utils.ServiceBuilderFactory;
+import picocli.CommandLine.ParentCommand;
 import picocli.CommandLine.Command;
 
+import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
 @Command(name = "info", description = "print information of processors in pochi")
-public class InfoCommand extends AbstractCommand {
-    public InfoCommand() {
-        this(new GlobalOptions());
-    }
-
-    public InfoCommand(GlobalOptions globalOptions) {
-        super(globalOptions);
-    }
+public class InfoCommand implements Callable<Integer> {
+    @ParentCommand
+    private Pochi pochi;
 
     @Override
     public Integer call() {
@@ -31,13 +28,13 @@ public class InfoCommand extends AbstractCommand {
         printTypes("Algorithms", new ServiceBuilderFactory<>(ComparatorBuilder.class));
         printTypes("Relationers", new RelationerBuilderFactory());
         printConfig();
-        return printAll();
+        return pochi.printAll();
     }
 
     private void printConfig() {
-        Try.of(() -> globalOptions.config())
+        Try.of(() -> pochi.config())
                 .onSuccess(this::printConfigImpl)
-                .onFailure(this::push);
+                .onFailure(pochi::push);
     }
 
     private void printConfigImpl(Configuration c) {
@@ -46,15 +43,15 @@ public class InfoCommand extends AbstractCommand {
     }
 
     private void printRules(Configuration config) {
-        push(header("Rules"));
+        pochi.push(header("Rules"));
         config.rules()
-                .forEach(r -> push(r.toString()));
+                .forEach(r -> pochi.push(r.toString()));
     }
 
     private void printProperties(Configuration config) {
-        push(header("Properties"));
+        pochi.push(header("Properties"));
         config.properties()
-                .forEach(p -> p.accept((label, value) -> pushf("%s: %s", label, value)));
+                .forEach(p -> p.accept((label, value) -> pochi.pushf("%s: %s", label, value)));
     }
 
     private <B, T extends Stringer> void printTypes(String label, BuilderFactory<B, T> factory) {
@@ -68,9 +65,9 @@ public class InfoCommand extends AbstractCommand {
     }
 
     private <T> void printStream(String label, Stream<? extends Stringer> stream) {
-        push(header(label));
+        pochi.push(header(label));
         stream.map(t -> t.string())
-                .forEach(this::push);
+                .forEach(pochi::push);
     }
 
     private String header(String label) {

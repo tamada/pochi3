@@ -3,6 +3,7 @@ package jp.cafebabe.pochi.cli;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ParentCommand;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -15,13 +16,8 @@ public class RunCommand extends AbstractCommand {
     @Parameters(paramLabel = "SCRIPTs...", arity = "1..*", description = "script files for birthmarking")
     private List<Path> scripts;
 
-    public RunCommand() {
-        this(new GlobalOptions());
-    }
-
-    public RunCommand(GlobalOptions globalOptions) {
-        super(globalOptions);
-    }
+    @ParentCommand
+    private Pochi pochi;
 
     @Override
     public Integer call() {

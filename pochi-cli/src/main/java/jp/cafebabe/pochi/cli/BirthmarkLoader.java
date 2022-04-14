@@ -8,6 +8,7 @@ import jp.cafebabe.pochi.cli.messages.Publisher;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 class BirthmarkLoader {
@@ -19,17 +20,22 @@ class BirthmarkLoader {
 
     public Birthmarks load(List<Path> birthmarks) {
         BirthmarkParser parser = new BirthmarkParser();
-        if (isReadFromStdin(birthmarks))
-            return readFromStdin(parser, birthmarks);
-        return readFromPaths(parser, birthmarks);
+        List<Path> targets = deleteDuplicated(birthmarks);
+        if (isArgsEmpty(targets))
+            return readFromStdin(parser);
+        return readFromPaths(parser, targets);
     }
 
-    private boolean isReadFromStdin(List<Path> birthmarks) {
-        return birthmarks.size() == 0 ||
-                (birthmarks.size() == 1 && birthmarks.contains(Path.of("-")));
+    private List<Path> deleteDuplicated(List<Path> list) {
+        return list.stream()
+                .distinct().toList();
     }
 
-    private Birthmarks readFromStdin(BirthmarkParser parser, List<Path> birthmarks) {
+    private boolean isArgsEmpty(List<Path> birthmarks) {
+        return birthmarks.size() == 0;
+    }
+
+    private Birthmarks readFromStdin(BirthmarkParser parser) {
         return Try.of(() -> parser.parse(System.in))
                 .get();
     }
@@ -41,6 +47,12 @@ class BirthmarkLoader {
     }
 
     private Birthmarks readJson(BirthmarkParser parser, Path path) {
+        if(Objects.equals(path, Path.of("-")))
+            return readFromStdin(parser);
+        return readJsonImpl(parser, path);
+    }
+
+    private Birthmarks readJsonImpl(BirthmarkParser parser, Path path) {
         return Try.withResources(() -> Files.newInputStream(path))
                 .of(in -> parser.parse(in))
                 .onFailure(publisher::push)

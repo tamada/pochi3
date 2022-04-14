@@ -9,20 +9,19 @@ import jp.cafebabe.clpond.source.factories.DataSourceBuilder;
 import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
 import jp.cafebabe.pochi.cli.messages.AnsiColors;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Visibility;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ParentCommand;
 
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
 @Command(name = "extract", description = "extract the birthmarks from given targets")
-public class ExtractCommand extends AbstractCommand {
+public class ExtractCommand implements Callable<Integer> {
     @Option(names = {"-b", "--birthmark"}, paramLabel = "BIRTHMARK", description = "specify the birthmark type. This option is mandatory", required = true)
     private String birthmarkType;
 
@@ -35,18 +34,13 @@ public class ExtractCommand extends AbstractCommand {
     @Parameters(paramLabel = "CLASS|ZIP|JAR|WAR_FILEs...", arity = "1..*", description = "targets of birthmark extraction")
     private List<Path> targets;
 
-    public ExtractCommand() {
-        this(new GlobalOptions());
-    }
-
-    public ExtractCommand(GlobalOptions globalOptions) {
-        super(globalOptions);
-    }
+    @ParentCommand
+    private Pochi pochi;
 
     private boolean isValidOptions(ExtractorBuilderFactory factory) {
         boolean result = true;
         if(!factory.available(birthmarkType)){
-            pushf(AnsiColors.RED_BOLD, "Error: %s: birthmark type not found", birthmarkType);
+            pochi.pushf(AnsiColors.RED_BOLD, "Error: %s: birthmark type not found", birthmarkType);
             result = false;
         }
         return result & targets.stream()
@@ -56,21 +50,21 @@ public class ExtractCommand extends AbstractCommand {
     }
 
     private void pushErrorMessage(Path path) {
-        pushf(AnsiColors.RED_BOLD, "Error: %s: file not found", path);
+        pochi.pushf(AnsiColors.RED_BOLD, "Error: %s: file not found", path);
     }
 
     private int perform(Extractor extractor) {
         var birthmarks = extractImpl(extractor);
-        new DestCreator(this)
+        new DestCreator(pochi)
                 .dest(dest, p -> p.println(new BirthmarksJsonier().toJson(birthmarks)));
         if(birthmarks.hasFailure())
             printFailures(birthmarks.failures());
-        return printAll();
+        return pochi.printAll();
     }
 
     private void printFailures(Stream<Throwable> stream) {
-        push(AnsiColors.RED_BOLD, "========== Errors ==========");
-        stream.forEach(t -> push(t));
+        pochi.push(AnsiColors.RED_BOLD, "========== Errors ==========");
+        stream.forEach(t -> pochi.push(t));
     }
 
     private Birthmarks extractImpl(Extractor extractor) {
@@ -83,7 +77,7 @@ public class ExtractCommand extends AbstractCommand {
     private Birthmarks performEach(Path target, DataSourceBuilder dsBuilder, Extractor extractor) {
         return Try.of(() -> dsBuilder.build(target))
                 .map(source -> extractor.extract(source, type))
-                .onFailure(t -> push(t))
+                .onFailure(t -> pochi.push(t))
                 .get();
     }
 
@@ -91,8 +85,8 @@ public class ExtractCommand extends AbstractCommand {
     public Integer call() {
         ExtractorBuilderFactory factory = new ExtractorBuilderFactory();
         if(isValidOptions(factory))
-            return printAll(1);
-        var config = globalOptions.config();
+            return pochi.printAll(1);
+        var config = pochi.config();
         return factory.builder(birthmarkType)
                 .map(builder -> perform(builder.build(config)))
                 .orElse(2);
