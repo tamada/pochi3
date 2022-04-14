@@ -5,23 +5,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageCenter implements Publisher<String> {
+public class MessageCenter implements Publisher {
     private List<String> messages = new ArrayList<>();
 
     public void push(String message) {
         messages.add(message);
-    }
-
-    public void push(AnsiColors color, String message) {
-        messages.add(color.decorate(message));
-    }
-
-    public void push(Throwable t) {
-        push(AnsiColors.RED_BOLD, t);
-    }
-
-    public void push(AnsiColors color, Throwable t) {
-        messages.add(color.decoratef("Error: %s (%s)", t.getMessage(), t.getClass().getName()));
     }
 
     public void printAll(PrintStream out) {

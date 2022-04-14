@@ -6,7 +6,7 @@ import jp.cafebabe.pochi.cli.messages.Publisher;
 
 import java.util.concurrent.Callable;
 
-public abstract class AbstractCommand implements Callable<Integer>, Publisher<String> {
+public abstract class AbstractCommand implements Callable<Integer>, Publisher {
     private MessageCenter center = new MessageCenter();
     GlobalOptions globalOptions;
 
@@ -17,22 +17,6 @@ public abstract class AbstractCommand implements Callable<Integer>, Publisher<St
 
     public void push(String message) {
         this.center.push(message);
-    }
-
-    public void push(AnsiColors color, String message) {
-        this.center.push(color.decorate(message));
-    }
-
-    public void push(Throwable t) {
-        center.push(t);
-    }
-
-    public void pushf(AnsiColors color, String formatter, Object... labels) {
-        this.center.push(color.decoratef(formatter, labels));
-    }
-
-    public void pushf(String formatter, Object... labels) {
-        this.center.push(String.format(formatter, labels));
     }
 
     public int printAll() {

@@ -12,9 +12,9 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class DestCreator {
-    private Publisher<String> publisher;
+    private Publisher publisher;
 
-    public DestCreator(Publisher<String> publisher) {
+    public DestCreator(Publisher publisher) {
         this.publisher = publisher;
     }
 

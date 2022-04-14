@@ -48,37 +48,6 @@ public class CompareCommand extends AbstractCommand {
         super(globalOptions);
     }
 
-    private Birthmarks loadBirthmarks() {
-        BirthmarkParser parser = new BirthmarkParser();
-        if (isReadFromStdin())
-            return readFromStdin(parser);
-        return readFromPaths(parser);
-    }
-
-    private boolean isReadFromStdin() {
-        return birthmarks.size() == 0 ||
-                (birthmarks.size() == 1 && birthmarks.contains(Path.of("-")));
-    }
-
-    private Birthmarks readFromStdin(BirthmarkParser parser) {
-        return Try.of(() -> parser.parse(System.in))
-                .onFailure(this::push)
-                .get();
-    }
-
-    private Birthmarks readFromPaths(BirthmarkParser parser) {
-        return birthmarks.stream()
-                .map(p -> readJson(parser, p))
-                .reduce(new Birthmarks(Stream.empty()), (b1, b2) -> b1.merge(b2));
-    }
-
-    private Birthmarks readJson(BirthmarkParser parser, Path path) {
-        return Try.withResources(() -> Files.newInputStream(path))
-                .of(in -> parser.parse(in))
-                .onFailure(this::push)
-                .get();
-    }
-
     private Pairer<Birthmark> constructPairer(Configuration config) {
         return new PairerBuilderFactory<Birthmark>().builder("round_robin")
                 .orElseThrow(() -> new InternalError("round_robin: pairer not found"))
@@ -100,9 +69,10 @@ public class CompareCommand extends AbstractCommand {
 
     @Override
     public Integer call() {
+        var loader = new BirthmarkLoader(this);
         var config = globalOptions.config();
         var comparator = constructComparator(config);
-        comparator.map(c -> c.compare(loadBirthmarks(), constructPairer(config)))
+        comparator.map(c -> c.compare(loader.load(birthmarks), constructPairer(config)))
                 .ifPresent(this::printResults);
         return 0;
     }
