@@ -16,4 +16,9 @@ module jp.cafebabe.pochi.birthmarks {
     exports jp.cafebabe.birthmarks.extractors;
     exports jp.cafebabe.birthmarks.pairers;
     exports jp.cafebabe.birthmarks.utils;
+
+    opens jp.cafebabe.birthmarks.entities;
+    opens jp.cafebabe.birthmarks.entities.elements;
+    opens jp.cafebabe.birthmarks.entities.impl;
+    opens jp.cafebabe.birthmarks.io;
 }

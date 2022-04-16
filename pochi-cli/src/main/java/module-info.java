@@ -5,7 +5,8 @@ module jp.cafebabe.pochi.cli {
     requires jp.cafebabe.pochi.clpond;
     requires jp.cafebabe.pochi.core;
     requires jp.cafebabe.pochi.birthmarks;
+    requires java.scripting;
     requires org.objectweb.asm;
 
-    opens jp.cafebabe.pochi.cli to info.picocli;
+    opens jp.cafebabe.pochi.cli;
 }

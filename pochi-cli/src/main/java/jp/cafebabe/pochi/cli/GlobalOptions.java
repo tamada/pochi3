@@ -26,6 +26,7 @@ public class GlobalOptions {
     private boolean versionFlag;
 
     private PathUtils pathUtils = new PathUtils();
+    private Configuration config;
     MessageCenter center;
 
     public Path pochiHome() {
@@ -41,8 +42,11 @@ public class GlobalOptions {
     }
 
     public Configuration config() {
-        return openConfig()
-                .orElseGet(() -> Configuration.defaultConfig());
+        if(config == null) {
+            config = openConfig()
+                    .orElseGet(() -> Configuration.defaultConfig());
+        }
+        return config;
     }
 
     private Optional<Configuration> openConfig() {

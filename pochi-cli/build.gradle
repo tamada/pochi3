@@ -8,6 +8,9 @@ dependencies {
     implementation project(":birthmarks")
     implementation project(":pochi-core")
 
+    // https://mvnrepository.com/artifact/org.codehaus.groovy/groovy
+    implementation "org.codehaus.groovy:groovy:${versions.groovy}"
+    implementation "org.codehaus.groovy:groovy-jsr223:${versions.groovy}"
     implementation "com.google.code.gson:gson:${versions.gson}"
     implementation "info.picocli:picocli:${versions.picocli}"
     implementation "org.ow2.asm:asm:${versions.asm}"

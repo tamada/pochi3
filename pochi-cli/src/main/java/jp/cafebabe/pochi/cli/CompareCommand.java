@@ -50,7 +50,7 @@ public class CompareCommand implements Callable<Integer> {
         new DestCreator(pochi)
                 .dest(dest, p -> p.println(new ComparisonsJsonier().toJson(comparisons)));
         if(comparisons.hasFailure())
-            pochi.printAll();
+            pochi.flush();
     }
 
     @Override

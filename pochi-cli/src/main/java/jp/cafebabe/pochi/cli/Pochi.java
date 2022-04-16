@@ -38,11 +38,11 @@ public class Pochi implements Callable<Integer>, Publisher {
         center.push(item);
     }
 
-    public int printAll() {
-        return printAll(0);
+    public int flush() {
+        return flush(0);
     }
 
-    public int printAll(int status) {
+    public int flush(int status) {
         center.printAll(System.out);
         return status;
     }

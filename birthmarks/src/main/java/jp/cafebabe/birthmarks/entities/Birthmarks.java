@@ -1,6 +1,7 @@
 package jp.cafebabe.birthmarks.entities;
 
 import io.vavr.control.Either;
+import jp.cafebabe.birthmarks.utils.Streamable;
 import jp.cafebabe.clpond.entities.Name;
 
 import java.io.Serial;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class Birthmarks extends Results<Throwable, Birthmark> implements Serializable, Mergeable<Birthmarks> {
+public class Birthmarks extends Results<Throwable, Birthmark> implements Serializable, Mergeable<Birthmarks>, Streamable<Birthmark> {
     @Serial
     private static final long serialVersionUID = 4476836761615526741L;
 

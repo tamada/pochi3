@@ -24,7 +24,6 @@ GLOBAL_OPTS
 OPTIONS
     -a, --algorithm <ALGORITHM>    specify the comparing algorithm.  This option is mandatory.
     -d, --dest <FILE>              specify the destination. If this option is absent, the results outputs to stdout.
-    -h, --help                     print this message.
 ```
 
 ## `pochi extract`
@@ -39,7 +38,6 @@ OPTIONS
     -b, --birthmark <BIRTHMARK>    specify the birthmark type. This option is mandatory.
     -c, --container <TYPE>         specify the container type. Available: list, set, vector, graph. 
     -d, --dest <FILE>              specify the destination. If this option is absent, the results outputs to stdout.
-    -h, --help                     print this message.
 ```
 
 ## `pochi info`
@@ -61,8 +59,20 @@ pochi [GLOBAL_OPTS] run <OPTIONS> <SCRIPT>
 GLOBAL_OPTS
     -c, --config <CONFIG>    specify the configuration file.
 OPTIONS
-        --runtime <ENV>      specify the runtime environment.  Available: ruby, python, javascript, kotlin, scala.
+        --runtime <ENV>      specify the runtime environment.  Available: ruby, python, javascript, kotlin, and scala.
 ```
+
+### Supported runtime environment
+
+| Languages  | ScriptName | Runtime              |
+| ---------- | ---------- | -------------------- |
+| Groovy     | `groovy`   | Default              |
+| JavaScript | `graaljs`  | Use GraalVM 17       |
+| Python     | `python`   | Jython, Graal.Python |
+| Ruby       | `ruby`     | JRuby, TruffeRuby    |
+| Scala      | `scala`    |                      |
+| Kotlin     | `kotlin`   |                      |
+| Clojure    | `clojure`  |                      |
 
 ## `pochi shell`
 

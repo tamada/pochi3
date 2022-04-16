@@ -59,7 +59,7 @@ public class ExtractCommand implements Callable<Integer> {
                 .dest(dest, p -> p.println(new BirthmarksJsonier().toJson(birthmarks)));
         if(birthmarks.hasFailure())
             printFailures(birthmarks.failures());
-        return pochi.printAll();
+        return pochi.flush();
     }
 
     private void printFailures(Stream<Throwable> stream) {
@@ -85,7 +85,7 @@ public class ExtractCommand implements Callable<Integer> {
     public Integer call() {
         ExtractorBuilderFactory factory = new ExtractorBuilderFactory();
         if(isValidOptions(factory))
-            return pochi.printAll(1);
+            return pochi.flush(1);
         var config = pochi.config();
         return factory.builder(birthmarkType)
                 .map(builder -> perform(builder.build(config)))
