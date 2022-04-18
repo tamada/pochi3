@@ -6,6 +6,7 @@ import jp.cafebabe.birthmarks.Task;
 import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.Birthmark;
 import jp.cafebabe.birthmarks.entities.Birthmarks;
+import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.events.BirthmarkEvent;
 import jp.cafebabe.clpond.entities.Entry;
 import jp.cafebabe.clpond.source.DataSource;
@@ -28,12 +29,10 @@ public abstract class AbstractExtractor extends Task implements Extractor {
     }
 
     @Override
-    public Birthmarks extract(DataSource source) {
+    public Birthmarks extract(DataSource source, ContainerType ct) {
         fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Extraction, BirthmarkEvent.Phase.Before, source));
-        var result = new Birthmarks(source.stream()
-                .filter(entry -> entry.endsWith(".class"))
-                .map(this::extractEach));
-        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Extraction, BirthmarkEvent.Phase.After, source));
+        var result = Extractor.super.extract(source, ct);
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Extraction, BirthmarkEvent.Phase.After, result));
         return result;
     }
 

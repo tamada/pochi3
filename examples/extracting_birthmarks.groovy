@@ -11,7 +11,6 @@ def extract(path, extractor, name) {
 
 // prints each Birthmark object.
 def printBirthmarks(birthmarks) {
-
     birthmarks.each(b -> println(jsonier.toJson(b)))
 }
 

@@ -20,7 +20,7 @@ public class BirthmarkParser extends Task implements Parser<Birthmarks> {
         fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Parsing, BirthmarkEvent.Phase.Before, element));
         List<Either<Throwable, Birthmark>> list = parseJson(JsonUtil.stream(element.getAsJsonArray()));
         var result = new Birthmarks(list.stream());
-        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Parsing, BirthmarkEvent.Phase.After, element));
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Parsing, BirthmarkEvent.Phase.After, result));
         return result;
     }
 
@@ -30,7 +30,10 @@ public class BirthmarkParser extends Task implements Parser<Birthmarks> {
     }
 
     private Either<Throwable, Birthmark> parseBirthmark(JsonElement element) {
-        return Try.of(() -> unmarshaller.unmarshal(element.getAsJsonObject()))
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Parsing, BirthmarkEvent.Phase.BeforeEach, element));
+        var result = Try.of(() -> unmarshaller.unmarshal(element.getAsJsonObject()))
                 .toEither();
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Parsing, BirthmarkEvent.Phase.AfterEach, result));
+       return result;
     }
 }

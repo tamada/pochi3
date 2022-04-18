@@ -5,13 +5,13 @@ import jp.cafebabe.birthmarks.comparators.ComparatorBuilder;
 import jp.cafebabe.birthmarks.comparators.ComparatorType;
 import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.Birthmark;
-import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.extractors.Extractor;
 import jp.cafebabe.birthmarks.io.BirthmarkParser;
 import jp.cafebabe.birthmarks.pairers.Pairer;
 import jp.cafebabe.clpond.source.DataSource;
 import jp.cafebabe.clpond.source.factories.DataSourceBuilderFactory;
 import jp.cafebabe.pochi.birthmarks.ExtractorBuilderFactory;
+import jp.cafebabe.pochi.cli.time.Watch;
 import jp.cafebabe.pochi.pairers.PairerBuilderFactory;
 import jp.cafebabe.pochi.utils.ServiceBuilderFactory;
 
@@ -26,6 +26,10 @@ public class BirthmarkSystem {
 
     public BirthmarkSystem(Pochi pochi) {
         this.pochi = pochi;
+    }
+
+    public Watch timer() {
+        return new Watch();
     }
 
     public Configuration config() {

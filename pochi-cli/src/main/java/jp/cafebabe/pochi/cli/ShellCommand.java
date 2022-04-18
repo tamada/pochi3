@@ -14,7 +14,7 @@ public class ShellCommand extends AbstractCommand {
 
     @Override
     public Integer call() {
-        System.out.println("shell");
+        System.out.println("shell: not implemented yet");
         return 0;
     }
 }

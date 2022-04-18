@@ -1,6 +1,7 @@
 package jp.cafebabe.pochi.cli;
 
 import io.vavr.control.Try;
+import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.Birthmarks;
 import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.extractors.Extractor;
@@ -53,7 +54,7 @@ public class ExtractCommand implements Callable<Integer> {
         pochi.pushf(AnsiColors.RED_BOLD, "Error: %s: file not found", path);
     }
 
-    private int perform(Extractor extractor) {
+    int perform(Configuration config, Extractor extractor) {
         var birthmarks = extractImpl(extractor);
         new DestCreator(pochi)
                 .dest(dest, p -> p.println(new BirthmarksJsonier().toJson(birthmarks)));
@@ -67,7 +68,7 @@ public class ExtractCommand implements Callable<Integer> {
         stream.forEach(t -> pochi.push(t));
     }
 
-    private Birthmarks extractImpl(Extractor extractor) {
+    Birthmarks extractImpl(Extractor extractor) {
         DataSourceBuilder dsBuilder = DataSourceBuilder.instance();
         return targets.stream()
                 .map(path -> performEach(path, dsBuilder, extractor))
@@ -88,7 +89,7 @@ public class ExtractCommand implements Callable<Integer> {
             return pochi.flush(1);
         var config = pochi.config();
         return factory.builder(birthmarkType)
-                .map(builder -> perform(builder.build(config)))
+                .map(builder -> perform(config, builder.build(config)))
                 .orElse(2);
     }
 }

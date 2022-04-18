@@ -25,8 +25,11 @@ public abstract class AbstractComparator extends Task implements Comparator {
     }
 
     public Either<Throwable, Similarity> similarity(Pair<Birthmark, Birthmark> pair) {
-        return Try.of(() -> calculateSimilarity(pair.left(), pair.right()))
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.BeforeEach, pair));
+        var result = Try.of(() -> calculateSimilarity(pair.left(), pair.right()))
                 .toEither();
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.AfterEach, result));
+        return result;
     }
 
     public final boolean isAcceptable(ContainerType type) {
@@ -44,30 +47,21 @@ public abstract class AbstractComparator extends Task implements Comparator {
             throw new ComparisonException(String.format("container types do not match (%s, %s)", left.containerType(), right.containerType()), left, right);
         if(!Objects.equals(left.type(), right.type()))
             throw new ComparisonException(String.format("birthmark types do not match (%s, %s)", left.type(), right.type()), left, right);
-        return calculateImpl(left, right);
+        return calculate(left, right);
     }
 
     public Comparisons compare(Birthmarks birthmarks, Pairer<Birthmark> pairer) {
         fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.Before, birthmarks));
-        var result = new Comparisons(pairer.pair(birthmarks)
-                .map(this::compareBirthmark));
-        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.After, birthmarks));
+        var result = Comparator.super.compare(birthmarks, pairer);
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.After, result));
         return result;
     }
 
     public Comparisons compare(Birthmarks left, Birthmarks right, Pairer<Birthmark> pairer) {
         fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.Before, Pair.of(left, right)));
-        var result = new Comparisons(pairer.pair(left, right)
-                .map(this::compareBirthmark));
-        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.After, Pair.of(left, right)));
+        var result = Comparator.super.compare(left, right, pairer);
+        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.After, result));
         return result;
-    }
-
-    private Similarity calculateImpl(Birthmark left, Birthmark right) throws ComparisonException {
-        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.BeforeEach, Pair.of(left, right)));
-        var similarity = calculate(left, right);
-        fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.AfterEach, Pair.of(left, right)));
-        return similarity;
     }
 
     protected abstract Similarity calculate(Birthmark left, Birthmark right) throws ComparisonException;

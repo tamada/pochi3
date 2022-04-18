@@ -34,19 +34,19 @@ public class CompareCommand implements Callable<Integer> {
     @ParentCommand
     private Pochi pochi;
 
-    private Pairer<Birthmark> constructPairer(Configuration config) {
+    Pairer<Birthmark> constructPairer(Configuration config) {
         return new PairerBuilderFactory<Birthmark>().builder("round_robin")
                 .orElseThrow(() -> new InternalError("round_robin: pairer not found"))
                 .build(config);
     }
 
-    private Optional<Comparator> constructComparator(Configuration config) {
+    Optional<Comparator> constructComparator(Configuration config, String algorithm) {
         return new ServiceBuilderFactory<>(ComparatorBuilder.class)
                 .builder(algorithm)
                 .map(b -> b.build(config));
     }
 
-    private void printResults(Comparisons comparisons) {
+    void printResults(Comparisons comparisons) {
         new DestCreator(pochi)
                 .dest(dest, p -> p.println(new ComparisonsJsonier().toJson(comparisons)));
         if(comparisons.hasFailure())
@@ -57,7 +57,7 @@ public class CompareCommand implements Callable<Integer> {
     public Integer call() {
         var loader = new BirthmarkLoader(pochi);
         var config = pochi.config();
-        var comparator = constructComparator(config);
+        var comparator = constructComparator(config, algorithm);
         comparator.map(c -> c.compare(loader.load(birthmarks), constructPairer(config)))
                 .ifPresent(this::printResults);
         return 0;
