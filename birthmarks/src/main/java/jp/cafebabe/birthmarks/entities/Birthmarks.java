@@ -13,6 +13,10 @@ public class Birthmarks extends Results<Throwable, Birthmark> implements Seriali
     @Serial
     private static final long serialVersionUID = 4476836761615526741L;
 
+    public Birthmarks() {
+        this(Stream.empty());
+    }
+
     public Birthmarks(Stream<Either<Throwable, Birthmark>> stream) {
         super(stream);
     }

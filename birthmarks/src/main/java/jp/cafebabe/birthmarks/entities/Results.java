@@ -27,6 +27,11 @@ public class Results<L extends Throwable, R> implements Serializable, Streamable
         return list.size();
     }
 
+    protected Stream<Either<L, R>> filterImpl(Predicate<R> predicate) {
+        return list.stream()
+                .filter(either -> either.isLeft() || either.filter(predicate).isDefined());
+    }
+
     public Stream<R> stream() {
         return streamImpl(Either::isRight, Either::get);
     }

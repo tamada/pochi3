@@ -16,6 +16,10 @@ public class Configuration {
         this.properties = props;
     }
 
+    public void put(String key, String value) {
+        properties.put(key, value);
+    }
+
     public Stream<Pair<String, String>> properties() {
         return properties.entrySet().stream()
                 .map(entry -> Pair.of(entry.getKey(), entry.getValue()));

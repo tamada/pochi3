@@ -14,6 +14,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class RunCommand extends AbstractCommand {
     private Path script;
 
     @Parameters(index = "1..", paramLabel = "ARGS", description = "args for the script file")
-    private List<String> args;
+    private List<String> args = new ArrayList<>();
 
     @ParentCommand
     private Pochi pochi;
@@ -115,7 +116,7 @@ public class RunCommand extends AbstractCommand {
     }
 
     private void printFactory(ScriptEngineFactory factory) {
-        pochi.pushf("%10s %12s %s%n", factory.getLanguageName(),
+        pochi.pushf("%10s %12s %s", factory.getLanguageName(),
                 "(" + factory.getEngineName() +")", factory.getLanguageVersion());
     }
 }

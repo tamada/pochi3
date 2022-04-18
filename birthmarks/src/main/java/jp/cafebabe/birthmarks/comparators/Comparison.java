@@ -21,6 +21,10 @@ public class Comparison implements Comparable<Comparison>, Serializable {
         this.similarity = similarity;
     }
 
+    public boolean isStolen(double threshold) {
+        return similarity.isStolen(threshold);
+    }
+
     public void accept(ComparisonVisitor visitor) {
         visitor.visit(pair.left(), pair.right(), similarity);
     }

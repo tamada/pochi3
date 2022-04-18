@@ -11,6 +11,10 @@ public record Similarity(double value) implements Comparable<Similarity>, Serial
         return Math.abs(value - other.value()) < delta;
     }
 
+    public boolean isStolen(double threshold) {
+        return value < threshold;
+    }
+
     @Override
     public int compareTo(Similarity other) {
         return Double.compare(value, other.value);

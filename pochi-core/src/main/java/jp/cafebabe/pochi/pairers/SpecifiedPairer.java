@@ -37,6 +37,11 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
     }
 
     @Override
+    public String toString() {
+        return String.format("%s (%s)", getClass().getName(), relationer.getClass().getName());
+    }
+
+    @Override
     public Stream<Pair<T, T>> pair(Streamable<T> birthmarks) {
         return birthmarks.stream()
                 .flatMap(item -> makePair(item, birthmarks));

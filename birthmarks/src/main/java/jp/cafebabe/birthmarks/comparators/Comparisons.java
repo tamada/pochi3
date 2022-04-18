@@ -6,6 +6,7 @@ import jp.cafebabe.birthmarks.entities.Results;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Comparisons extends Results<Throwable, Comparison> implements Serializable, Mergeable<Comparisons> {
@@ -23,5 +24,9 @@ public class Comparisons extends Results<Throwable, Comparison> implements Seria
     @Override
     public Comparisons merge(Comparisons other) {
         return new Comparisons(mergedStream(other));
+    }
+
+    public Comparisons filter(Predicate<Comparison> predicate) {
+        return new Comparisons(filterImpl(predicate));
     }
 }
