@@ -18,23 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Command(name = "run", description = "run the given scripts for birthmarking")
+@Command(name = "run", description = "run the given scripts for birthmarking.")
 public class RunCommand extends AbstractCommand {
     @Option(names = {"-E", "--engine"}, paramLabel = "ENGINE_NAME",
-            description = "specify the script engine.  Available values are shown in info subcommand. Default: groovy", defaultValue = "groovy")
+            description = "specify the script engine.  Available values are shown in info subcommand. Default: groovy.", defaultValue = "groovy")
     private String runtime = "groovy";
 
-    @Option(names = {"-e"}, paramLabel = "ONE_LINER", description = "specify a command line script")
+    @Option(names = {"-e"}, paramLabel = "ONE_LINER", description = "specify a command line script.")
     private String oneliner = null;
 
-    @Option(names = {"-w", "--workdir"}, paramLabel = "DIR", description = "specify a work directory.")
-    private Optional<Path> workingDir = Optional.empty();
-
     @Parameters(index = "0", paramLabel = "SCRIPT", arity = "0..1",
-            description = "specify a script file for birthmarking")
+            description = "specify a script file for birthmarking.")
     private Path script;
 
-    @Parameters(index = "1..", paramLabel = "ARGS", description = "args for the script file")
+    @Parameters(index = "1..", paramLabel = "ARGS", description = "args for the script file.")
     private List<String> args = new ArrayList<>();
 
     @ParentCommand

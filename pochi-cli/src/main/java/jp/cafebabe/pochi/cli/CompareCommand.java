@@ -20,15 +20,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
-@Command(name = "compare", description = "compares the given birthmarks by a round-robin")
+@Command(name = "compare", description = "compares the given birthmarks by a round-robin.")
 public class CompareCommand implements Callable<Integer> {
-    @Option(names = {"-a", "--algorithm"}, paramLabel = "ALGORITHM", description = "specify the comparing algorithm. info command shows availables", required = true)
+    @Option(names = {"-a", "--algorithm"}, paramLabel = "ALGORITHM", description = "specify the comparing algorithm. Available: show info subcommand.", required = true)
     private String algorithm;
 
-    @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), output to stdout .")
+    @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), output to stdout.")
     private Optional<String> dest = Optional.empty();
 
-    @Parameters(paramLabel = "BIRTHMARKs...", arity = "0..*", description = "birthmarks in json format. If parameters were empty or dash (\"-\"), read from stdin")
+    @Parameters(paramLabel = "BIRTHMARKs", arity = "0..*", description = "birthmarks in json format. If parameters were empty or dash (\"-\"), read from stdin.")
     private List<Path> birthmarks = new ArrayList<>();
 
     @ParentCommand

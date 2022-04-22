@@ -11,11 +11,14 @@ import java.util.Arrays;
 public interface Comparator {
     Either<Throwable, Similarity> similarity(Pair<Birthmark, Birthmark> pair);
 
-    ContainerType[] acceptableTypes();
+    default ContainerType[] acceptableTypes() {
+        return type().acceptable();
+    }
+
+    ComparatorType type();
 
     default boolean isAcceptable(ContainerType type) {
-        return Arrays.stream(acceptableTypes())
-                .anyMatch(acceptableType -> type == acceptableType);
+        return type().isAcceptable(type);
     }
 
     default Comparisons compare(Birthmarks birthmarks, Pairer<Birthmark> pairer) {

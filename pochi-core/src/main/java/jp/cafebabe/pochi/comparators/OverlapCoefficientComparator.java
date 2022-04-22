@@ -10,7 +10,12 @@ import jp.cafebabe.birthmarks.entities.impl.Converter;
 import java.util.Set;
 
 public class OverlapCoefficientComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("overlap_coefficient");
+    private static final ComparatorType thisType = new ComparatorType("overlap_coefficient") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[] { ContainerType.Set };
+        }
+    };
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -29,16 +34,7 @@ public class OverlapCoefficientComparator extends AbstractComparator {
     }
 
     public OverlapCoefficientComparator(Configuration config){
-        super(config);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.Set,
-                ContainerType.List,
-                ContainerType.Vector,
-        };
+        super(config, thisType);
     }
 
     @Override

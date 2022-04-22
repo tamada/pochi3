@@ -10,10 +10,17 @@ import jp.cafebabe.pochi.comparators.algorithms.LCSCalculator;
 import java.util.List;
 
 public class LongestCommonSubsequenceComparator extends AbstractComparator {
+    private static final ComparatorType thisType = new ComparatorType("lcs") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[] { ContainerType.List };
+        }
+    };
+
     public static final class Builder implements ComparatorBuilder {
         @Override
         public ComparatorType type() {
-            return new ComparatorType("lcs");
+            return thisType;
         }
 
         @Override
@@ -23,12 +30,12 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "";
+            return "longest common subsequence similarity";
         }
     }
 
     public LongestCommonSubsequenceComparator(Configuration config) {
-        super(config);
+        super(config, thisType);
     }
 
     @Override
@@ -38,12 +45,5 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
         var result = new LCSCalculator<Element>()
                 .compute(SetUtils.list(left), SetUtils.list(right));
         return new Similarity(result);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.List,
-        };
     }
 }

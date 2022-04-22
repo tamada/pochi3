@@ -16,13 +16,13 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class GlobalOptions {
-    @Option(names = {"-c", "--config"}, description = "specify the configuration file.")
+    @Option(names = {"-C", "--config"}, description = "specify the configuration file.")
     private Optional<Path> configPath = Optional.empty();
 
-    @Option(names = {"-h", "--help"}, description = "print this message", usageHelp = true)
+    @Option(names = {"-h", "--help"}, description = "print this message and exit.", usageHelp = true)
     private boolean helpFlag;
 
-    @Option(names = {"-V", "--version"}, description = "print version and exit", versionHelp = true)
+    @Option(names = {"-V", "--version"}, description = "print version and exit.", versionHelp = true)
     private boolean versionFlag;
 
     private PathUtils pathUtils = new PathUtils();

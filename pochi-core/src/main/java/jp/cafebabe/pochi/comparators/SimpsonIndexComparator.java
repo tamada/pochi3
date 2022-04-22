@@ -10,7 +10,12 @@ import jp.cafebabe.birthmarks.entities.impl.Converter;
 import java.util.Set;
 
 public class SimpsonIndexComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("simpson_index");
+    private static final ComparatorType thisType = new ComparatorType("simpson_index") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[] { ContainerType.Set };
+        }
+    };
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -25,21 +30,12 @@ public class SimpsonIndexComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "";
+            return "simpson index";
         }
     }
 
     public SimpsonIndexComparator(Configuration config){
-        super(config);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.Set,
-                ContainerType.List,
-                ContainerType.Vector,
-        };
+        super(config, thisType);
     }
 
     @Override

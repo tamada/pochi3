@@ -15,13 +15,19 @@ import java.util.Objects;
 
 public abstract class AbstractComparator extends Task implements Comparator {
     private final Configuration config;
+    private ComparatorType type;
 
-    public AbstractComparator(Configuration config) {
+    public AbstractComparator(Configuration config, ComparatorType type) {
         this.config = config;
+        this.type = type;
     }
 
     protected Configuration config() {
         return config;
+    }
+
+    public final ComparatorType type() {
+        return type;
     }
 
     public Either<Throwable, Similarity> similarity(Pair<Birthmark, Birthmark> pair) {
@@ -30,12 +36,6 @@ public abstract class AbstractComparator extends Task implements Comparator {
                 .toEither();
         fireEvent(BirthmarkEvent.of(BirthmarkEvent.Id.Comparison, BirthmarkEvent.Phase.AfterEach, result));
         return result;
-    }
-
-    public final boolean isAcceptable(ContainerType type) {
-        return Arrays.stream(acceptableTypes())
-                .map(acceptableType -> type == acceptableType)
-                .reduce(false, (b1, b2) -> b1 || b2);
     }
 
     private Similarity calculateSimilarity(Birthmark left, Birthmark right) throws ComparisonException {

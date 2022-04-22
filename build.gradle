@@ -5,7 +5,7 @@ buildscript {
             'jupiter': '5.8.2',
             'gson': '2.9.0',
             'vavr': '0.10.4',
-            'groovy': '3.0.10'
+            'groovy': '4.0.1'
     ]
 }
 

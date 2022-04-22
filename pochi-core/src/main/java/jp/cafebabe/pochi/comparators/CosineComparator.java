@@ -7,7 +7,12 @@ import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.entities.impl.VectorBirthmark;
 
 public class CosineComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("cosine");
+    private static final ComparatorType thisType = new ComparatorType("cosine") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[]{ ContainerType.Vector };
+        }
+    };
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -22,19 +27,12 @@ public class CosineComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "";
+            return "cosine similarity";
         }
     }
 
     public CosineComparator(Configuration config) {
-        super(config);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.Vector,
-        };
+        super(config, thisType);
     }
 
     protected Similarity calculate(Birthmark left, Birthmark right) {

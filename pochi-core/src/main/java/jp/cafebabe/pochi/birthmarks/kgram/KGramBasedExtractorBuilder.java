@@ -1,11 +1,12 @@
 package jp.cafebabe.pochi.birthmarks.kgram;
 
+import jp.cafebabe.birthmarks.TaskBuilder;
 import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.BirthmarkType;
 import jp.cafebabe.birthmarks.extractors.Extractor;
 import jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
 
-public class KGramBasedExtractorBuilder implements ExtractorBuilder {
+public class KGramBasedExtractorBuilder implements ExtractorBuilder, TaskBuilder<Extractor, BirthmarkType> {
     private final int kValue;
 
     public KGramBasedExtractorBuilder() {

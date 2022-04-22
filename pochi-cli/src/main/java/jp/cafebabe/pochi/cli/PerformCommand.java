@@ -7,9 +7,9 @@ import picocli.CommandLine.Option;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "perform", description = "extract birthmarks and compare the extraction results by a round-robin")
+@Command(name = "perform", description = "extract birthmarks and compare the extraction results by a round-robin.")
 public class PerformCommand extends ExtractCommand implements Callable<Integer> {
-    @Option(names = {"-a", "--algorithm"}, paramLabel = "ALGORITHM", description = "specify the comparing algorithm. info command shows availables", required = true)
+    @Option(names = {"-a", "--algorithm"}, paramLabel = "ALGORITHM", description = "specify the comparing algorithm. Available: show info subcommand.", required = true)
     private String algorithm;
 
     private CompareCommand compareCommand = new CompareCommand();

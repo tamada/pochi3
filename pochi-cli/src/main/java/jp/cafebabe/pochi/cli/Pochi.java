@@ -10,7 +10,7 @@ import picocli.CommandLine.Spec;
 
 import java.util.concurrent.Callable;
 
-@Command(name="pochi", versionProvider = VersionProvider.class, description = "Java Birthmark Toolkit")
+@Command(name="pochi", versionProvider = VersionProvider.class, description = "The Birthmarking Toolkit for the JVM platform.")
 public class Pochi implements Callable<Integer>, Publisher {
     private MessageCenter center = new MessageCenter();
 

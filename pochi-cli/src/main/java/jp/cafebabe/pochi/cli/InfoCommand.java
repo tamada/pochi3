@@ -2,6 +2,7 @@ package jp.cafebabe.pochi.cli;
 
 import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.BuilderFactory;
+import jp.cafebabe.birthmarks.TaskBuilder;
 import jp.cafebabe.birthmarks.comparators.ComparatorBuilder;
 import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.pairers.PairerBuilder;
@@ -19,13 +20,12 @@ import javax.script.ScriptEngineManager;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.stream.Stream;
 
-@Command(name = "info", description = "print information of processors in pochi")
+@Command(name = "info", description = "print information of processors in pochi.")
 public class InfoCommand implements Callable<Integer> {
     private static List<String> availables = List.of("all", "extractors", "pairers", "algorithms", "relationers", "rules", "properties", "runtimes");
 
-    @Option(names = {"-i", "--info"}, description = "specify the printing information. Availables: all, extractors, pairers, algorithms, relationers, rules, properties, and runtimes. Default: all",
+    @Option(names = {"-i", "--info"}, paramLabel = "TARGET", description = "specify the printing information. Availables: all, extractors, pairers, relationers, algorithms, rules, properties, and runtimes. Default: all",
         arity = "0..*")
     private List<String> targets = List.of("all");
 
@@ -33,12 +33,13 @@ public class InfoCommand implements Callable<Integer> {
     private Pochi pochi;
 
     @Override
+    @SuppressWarnings("unchecked")
     public Integer call() {
         targets = validateTargets(targets);
-        isRequest("extractors", () -> printTypes("Extractors", new ExtractorBuilderFactory()));
-        isRequest("pairers", () -> printPairerTypes());
-        isRequest("algorithms", () -> printTypes("Algorithms", new ServiceBuilderFactory<>(ComparatorBuilder.class)));
-        isRequest("relationers", () -> printTypes("Relationers", new RelationerBuilderFactory()));
+        isRequest("extractors", () -> printBuilders("Extractors", new ExtractorBuilderFactory()));
+        isRequest("pairers", () -> printBuilders("Pairers", new ServiceBuilderFactory<>(PairerBuilder.class)));
+        isRequest("relationers", () -> printBuilders("Relationers", new RelationerBuilderFactory()));
+        isRequest("algorithms", () -> printBuilders("Comparison Algorithms", new ServiceBuilderFactory<>(ComparatorBuilder.class)));
         printConfig();
         isRequest("engines", () -> printScriptEngine());
         return pochi.flush();
@@ -99,19 +100,10 @@ public class InfoCommand implements Callable<Integer> {
                 .forEach(p -> p.accept((label, value) -> pochi.pushf("%s: %s", label, value)));
     }
 
-    private <B, T extends Stringer> void printTypes(String label, BuilderFactory<B, T> factory) {
-        printStream(label, factory.availables());
-    }
-
-    @SuppressWarnings("unchecked")
-    private void printPairerTypes() {
-        printStream("Pairers", new ServiceBuilderFactory(PairerBuilder.class)
-                .availables());
-    }
-
-    private <T> void printStream(String label, Stream<? extends Stringer> stream) {
+    private <TB extends TaskBuilder<E, T>, T extends Stringer, E> void printBuilders(String label, BuilderFactory<TB, T> factory) {
         pochi.push(header(label));
-        stream.map(t -> t.string())
+        factory.builders()
+                .map(t -> String.format("%-20s %s", t.type().string(), t.description()))
                 .forEach(pochi::push);
     }
 

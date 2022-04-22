@@ -11,6 +11,6 @@ public interface ComparatorBuilder extends TaskBuilder<Comparator, ComparatorTyp
     Comparator build(Configuration config);
 
     default boolean matchType(String name) {
-        return Objects.equals(name, type().type());
+        return Objects.equals(name, type().string());
     }
 }

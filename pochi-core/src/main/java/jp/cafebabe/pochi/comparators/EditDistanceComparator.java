@@ -10,7 +10,12 @@ import jp.cafebabe.pochi.comparators.algorithms.EditDistanceCalculator;
 import java.util.List;
 
 public class EditDistanceComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("edit_distance");
+    private static final ComparatorType thisType = new ComparatorType("edit_distance") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[] { ContainerType.List };
+        }
+    };
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -25,20 +30,12 @@ public class EditDistanceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "";
+            return "edit distance similarity";
         }
     }
 
     public EditDistanceComparator(Configuration config){
-        super(config);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.Set,
-                ContainerType.List,
-        };
+        super(config, thisType);
     }
 
     @Override

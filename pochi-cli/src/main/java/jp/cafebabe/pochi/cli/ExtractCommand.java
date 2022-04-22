@@ -21,18 +21,18 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
-@Command(name = "extract", description = "extract the birthmarks from given targets")
+@Command(name = "extract", description = "extract the birthmarks from given targets.")
 public class ExtractCommand implements Callable<Integer> {
-    @Option(names = {"-b", "--birthmark"}, paramLabel = "BIRTHMARK", description = "specify the birthmark type. This option is mandatory", required = true)
+    @Option(names = {"-b", "--birthmark"}, paramLabel = "BIRTHMARK", description = "specify the birthmark type. This option is mandatory. This option is mandatory.", required = true)
     private String birthmarkType;
 
-    @Option(names = {"-c", "--container"}, paramLabel = "CONTAINER", description = "specify the container type. Available: list, set, vector, graph. Default: list")
+    @Option(names = {"-c", "--container"}, paramLabel = "CONTAINER", description = "specify the container type. Available: list, set, vector, graph. Default: list.")
     private ContainerType type = ContainerType.List;
 
     @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), output to stdout.")
     private Optional<String> dest = Optional.empty();
 
-    @Parameters(paramLabel = "CLASS|ZIP|JAR|WAR_FILEs...", arity = "1..*", description = "targets of birthmark extraction")
+    @Parameters(paramLabel = "CLASS|ZIP|JAR|WAR_FILEs", arity = "1..*", description = "targets of birthmark extraction.")
     private List<Path> targets;
 
     @ParentCommand

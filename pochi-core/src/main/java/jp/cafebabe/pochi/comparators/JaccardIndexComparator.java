@@ -9,7 +9,12 @@ import jp.cafebabe.birthmarks.entities.Element;
 import java.util.Set;
 
 public class JaccardIndexComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("jaccard_index");
+    private static final ComparatorType thisType = new ComparatorType("jaccard_index") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[] { ContainerType.Set };
+        }
+    };
 
     public static final class Builder implements ComparatorBuilder {
         @Override
@@ -24,21 +29,12 @@ public class JaccardIndexComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "";
+            return "jaccard index";
         }
     }
 
     public JaccardIndexComparator(Configuration config){
-        super(config);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.Set,
-                ContainerType.List,
-                ContainerType.Vector,
-        };
+        super(config, thisType);
     }
 
     @Override

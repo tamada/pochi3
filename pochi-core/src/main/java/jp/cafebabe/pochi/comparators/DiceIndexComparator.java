@@ -10,10 +10,15 @@ import jp.cafebabe.birthmarks.entities.impl.Converter;
 import java.util.Set;
 
 public class DiceIndexComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("dice_index");
+    private static final ComparatorType thisType = new ComparatorType("dice_index") {
+        @Override
+        public ContainerType[] acceptable() {
+            return new ContainerType[] { ContainerType.Set };
+        }
+    };
 
     public DiceIndexComparator(Configuration config){
-        super(config);
+        super(config, thisType);
     }
 
     @Override
@@ -23,15 +28,6 @@ public class DiceIndexComparator extends AbstractComparator {
         Set<Element> intersection = SetUtils.intersect(left, right);
         long denominator = Converter.toSet(left).size() + Converter.toSet(right).size();
         return new Similarity(2.0 * intersection.size() / denominator);
-    }
-
-    @Override
-    public ContainerType[] acceptableTypes() {
-        return new ContainerType[] {
-                ContainerType.Set,
-                ContainerType.List,
-                ContainerType.Vector,
-        };
     }
 
     public static final class Builder implements ComparatorBuilder {
@@ -47,7 +43,7 @@ public class DiceIndexComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "";
+            return "dice index";
         }
     }
 }
