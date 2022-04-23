@@ -19,7 +19,8 @@ module jp.cafebabe.pochi.core {
             JaccardIndexComparator.Builder,
             LongestCommonSubsequenceComparator.Builder,
             OverlapCoefficientComparator.Builder,
-            SimpsonIndexComparator.Builder;
+            SimpsonIndexComparator.Builder,
+            SmithWatermanComparator.Builder;
 
     uses jp.cafebabe.birthmarks.extractors.ExtractorBuilder;
     provides jp.cafebabe.birthmarks.extractors.ExtractorBuilder with

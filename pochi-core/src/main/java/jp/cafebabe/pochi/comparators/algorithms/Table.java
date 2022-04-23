@@ -34,4 +34,13 @@ class Table {
     public Stream<Index2D> indexStream() {
         return max.stream();
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        max.stream()
+                .peek(index -> sb.append(index.y() == 0? System.getProperty("line.separator"): ""))
+                .map(index -> String.format("%2d ", get(index)))
+                .forEach(sb::append);
+        return new String(sb);
+    }
 }

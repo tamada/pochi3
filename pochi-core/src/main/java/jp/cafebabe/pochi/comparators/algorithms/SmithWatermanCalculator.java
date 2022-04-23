@@ -5,20 +5,28 @@ import jp.cafebabe.birthmarks.comparators.Pair;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.IntBinaryOperator;
-import java.util.stream.IntStream;
 
-public class EditDistanceCalculator<T> extends Calculator {
-    private static final int BIG_NUMBER = 10;
+public class SmithWatermanCalculator<T> extends Calculator {
+    private ScoreParameter params;
+    private Value score = new Value(0, Index2D.of(0, 0));
+
+    public SmithWatermanCalculator() {
+        this(ScoreParameter.of(1, 1, 1));
+    }
+
+    public SmithWatermanCalculator(int match, int mismatch, int gap) {
+        this(ScoreParameter.of(match, mismatch, gap));
+    }
+
+    public SmithWatermanCalculator(ScoreParameter params) {
+        this.params = params;
+    }
 
     public int compute(List<T> list1, List<T> list2) {
-        var table = init(list1.size() + 1, list2.size() + 1, (x, y) -> {
-            if(x == 0)      return y;
-            else if(y == 0) return x;
-            else return 0;
-        });
+        Table table = init(list1.size() + 1, list2.size() + 1, (x, y) -> 0);
         computeCosts(table, list1, list2);
-        return table.cost();
+        System.out.println(table);
+        return score.value();
     }
 
     private void computeCosts(Table table, List<T> list1, List<T> list2) {
@@ -36,18 +44,19 @@ public class EditDistanceCalculator<T> extends Calculator {
     private void computeCost(Table table, Index2D index, Pair<T, T> pair) {
         int newValue = computeCostImpl(table, index, pair);
         table.set(newValue, index);
+        score = score.update(newValue, index);
     }
 
     private int computeCostImpl(Table table, Index2D index, Pair<T, T> pair) {
-        int d1 = tableValue(table, index.relativeOf(-1,  0)) + 1;
-        int d2 = tableValue(table, index.relativeOf( 0, -1)) + 1;
+        int d1 = tableValue(table, index.relativeOf(-1,  0)) + params.gap();
+        int d2 = tableValue(table, index.relativeOf( 0, -1)) + params.gap();
         int d3 = tableValue(table, index.relativeOf(-1, -1)) +
-                pair.ifAndElse((l, r) -> Objects.equals(l, r), 0, 1);
-        return minimum(d1, d2, d3);
+                pair.ifAndElse((l, r) -> Objects.equals(l, r), params.match(), params.mismatch());
+        return maximum(d1, d2, d3, 0);
     }
 
     private int tableValue(Table table, Optional<Index2D> optionalIndex) {
         return optionalIndex.map(table::get)
-                .orElse(BIG_NUMBER);
+                .orElse(Integer.MIN_VALUE);
     }
 }

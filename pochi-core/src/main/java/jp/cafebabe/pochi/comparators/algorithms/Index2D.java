@@ -12,4 +12,8 @@ record Index2D(int x, int y) {
     public int compute(Size max) {
         return y * max.width() + x;
     }
+
+    public static Index2D of(int x, int y) {
+        return new Index2D(x, y);
+    }
 }
