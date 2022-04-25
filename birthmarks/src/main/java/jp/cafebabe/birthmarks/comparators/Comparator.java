@@ -7,18 +7,20 @@ import jp.cafebabe.birthmarks.entities.ContainerType;
 import jp.cafebabe.birthmarks.pairers.Pairer;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public interface Comparator {
     Either<Throwable, Similarity> similarity(Pair<Birthmark, Birthmark> pair);
 
-    default ContainerType[] acceptableTypes() {
+    default ContainerType acceptableType() {
         return type().acceptable();
     }
 
     ComparatorType type();
 
     default boolean isAcceptable(ContainerType type) {
-        return type().isAcceptable(type);
+        return Stream.of(type().acceptable())
+                .anyMatch(t -> t.isAcceptable(type));
     }
 
     default Comparisons compare(Birthmarks birthmarks, Pairer<Birthmark> pairer) {

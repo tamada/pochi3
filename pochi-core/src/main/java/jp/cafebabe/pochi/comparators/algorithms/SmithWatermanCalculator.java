@@ -11,7 +11,7 @@ public class SmithWatermanCalculator<T> extends Calculator {
     private Value score = new Value(0, Index2D.of(0, 0));
 
     public SmithWatermanCalculator() {
-        this(ScoreParameter.of(1, 1, 1));
+        this(ScoreParameter.of(1, -1, -1));
     }
 
     public SmithWatermanCalculator(int match, int mismatch, int gap) {
@@ -25,7 +25,6 @@ public class SmithWatermanCalculator<T> extends Calculator {
     public int compute(List<T> list1, List<T> list2) {
         Table table = init(list1.size() + 1, list2.size() + 1, (x, y) -> 0);
         computeCosts(table, list1, list2);
-        System.out.println(table);
         return score.value();
     }
 

@@ -12,8 +12,8 @@ import java.util.Set;
 public class OverlapCoefficientComparator extends AbstractComparator {
     private static final ComparatorType thisType = new ComparatorType("overlap_coefficient") {
         @Override
-        public ContainerType[] acceptable() {
-            return new ContainerType[] { ContainerType.Set };
+        public ContainerType acceptable() {
+            return ContainerType.Set;
         }
     };
 

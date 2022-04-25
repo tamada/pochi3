@@ -9,8 +9,8 @@ import jp.cafebabe.birthmarks.entities.impl.VectorBirthmark;
 public class CosineComparator extends AbstractComparator {
     private static final ComparatorType thisType = new ComparatorType("cosine") {
         @Override
-        public ContainerType[] acceptable() {
-            return new ContainerType[]{ ContainerType.Vector };
+        public ContainerType acceptable() {
+            return ContainerType.Vector;
         }
     };
 

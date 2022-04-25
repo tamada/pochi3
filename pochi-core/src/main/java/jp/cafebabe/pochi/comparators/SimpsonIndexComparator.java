@@ -12,8 +12,8 @@ import java.util.Set;
 public class SimpsonIndexComparator extends AbstractComparator {
     private static final ComparatorType thisType = new ComparatorType("simpson_index") {
         @Override
-        public ContainerType[] acceptable() {
-            return new ContainerType[] { ContainerType.Set };
+        public ContainerType acceptable() {
+            return ContainerType.Set;
         }
     };
 

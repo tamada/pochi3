@@ -25,7 +25,7 @@ public class SmithWatermanCalculatorTest {
 
     @Test
     public void testBasic3() {
-        var calculator = new SmithWatermanCalculator<String>(1, -1, -1);
+        var calculator = new SmithWatermanCalculator<String>();
         int distance = calculator.compute(toList("TGTTACGG"), toList("GGTTGACTA"));
         assertEquals(4, distance);
     }

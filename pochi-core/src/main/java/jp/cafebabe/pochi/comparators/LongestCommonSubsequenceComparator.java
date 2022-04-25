@@ -12,8 +12,8 @@ import java.util.List;
 public class LongestCommonSubsequenceComparator extends AbstractComparator {
     private static final ComparatorType thisType = new ComparatorType("lcs") {
         @Override
-        public ContainerType[] acceptable() {
-            return new ContainerType[] { ContainerType.List };
+        public ContainerType acceptable() {
+            return ContainerType.List;
         }
     };
 

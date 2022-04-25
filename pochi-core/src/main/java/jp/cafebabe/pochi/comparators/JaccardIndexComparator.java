@@ -11,8 +11,8 @@ import java.util.Set;
 public class JaccardIndexComparator extends AbstractComparator {
     private static final ComparatorType thisType = new ComparatorType("jaccard_index") {
         @Override
-        public ContainerType[] acceptable() {
-            return new ContainerType[] { ContainerType.Set };
+        public ContainerType acceptable() {
+            return ContainerType.Set;
         }
     };
 

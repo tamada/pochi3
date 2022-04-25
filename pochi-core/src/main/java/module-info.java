@@ -7,6 +7,7 @@ import jp.cafebabe.pochi.pairers.SpecifiedPairer;
 
 module jp.cafebabe.pochi.core {
     requires io.vavr;
+    requires com.google.gson;
     requires org.objectweb.asm;
     requires jp.cafebabe.pochi.clpond;
     requires jp.cafebabe.pochi.birthmarks;

@@ -26,10 +26,7 @@ public abstract class ComparatorType implements Serializable, Stringer {
     }
 
     public String toString() {
-        String acceptable = Arrays.stream(acceptable())
-                .map(t -> t.name().toLowerCase())
-                .collect(Collectors.joining(", "));
-        return String.format("%s (accept: %s)", type, acceptable);
+        return String.format("%s (accept: %s)", type, acceptable());
     }
 
     public int hashCode() {
@@ -41,10 +38,9 @@ public abstract class ComparatorType implements Serializable, Stringer {
             && Objects.equals(type, ct.type);
     }
 
-    public abstract ContainerType[] acceptable();
+    public abstract ContainerType acceptable();
 
     public boolean isAcceptable(ContainerType type) {
-        return Arrays.stream(acceptable())
-                .anyMatch(c -> c == type);
+        return acceptable() == type;
     }
 }
