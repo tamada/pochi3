@@ -12,8 +12,8 @@ public class LCSCalculatorTest {
     public void testCompute() {
         List<String> list1 = Arrays.asList("myabcuuu".split(""));
         List<String> list2 = Arrays.asList("abcjju".split(""));
-        double result = new LCSCalculator<String>().compute(list1, list2);
+        int result = new LCSCalculator<String>().compute(list1, list2);
 
-        assertEquals(4d/6d, result, 1E-6);
+        assertEquals(4, result);
     }
 }

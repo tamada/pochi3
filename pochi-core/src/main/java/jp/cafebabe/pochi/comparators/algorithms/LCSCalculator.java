@@ -7,10 +7,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LCSCalculator<T> {
-    public double compute(List<T> list1, List<T> list2) {
+    public int compute(List<T> list1, List<T> list2) {
         var table = new Table(list1.size() + 1, list2.size() + 1);
         computeCosts(table, list1, list2);
-        return 1d * table.getLatestItem() / Math.min(list1.size(), list2.size());
+        return table.getLatestItem();
     }
 
     private void computeCosts(Table table, List<T> list1, List<T> list2) {

@@ -9,7 +9,7 @@ import jp.cafebabe.birthmarks.entities.Element;
 import java.util.Set;
 
 public class JaccardIndexComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("jaccard_index") {
+    public static final ComparatorType TYPE = new ComparatorType("jaccard_index") {
         @Override
         public ContainerType acceptable() {
             return ContainerType.Set;
@@ -19,7 +19,7 @@ public class JaccardIndexComparator extends AbstractComparator {
     public static final class Builder implements ComparatorBuilder {
         @Override
         public ComparatorType type() {
-            return thisType;
+            return TYPE;
         }
 
         @Override
@@ -34,13 +34,11 @@ public class JaccardIndexComparator extends AbstractComparator {
     }
 
     public JaccardIndexComparator(Configuration config){
-        super(config, thisType);
+        super(config, TYPE);
     }
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        if(left.size() == 0 && right.size() == 0)
-            return new Similarity(1d);
         Set<Element> intersection = SetUtils.intersect(left, right);
         Set<Element> union = SetUtils.union(left, right);
         return new Similarity((1.0 * intersection.size()) / union.size());

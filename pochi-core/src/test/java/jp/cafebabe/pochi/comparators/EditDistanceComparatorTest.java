@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 import static jp.cafebabe.pochi.comparators.BirthmarkBuilder.buildBirthmarks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DiceIndexComparatorTest {
+public class EditDistanceComparatorTest {
     private Configuration config = Configuration.defaultConfig();
-    private ComparatorBuilder builder = new DiceIndexComparator.Builder();
+    private ComparatorBuilder builder = new EditDistanceComparator.Builder();
 
     @Test
     public void testBuilder() {
-        assertEquals("dice index", builder.description());
-        assertEquals(DiceIndexComparator.TYPE, builder.type());
+        assertEquals("edit distance similarity", builder.description());
+        assertEquals(EditDistanceComparator.TYPE, builder.type());
     }
 
     @Test
@@ -41,9 +41,9 @@ public class DiceIndexComparatorTest {
     @Test
     public void testSimilarity() throws Exception {
         var comparator = builder.build(config);
-        var b1 = buildBirthmarks("a", "b", "c").stream().findFirst().get();
-        var b2 = buildBirthmarks("a", "b").stream().findFirst().get();
+        var b1 = buildBirthmarks("sitting".split("")).stream().findFirst().get();
+        var b2 = buildBirthmarks("kitten".split("")).stream().findFirst().get();
         var result = comparator.similarity(Pair.of(b1, b2));
-        assertEquals(new Similarity(2.0 * 2 / 5), result.get());
+        assertEquals(new Similarity(1d - 3.0 / Math.max("sitting".length(), "kitten".length())), result.get());
     }
 }

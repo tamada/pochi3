@@ -47,6 +47,14 @@ public abstract class AbstractComparator extends Task implements Comparator {
             throw new ComparisonException(String.format("container types do not match (%s, %s)", left.containerType(), right.containerType()), left, right);
         if(!Objects.equals(left.type(), right.type()))
             throw new ComparisonException(String.format("birthmark types do not match (%s, %s)", left.type(), right.type()), left, right);
+        return calculateSimilarityImpl(left, right);
+    }
+
+    private Similarity calculateSimilarityImpl(Birthmark left, Birthmark right) throws ComparisonException {
+        if(left.size() == 0 && right.size() == 0)
+            return new Similarity(1d);
+        else if(left.size() == 0 || right.size() == 0)
+            return new Similarity(0d);
         return calculate(left, right);
     }
 

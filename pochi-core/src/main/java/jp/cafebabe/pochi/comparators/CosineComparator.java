@@ -4,10 +4,11 @@ import jp.cafebabe.birthmarks.comparators.*;
 import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.birthmarks.entities.Birthmark;
 import jp.cafebabe.birthmarks.entities.ContainerType;
+import jp.cafebabe.birthmarks.entities.impl.Converter;
 import jp.cafebabe.birthmarks.entities.impl.VectorBirthmark;
 
 public class CosineComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("cosine") {
+    public static final ComparatorType TYPE = new ComparatorType("cosine") {
         @Override
         public ContainerType acceptable() {
             return ContainerType.Vector;
@@ -17,7 +18,7 @@ public class CosineComparator extends AbstractComparator {
     public static final class Builder implements ComparatorBuilder {
         @Override
         public ComparatorType type() {
-            return thisType;
+            return TYPE;
         }
 
         @Override
@@ -32,11 +33,11 @@ public class CosineComparator extends AbstractComparator {
     }
 
     public CosineComparator(Configuration config) {
-        super(config, thisType);
+        super(config, TYPE);
     }
 
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        return calculateImpl((VectorBirthmark)left, (VectorBirthmark)right);
+        return calculateImpl(Converter.toFrequency(left), Converter.toFrequency(right));
     }
 
     private Similarity calculateImpl(VectorBirthmark left, VectorBirthmark right) {

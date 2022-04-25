@@ -8,15 +8,16 @@ import org.junit.jupiter.api.Test;
 
 import static jp.cafebabe.pochi.comparators.BirthmarkBuilder.buildBirthmarks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DiceIndexComparatorTest {
+public class CosineComparatorTest {
     private Configuration config = Configuration.defaultConfig();
-    private ComparatorBuilder builder = new DiceIndexComparator.Builder();
+    private ComparatorBuilder builder = new CosineComparator.Builder();
 
     @Test
     public void testBuilder() {
-        assertEquals("dice index", builder.description());
-        assertEquals(DiceIndexComparator.TYPE, builder.type());
+        assertEquals("cosine similarity", builder.description());
+        assertEquals(CosineComparator.TYPE, builder.type());
     }
 
     @Test
@@ -41,9 +42,9 @@ public class DiceIndexComparatorTest {
     @Test
     public void testSimilarity() throws Exception {
         var comparator = builder.build(config);
-        var b1 = buildBirthmarks("a", "b", "c").stream().findFirst().get();
-        var b2 = buildBirthmarks("a", "b").stream().findFirst().get();
+        var b1 = buildBirthmarks("android".split("")).stream().findFirst().get();
+        var b2 = buildBirthmarks("ipodtouch".split("")).stream().findFirst().get();
         var result = comparator.similarity(Pair.of(b1, b2));
-        assertEquals(new Similarity(2.0 * 2 / 5), result.get());
+        assertTrue(new Similarity(0.5025189).isCloseTo(result.get(), 1E-6));
     }
 }

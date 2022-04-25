@@ -10,7 +10,7 @@ import jp.cafebabe.pochi.comparators.algorithms.LCSCalculator;
 import java.util.List;
 
 public class LongestCommonSubsequenceComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("lcs") {
+    public static final ComparatorType TYPE = new ComparatorType("lcs") {
         @Override
         public ContainerType acceptable() {
             return ContainerType.List;
@@ -20,7 +20,7 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
     public static final class Builder implements ComparatorBuilder {
         @Override
         public ComparatorType type() {
-            return thisType;
+            return TYPE;
         }
 
         @Override
@@ -35,15 +35,13 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
     }
 
     public LongestCommonSubsequenceComparator(Configuration config) {
-        super(config, thisType);
+        super(config, TYPE);
     }
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        if(left.size() == 0 && right.size() == 0)
-            return new Similarity(1d);
         var result = new LCSCalculator<Element>()
                 .compute(SetUtils.list(left), SetUtils.list(right));
-        return new Similarity(result);
+        return new Similarity(1d * result / Math.min(left.size(), right.size()));
     }
 }

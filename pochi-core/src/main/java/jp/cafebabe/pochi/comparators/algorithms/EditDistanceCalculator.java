@@ -18,6 +18,7 @@ public class EditDistanceCalculator<T> extends Calculator {
             else return 0;
         });
         computeCosts(table, list1, list2);
+        System.out.println(table);
         return table.cost();
     }
 

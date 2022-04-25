@@ -10,7 +10,7 @@ import jp.cafebabe.pochi.comparators.algorithms.SmithWatermanCalculator;
 import java.util.List;
 
 public class SmithWatermanComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("smith_waterman") {
+    public static final ComparatorType TYPE = new ComparatorType("smith_waterman") {
         @Override
         public ContainerType acceptable() {
             return ContainerType.List;
@@ -20,7 +20,7 @@ public class SmithWatermanComparator extends AbstractComparator {
     public static final class Builder implements ComparatorBuilder {
         @Override
         public ComparatorType type() {
-            return thisType;
+            return TYPE;
         }
 
         @Override
@@ -35,7 +35,7 @@ public class SmithWatermanComparator extends AbstractComparator {
     }
 
     public SmithWatermanComparator(Configuration config){
-        super(config, thisType);
+        super(config, TYPE);
     }
 
     @Override

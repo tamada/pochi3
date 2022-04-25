@@ -10,7 +10,7 @@ import jp.cafebabe.birthmarks.entities.impl.Converter;
 import java.util.Set;
 
 public class OverlapCoefficientComparator extends AbstractComparator {
-    private static final ComparatorType thisType = new ComparatorType("overlap_coefficient") {
+    public static final ComparatorType TYPE = new ComparatorType("overlap_coefficient") {
         @Override
         public ContainerType acceptable() {
             return ContainerType.Set;
@@ -20,7 +20,7 @@ public class OverlapCoefficientComparator extends AbstractComparator {
     public static final class Builder implements ComparatorBuilder {
         @Override
         public ComparatorType type() {
-            return thisType;
+            return TYPE;
         }
 
         @Override
@@ -29,18 +29,16 @@ public class OverlapCoefficientComparator extends AbstractComparator {
         }
         @Override
         public String description() {
-            return "";
+            return "overlap coefficient similarity";
         }
     }
 
     public OverlapCoefficientComparator(Configuration config){
-        super(config, thisType);
+        super(config, TYPE);
     }
 
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
-        if(left.size() == 0 && right.size() == 0)
-            return new Similarity(1d);
         Set<Element> intersection = SetUtils.intersect(left, right);
         var denominator = Math.min(Converter.toSet(left).size(), Converter.toSet(right).size());
         return new Similarity((1.0 * intersection.size()) / denominator);
