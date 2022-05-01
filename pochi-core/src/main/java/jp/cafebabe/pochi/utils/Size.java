@@ -1,4 +1,4 @@
-package jp.cafebabe.pochi.comparators.algorithms;
+package jp.cafebabe.pochi.utils;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;

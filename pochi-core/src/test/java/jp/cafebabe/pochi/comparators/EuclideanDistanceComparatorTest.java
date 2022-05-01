@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EuclideanDistanceComparatorTest {
     private Configuration config = Configuration.defaultConfig();
-    private ComparatorBuilder builder = new EuclideanDistanceComparator.Builder();
+    private ComparatorBuilder builder = new MinkowskiDistanceComparator.EuclideanBuilder();
 
     @Test
     public void testBuilder() {
         assertEquals("euclidean distance similarity", builder.description());
-        assertEquals(EuclideanDistanceComparator.TYPE, builder.type());
+        assertEquals(MinkowskiDistanceComparator.EUCLIDEAN, builder.type());
     }
 
     @Test
@@ -58,7 +58,6 @@ public class EuclideanDistanceComparatorTest {
 
     @Test
     public void testSimilarity2() throws Exception {
-        System.out.println("testSimilarity2");
         var comparator = builder.build(config);
         var b1 = buildBirthmarks("pochi".split("")).stream().findFirst().get();
         var b2 = buildBirthmarks("birthmarks".split("")).stream().findFirst().get();

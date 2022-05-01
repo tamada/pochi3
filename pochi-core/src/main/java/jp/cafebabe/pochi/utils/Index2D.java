@@ -1,8 +1,8 @@
-package jp.cafebabe.pochi.comparators.algorithms;
+package jp.cafebabe.pochi.utils;
 
 import java.util.Optional;
 
-record Index2D(int x, int y) {
+public record Index2D(int x, int y) {
     public Optional<Index2D> relativeOf(int deltaX, int deltaY) {
         if((x + deltaX) < 0 || (y + deltaY) < 0)
             return Optional.empty();

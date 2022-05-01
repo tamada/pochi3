@@ -1,33 +1,37 @@
-package jp.cafebabe.pochi.comparators.algorithms;
+package jp.cafebabe.pochi.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-class Table {
-    private final int[] table;
+public class Table<T> {
+    private final List<T> list;
     private final Size max;
 
     public Table(int width, int height) {
-        table = new int[width * height];
+        list = new ArrayList<T>(width * height);
+        IntStream.range(0, width * height).forEach(i -> list.add(null));
         this.max = Size.of(width, height);
     }
 
-    public int cost() {
-        return table[table.length - 1];
+    public T cost() {
+        return list.get(list.size() - 1);
     }
 
-    public void set(int value, Index2D index) {
-        table[index.compute(max)] = value;
+    public void set(T value, Index2D index) {
+        list.set(index.compute(max), value);
     }
 
-    public int get(Index2D index) {
-        return table[index.compute(max)];
+    public T get(Index2D index) {
+        return list.get(index.compute(max));
     }
 
-    public int get(int x, int y) {
+    public T get(int x, int y) {
         return get(new Index2D(x, y));
     }
 
-    public int getLatestItem() {
+    public T getLatestItem() {
         return get(max.width() - 1, max.height() - 1);
     }
 

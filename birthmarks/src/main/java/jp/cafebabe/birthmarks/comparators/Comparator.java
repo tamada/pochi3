@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 public interface Comparator {
     Either<Throwable, Similarity> similarity(Pair<Birthmark, Birthmark> pair);
 
+    default Either<Throwable, Similarity> similarity(Birthmark left, Birthmark right) {
+        return similarity(Pair.of(left, right));
+    }
+
     default ContainerType acceptableType() {
         return type().acceptable();
     }

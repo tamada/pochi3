@@ -14,12 +14,14 @@ module jp.cafebabe.pochi.core {
 
     uses jp.cafebabe.birthmarks.comparators.ComparatorBuilder;
     provides jp.cafebabe.birthmarks.comparators.ComparatorBuilder with
+            ChebyshevDistanceComparator.Builder,
             CosineComparator.Builder,
             DiceIndexComparator.Builder,
             EditDistanceComparator.Builder,
             JaccardIndexComparator.Builder,
             LongestCommonSubsequenceComparator.Builder,
-            OverlapCoefficientComparator.Builder,
+            MinkowskiDistanceComparator.EuclideanBuilder,
+            MinkowskiDistanceComparator.ManhattanBuilder,
             SimpsonIndexComparator.Builder,
             SmithWatermanComparator.Builder;
 

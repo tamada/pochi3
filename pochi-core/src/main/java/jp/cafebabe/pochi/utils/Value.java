@@ -1,4 +1,4 @@
-package jp.cafebabe.pochi.comparators.algorithms;
+package jp.cafebabe.pochi.utils;
 
 public record Value(int value, Index2D index) {
     public Value update(int newValue, Index2D index) {

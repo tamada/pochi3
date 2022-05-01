@@ -1,5 +1,4 @@
-package jp.cafebabe.pochi.comparators.algorithms;
-
+package jp.cafebabe.pochi.utils;
 
 import org.junit.jupiter.api.Test;
 

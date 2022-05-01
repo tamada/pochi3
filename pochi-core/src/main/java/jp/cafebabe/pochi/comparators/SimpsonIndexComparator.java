@@ -41,7 +41,7 @@ public class SimpsonIndexComparator extends AbstractComparator {
     @Override
     protected Similarity calculate(Birthmark left, Birthmark right) {
         Set<Element> intersection = SetUtils.intersect(left, right);
-        long denominator = Math.min(Converter.toSet(left).size(), Converter.toSet(right).size());
+        var denominator = Math.min(Converter.toSet(left).size(), Converter.toSet(right).size());
         return new Similarity(1.0 * intersection.size() / denominator);
     }
 }

@@ -1,6 +1,9 @@
 package jp.cafebabe.pochi.comparators.algorithms;
 
 import jp.cafebabe.birthmarks.comparators.Pair;
+import jp.cafebabe.pochi.utils.Index2D;
+import jp.cafebabe.pochi.utils.Table;
+import jp.cafebabe.pochi.utils.Value;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,12 +26,12 @@ public class SmithWatermanCalculator<T> extends Calculator {
     }
 
     public int compute(List<T> list1, List<T> list2) {
-        Table table = init(list1.size() + 1, list2.size() + 1, (x, y) -> 0);
+        var table = init(list1.size() + 1, list2.size() + 1, (x, y) -> 0);
         computeCosts(table, list1, list2);
         return score.value();
     }
 
-    private void computeCosts(Table table, List<T> list1, List<T> list2) {
+    private void computeCosts(Table<Integer> table, List<T> list1, List<T> list2) {
         table.indexStream()
                 .forEach(index -> findPair(index, list1, list2)
                         .ifPresent(pair -> computeCost(table, index, pair)));
@@ -40,13 +43,13 @@ public class SmithWatermanCalculator<T> extends Calculator {
         return Optional.of(Pair.of(list1.get(index.x() - 1), list2.get(index.y() - 1)));
     }
 
-    private void computeCost(Table table, Index2D index, Pair<T, T> pair) {
+    private void computeCost(Table<Integer> table, Index2D index, Pair<T, T> pair) {
         int newValue = computeCostImpl(table, index, pair);
         table.set(newValue, index);
         score = score.update(newValue, index);
     }
 
-    private int computeCostImpl(Table table, Index2D index, Pair<T, T> pair) {
+    private int computeCostImpl(Table<Integer> table, Index2D index, Pair<T, T> pair) {
         int d1 = tableValue(table, index.relativeOf(-1,  0)) + params.gap();
         int d2 = tableValue(table, index.relativeOf( 0, -1)) + params.gap();
         int d3 = tableValue(table, index.relativeOf(-1, -1)) +
@@ -54,7 +57,7 @@ public class SmithWatermanCalculator<T> extends Calculator {
         return maximum(d1, d2, d3, 0);
     }
 
-    private int tableValue(Table table, Optional<Index2D> optionalIndex) {
+    private int tableValue(Table<Integer> table, Optional<Index2D> optionalIndex) {
         return optionalIndex.map(table::get)
                 .orElse(Integer.MIN_VALUE);
     }
