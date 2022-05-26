@@ -49,3 +49,4 @@ task copyFiles(type: Copy) {
 }
 
 build.finalizedBy copyFiles
+

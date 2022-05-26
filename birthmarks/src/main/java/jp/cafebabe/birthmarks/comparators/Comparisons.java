@@ -9,6 +9,11 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * The resultant objects of the comparing phase.
+ *
+ * @see jp.cafebabe.birthmarks.io.ComparisonsJsonier
+ */
 public class Comparisons extends Results<Throwable, Comparison> implements Serializable, Mergeable<Comparisons> {
     @Serial
     private static final long serialVersionUID = 123856798190622633L;

@@ -1,3 +1,6 @@
+/**
+ * This module contains the classes related to cli interfaces of pochi command.
+ */
 module jp.cafebabe.pochi.cli {
     requires com.google.gson;
     requires io.vavr;
@@ -8,5 +11,5 @@ module jp.cafebabe.pochi.cli {
     requires java.scripting;
     requires org.objectweb.asm;
 
-    opens jp.cafebabe.pochi.cli;
+    opens jp.cafebabe.pochi.cli to info.picocli;
 }

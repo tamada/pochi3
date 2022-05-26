@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class RoundRobinPairer<T extends Namer> extends AbstractPairer<T> {
     public static final PairerType TYPE = new PairerType("round_robin");
-    public static final PairerType SAME_PAIR_TYPE = new PairerType("round_robin_with_same_pair");
+    public static final PairerType SAME_PAIR_TYPE = new PairerType("round_robin2");
 
     private final boolean includeSamePair;
 
@@ -35,7 +35,7 @@ public class RoundRobinPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public String description() {
-            return "";
+            return "round-robin";
         }
     }
 
@@ -57,12 +57,11 @@ public class RoundRobinPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public String description() {
-            return "";
+            return "round-robin with same pair by comparing one birthmarks";
         }
     }
 
-    public RoundRobinPairer(boolean includeSamePair,
-                            Configuration config) {
+    public RoundRobinPairer(boolean includeSamePair, Configuration config) {
         super(config);
         this.includeSamePair = includeSamePair;
     }

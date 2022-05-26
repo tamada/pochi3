@@ -25,6 +25,9 @@ public class CompareCommand implements Callable<Integer> {
     @Option(names = {"-a", "--algorithm"}, paramLabel = "ALGORITHM", description = "specify the comparing algorithm. Available: show info subcommand.", required = true)
     private String algorithm;
 
+    @Option(names = {"-p", "--pairer"}, paramLabel = "PAIRER", defaultValue = "round_robin", description = "specify the pairer for the birthmarks")
+    private String pairerName = "round_robin";
+
     @Option(names = {"-d", "--dest"}, paramLabel = "DEST", description = "specify the destination. If this option is absent or dash (\"-\"), output to stdout.")
     private Optional<String> dest = Optional.empty();
 
@@ -35,8 +38,8 @@ public class CompareCommand implements Callable<Integer> {
     private Pochi pochi;
 
     Pairer<Birthmark> constructPairer(Configuration config) {
-        return new PairerBuilderFactory<Birthmark>().builder("round_robin")
-                .orElseThrow(() -> new InternalError("round_robin: pairer not found"))
+        return new PairerBuilderFactory<Birthmark>().builder(pairerName)
+                .orElseThrow(() -> new InternalError(String.format("%s: pairer not found", pairerName)))
                 .build(config);
     }
 

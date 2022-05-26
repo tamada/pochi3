@@ -8,6 +8,10 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.stream.Stream;
 
+/**
+ * @see BirthmarkVisitor
+ * @see jp.cafebabe.birthmarks.io.BirthmarkJsonier
+ */
 public interface Birthmark extends Serializable, Streamable<Element>, Namer {
     Metadata metadata();
 

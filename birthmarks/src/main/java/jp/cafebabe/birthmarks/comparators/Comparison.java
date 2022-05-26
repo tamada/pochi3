@@ -5,6 +5,9 @@ import jp.cafebabe.birthmarks.entities.Birthmark;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * @see ComparisonVisitor
+ */
 public class Comparison implements Comparable<Comparison>, Serializable {
     @Serial
     private static final long serialVersionUID = 4696041585469364687L;

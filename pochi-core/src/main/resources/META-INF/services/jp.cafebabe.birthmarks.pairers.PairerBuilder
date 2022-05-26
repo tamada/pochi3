@@ -2,4 +2,3 @@ jp.cafebabe.pochi.pairers.GuessedPairer$Builder
 jp.cafebabe.pochi.pairers.RoundRobinPairer$Builder
 jp.cafebabe.pochi.pairers.RoundRobinPairer$WithSamePairBuilder
 jp.cafebabe.pochi.pairers.SpecifiedPairer$Builder
-

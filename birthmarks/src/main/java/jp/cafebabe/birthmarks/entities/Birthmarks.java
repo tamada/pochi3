@@ -9,6 +9,11 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * The resultant object for the reading phase.
+ *
+ * @see jp.cafebabe.birthmarks.io.BirthmarksJsonier
+ */
 public class Birthmarks extends Results<Throwable, Birthmark> implements Serializable, Mergeable<Birthmarks>, Streamable<Birthmark> {
     @Serial
     private static final long serialVersionUID = 4476836761615526741L;

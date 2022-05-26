@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 /**
  * This matcher matches the pair by the specified pairs from the csv file.
- * The csv file is given through the property of {@link Configuration <code>Configruation</code>} with key <code>pair.list</code>.
+ * The csv file is given through the property of <code>{@link Configuration Configruation}</code> with key <code>pair.list</code>.
  *
  * <pre><code>
  * pochi.config().put("pair.list", "csv/file/path");
@@ -83,7 +83,7 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public String description() {
-            return "";
+            return "pairs by the specified pairs. the pair list is given by the property of \"pair.list\"";
         }
 
         @Override
