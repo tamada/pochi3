@@ -6,7 +6,11 @@ import java.util.Map;
 public class PairList {
     private final Map<String, List<String>> pairs;
 
-    public PairList(Map<String, List<String>> pairs) {
+    PairList() {
+        this(Map.of());
+    }
+
+    PairList(Map<String, List<String>> pairs) {
         this.pairs = pairs;
     }
 

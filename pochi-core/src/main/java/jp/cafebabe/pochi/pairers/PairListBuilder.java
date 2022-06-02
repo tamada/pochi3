@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,17 +18,13 @@ class PairListBuilder implements Serializable {
     public static final String CONFIG_KEY = "pairer.list";
 
     public static PairList build(Configuration config) {
-        return new PairListBuilder().buildImpl(ResourceFinder
-                .find(config.value(CONFIG_KEY, null)));
+        var resource = ResourceFinder.find(config.value(CONFIG_KEY, null));
+        return resource.map(url -> new PairListBuilder().buildImpl(url))
+                .orElseGet(PairList::new);
     }
 
-    private PairList buildImpl(Optional<URL> optionalURL) {
-        return new PairList(readPairs(optionalURL));
-    }
-
-    private Map<String, List<String>> readPairs(Optional<URL> path) {
-        return path.map(this::readPairs)
-                .orElseGet(HashMap::new);
+    private PairList buildImpl(URL url) {
+        return new PairList(readPairs(url));
     }
 
     private Map<String, List<String>> readPairs(URL url) {
