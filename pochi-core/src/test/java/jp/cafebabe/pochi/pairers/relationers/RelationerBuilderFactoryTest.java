@@ -20,8 +20,8 @@ public class RelationerBuilderFactoryTest {
     @Test
     public void testClassName() {
         var relationer = factory.builder("classname")
-                .orElseGet(() -> new ClassNameRelationer.Builder()).build(null);
-        assertEquals("jp.cafebabe.pochi.pairers.relationers.ClassNameRelationer", relationer.getClass().getName());
+                .orElseGet(() -> new SimpleClassNameRelationer.Builder()).build(null);
+        assertEquals("jp.cafebabe.pochi.pairers.relationers.SimpleClassNameRelationer", relationer.getClass().getName());
         assertTrue(relationer.isRelate("SomeClassName", "SomeClassName"));
         assertTrue(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.cafebabe.pochi.SomeClassName"));
         assertTrue(relationer.isRelate("jp.cafebabe.pochi.SomeClassName", "jp.otherpackage.SomeClassName"));

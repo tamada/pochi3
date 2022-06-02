@@ -9,13 +9,14 @@ import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
 import jp.cafebabe.pochi.pairers.relationers.FullyMatchRelationer;
-import jp.cafebabe.pochi.pairers.relationers.RelationerBuilderFactory;
+import jp.cafebabe.pochi.pairers.relationers.SimpleClassNameRelationer;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
-    public static final PairerType TYPE = new PairerType("guessed");
+    public static final PairerType TYPE_SIMPLE = new PairerType("guessed-simple");
+    public static final PairerType TYPE_FULLY = new PairerType("guessed-fully");
 
     private final Relationer relationer;
 
@@ -51,26 +52,40 @@ public class GuessedPairer<T extends Namer> extends AbstractPairer<T> {
                 .findFirst();
     }
 
-    public static final class Builder<T extends Namer> implements PairerBuilder<T> {
+    public static final class SimpleBuilder<T extends Namer> extends Builder<T> {
+        public SimpleBuilder() {
+            super(TYPE_SIMPLE, new SimpleClassNameRelationer());
+        }
+    }
+
+    public static final class FullyBuilder<T extends Namer> extends Builder<T> {
+        public FullyBuilder() {
+            super(TYPE_FULLY, new FullyMatchRelationer());
+        }
+    }
+
+    public static abstract class Builder<T extends Namer> implements PairerBuilder<T> {
+        private final Relationer relationer;
+        private final PairerType type;
+
+        public Builder(PairerType type, Relationer relationer) {
+            this.type = type;
+            this.relationer = relationer;
+        }
+
         @Override
         public PairerType type() {
-            return TYPE;
+            return type;
         }
 
         @Override
         public Pairer<T> build(Configuration config) {
-            var builder = new RelationerBuilderFactory().builder(config);
-            return build(config,
-                    builder.orElseGet(() -> new FullyMatchRelationer.Builder()).build(config));
-        }
-
-        public Pairer<T> build(Configuration config, Relationer relationer) {
             return new GuessedPairer<>(config, relationer);
         }
 
         @Override
         public String description() {
-            return "pairs by the names with Relationer";
+            return String.format("pairs by the names with %s", relationer.getClass().getSimpleName());
         }
     }
 }

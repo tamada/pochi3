@@ -32,10 +32,12 @@ module jp.cafebabe.pochi.core {
 
     uses jp.cafebabe.birthmarks.pairers.PairerBuilder;
     provides jp.cafebabe.birthmarks.pairers.PairerBuilder with
-            GuessedPairer.Builder,
+            GuessedPairer.FullyBuilder,
+            GuessedPairer.SimpleBuilder,
             RoundRobinPairer.Builder,
             RoundRobinPairer.WithSamePairBuilder,
-            SpecifiedPairer.Builder;
+            SpecifiedPairer.FullyBuilder,
+            SpecifiedPairer.SimpleBuilder;
 
     exports jp.cafebabe.pochi.birthmarks;
     exports jp.cafebabe.pochi.birthmarks.kgram;

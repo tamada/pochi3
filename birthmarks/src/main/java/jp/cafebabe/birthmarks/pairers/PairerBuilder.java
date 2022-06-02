@@ -8,6 +8,4 @@ public interface PairerBuilder<T extends Namer> extends TaskBuilder<Pairer<T>, P
     PairerType type();
 
     Pairer<T> build(Configuration config);
-
-    Pairer<T> build(Configuration config, Relationer relationer);
 }

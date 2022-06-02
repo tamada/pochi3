@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>LongestCommonSubstring.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">Coverage reports of pochi</a> &gt; <a href="../index.html" class="el_bundle">pochi-api</a> &gt; <a href="index.source.html" class="el_package">jp.cafebabe.birthmarks.utils</a> &gt; <span class="el_source">LongestCommonSubstring.java</span></div><h1>LongestCommonSubstring.java</h1><pre class="source lang-java linenums">package jp.cafebabe.birthmarks.utils;
+
+<span class="fc" id="L3">public class LongestCommonSubstring {</span>
+    public static final String of(String s1, String s2) {
+<span class="fc" id="L5">        return new LongestCommonSubstring()</span>
+<span class="fc" id="L6">                .calculate(s1, s2);</span>
+    }
+
+    private String calculate(String s1, String s2) {
+<span class="fc" id="L10">        int[][] table = new int[s1.length() + 1][s2.length() + 1];</span>
+<span class="fc" id="L11">        Result r = Result.of(0, 0, 0);</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        for(int i = 0; i &lt; table.length; i++) {</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">            for(int j = 0; j &lt; table[i].length; j++) {</span>
+<span class="fc bfc" id="L14" title="All 4 branches covered.">                if(i == 0 || j == 0) table[i][j] = 0;</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">                else if(s1.charAt(i - 1) == s2.charAt(j - 1)) {</span>
+<span class="fc" id="L16">                    table[i][j] = 1 + table[i - 1][j - 1];</span>
+<span class="fc" id="L17">                    r = updateResultIfNeeded(r, i, j, table[i][j]);</span>
+                }
+                // printTable(table);
+            }
+        }
+<span class="fc" id="L22">        return s1.substring(r.i - r.max, r.i);</span>
+    }
+
+    private Result updateResultIfNeeded(Result r, int i, int j, int v) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if(r.max &gt; v)</span>
+<span class="fc" id="L27">            return r;</span>
+<span class="fc" id="L28">        return Result.of(i, j, v);</span>
+    }
+
+    private static final class Result {
+        private int i;
+        private int j;
+        private int max;
+<span class="fc" id="L35">        private Result(int i, int j, int max) {</span>
+<span class="fc" id="L36">            this.i = i;</span>
+<span class="fc" id="L37">            this.j = j;</span>
+<span class="fc" id="L38">            this.max = max;</span>
+<span class="fc" id="L39">        }</span>
+        public static Result of(int i, int j, int max) {
+<span class="fc" id="L41">            return new Result(i, j, max);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

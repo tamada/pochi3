@@ -7,14 +7,13 @@ import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.pairers.RelationerType;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class RelationerBuilderFactory implements BuilderFactory<TaskBuilder<Relationer, RelationerType>, RelationerType> {
     private final List<TaskBuilder<Relationer, RelationerType>> relationers =
             List.of(new FullyMatchRelationer.Builder(),
-                    new ClassNameRelationer.Builder());
+                    new SimpleClassNameRelationer.Builder());
 
     public Optional<TaskBuilder<Relationer, RelationerType>> builder(Configuration config) {
         return builder(config.value("pairer.relationer"));

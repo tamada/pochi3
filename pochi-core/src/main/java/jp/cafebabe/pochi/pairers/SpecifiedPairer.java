@@ -9,7 +9,7 @@ import jp.cafebabe.birthmarks.pairers.Relationer;
 import jp.cafebabe.birthmarks.utils.Namer;
 import jp.cafebabe.birthmarks.utils.Streamable;
 import jp.cafebabe.pochi.pairers.relationers.FullyMatchRelationer;
-import jp.cafebabe.pochi.pairers.relationers.RelationerBuilderFactory;
+import jp.cafebabe.pochi.pairers.relationers.SimpleClassNameRelationer;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,7 +25,8 @@ import java.util.stream.Stream;
  * </code></pre>
  */
 public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
-    public static final PairerType TYPE = new PairerType("specified");
+    public static final PairerType TYPE_SIMPLE = new PairerType("specified-simple");
+    public static final PairerType TYPE_FULLY = new PairerType("specified-fully");
 
     private final Relationer relationer;
     private final PairList pairs;
@@ -75,10 +76,30 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
         return pair(birthmarks1, birthmarks2).count();
     }
 
-    public static final class Builder<T extends Namer> implements PairerBuilder<T> {
+    public static final class SimpleBuilder<T extends Namer> extends Builder<T> {
+        public SimpleBuilder() {
+            super(TYPE_SIMPLE, new SimpleClassNameRelationer());
+        }
+    }
+
+    public static final class FullyBuilder<T extends Namer> extends Builder<T> {
+        public FullyBuilder() {
+            super(TYPE_FULLY, new FullyMatchRelationer());
+        }
+    }
+
+    public static abstract class Builder<T extends Namer> implements PairerBuilder<T> {
+        private final Relationer relationer;
+        private final PairerType type;
+
+        public Builder(PairerType type, Relationer relationer) {
+            this.type = type;
+            this.relationer = relationer;
+        }
+
         @Override
         public PairerType type() {
-            return TYPE;
+            return type;
         }
 
         @Override
@@ -88,14 +109,6 @@ public class SpecifiedPairer<T extends Namer> extends AbstractPairer<T> {
 
         @Override
         public Pairer<T> build(Configuration config) {
-            return build(config,
-                    new RelationerBuilderFactory().builder(config)
-                            .orElseGet(() -> new FullyMatchRelationer.Builder())
-                            .build(config));
-        }
-
-        @Override
-        public Pairer<T> build(Configuration config, Relationer relationer) {
             return new SpecifiedPairer<>(config, relationer);
         }
     }

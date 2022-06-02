@@ -1,0 +1,42 @@
+plugins {
+  id "io.github.fstaudt.hugo" version "0.2.0"
+  id 'pochi.java-conventions'
+}
+
+task site {
+  ant.mkdir(dir: "build/generated/sources")
+  ant.symlink(link: "build/generated/sources/jp.cafebabe.pochi.clpond", resource: "../../../../clpond/src/main/java")
+  ant.symlink(link: "build/generated/sources/jp.cafebabe.pochi.birthmarks", resource: "../../../../birthmarks/src/main/java")
+  ant.symlink(link: "build/generated/sources/jp.cafebabe.pochi.core", resource: "../../../../pochi-core/src/main/java")
+  ant.symlink(link: "build/generated/sources/jp.cafebabe.pochi.cli", resource: "../../../../pochi-cli/src/main/java")
+  ant.javadoc(destdir: "static/apidocs", modulepath: "../build/libs", modulesourcepath: "build/generated/sources",
+          encoding: "utf-8", modulenames: "jp.cafebabe.pochi.clpond,jp.cafebabe.pochi.birthmarks,jp.cafebabe.pochi.core",
+          locale: "en_US", author: true, version: true, use: true,
+          windowtitle: "the birthmarking toolkit",
+          additionalparam: "-J-Duser.language=en_US -encoding utf-8 -charset utf-8") {
+    doctitle("Pochi ${version} API")
+    bottom("Copyright &#169; 2017-2022 Haruaki TAMADA, All rights reserved.")
+    link(href: "https://docs.oracle.com/en/java/javase/17/docs/api")
+    link(href: "https://www.javadoc.io/doc/io.vavr/vavr/0.10.4/")
+  }
+}
+
+hugo {
+  // Hugo version
+  version = "0.98.0"
+  // Relative path to sources of Hugo site in Gradle project
+  sourceDirectory = "../site"
+  // Download URL for Windows ( {0} can be used to replace version )
+  windowsDownloadUrl = "https://github.com/gohugoio/hugo/releases/download/v{0}/hugo_extended_{0}_Windows-64bit.zip"
+  // Download URL for Linux ( {0} can be used to replace version )
+  linuxDownloadUrl = "https://github.com/gohugoio/hugo/releases/download/v{0}/hugo_extended_{0}_Linux-64bit.tar.gz"
+  // Download URL for macOS ( {0} can be used to replace version )
+  macOSDownloadUrl = "https://github.com/gohugoio/hugo/releases/download/v{0}/hugo_extended_{0}_macOS-64bit.tar.gz"
+  // Operating system family (Windows, macOS or Unix)
+  osFamily = io.github.fstaudt.hugo.OsFamily.CURRENT_SYSTEM // default value derived from system property "os.name"
+}
+
+tasks.hugoBuild {
+  outputDirectory = File("public")
+}
+

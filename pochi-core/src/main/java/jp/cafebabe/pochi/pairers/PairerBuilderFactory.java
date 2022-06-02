@@ -10,9 +10,10 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class PairerBuilderFactory<E extends Namer> implements BuilderFactory<PairerBuilder<E>, PairerType> {
-    private List<PairerBuilder<E>> list = List.of(new GuessedPairer.Builder<>(),
-            new RoundRobinPairer.Builder<>(), new RoundRobinPairer.WithSamePairBuilder<>(),
-            new SpecifiedPairer.Builder<>());
+    private final List<PairerBuilder<E>> list = List.of(new GuessedPairer.SimpleBuilder<>(),
+            new GuessedPairer.SimpleBuilder<>(), new SpecifiedPairer.SimpleBuilder<>(),
+            new SpecifiedPairer.FullyBuilder<>(), new RoundRobinPairer.Builder<>(),
+            new RoundRobinPairer.WithSamePairBuilder<>());
 
     @Override
     public Optional<PairerBuilder<E>> builder(String type) {
@@ -29,6 +30,6 @@ public class PairerBuilderFactory<E extends Namer> implements BuilderFactory<Pai
     @Override
     public Stream<PairerType> availables() {
         return builders()
-                .map(b -> b.type());
+                .map(PairerBuilder::type);
     }
 }

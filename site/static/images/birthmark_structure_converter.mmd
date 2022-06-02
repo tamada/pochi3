@@ -1,0 +1,15 @@
+flowchart LR
+  list((L)) --> vector((V))
+  list --> set((S))
+  raph((G)) --> list
+  raph --> vector
+  raph --> set
+  vector --> set
+  tree((T)) --> set
+  tree --> list
+  tree --> vector
+  set -.-> list
+  set -.-> vector
+  vector -.-> list
+  vector --> set
+

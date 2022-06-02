@@ -7,7 +7,7 @@ import jp.cafebabe.birthmarks.pairers.RelationerType;
 
 import java.util.Objects;
 
-public class ClassNameRelationer implements Relationer {
+public class SimpleClassNameRelationer implements Relationer {
     @Override
     public boolean isRelate(String name1, String name2) {
         return Objects.equals(extractClassName(name1), extractClassName(name2));
@@ -33,7 +33,7 @@ public class ClassNameRelationer implements Relationer {
 
         @Override
         public Relationer build(Configuration config) {
-            return new ClassNameRelationer();
+            return new SimpleClassNameRelationer();
         }
     }
 }

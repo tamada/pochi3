@@ -23,8 +23,8 @@ class PairListBuilder implements Serializable {
                 .find(config.value(CONFIG_KEY, null)));
     }
 
-    private PairList buildImpl(Optional<URL> url) {
-        return new PairList(readPairs(url));
+    private PairList buildImpl(Optional<URL> optionalURL) {
+        return new PairList(readPairs(optionalURL));
     }
 
     private Map<String, List<String>> readPairs(Optional<URL> path) {
