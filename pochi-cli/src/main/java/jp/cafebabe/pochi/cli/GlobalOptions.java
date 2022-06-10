@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -24,6 +25,9 @@ public class GlobalOptions {
 
     @Option(names = {"-V", "--version"}, description = "print version and exit.", versionHelp = true)
     private boolean versionFlag;
+
+    @Option(names = {"-P", "--property"}, description = "specify the property key and its value")
+    private Map<String, String> properties;
 
     private PathUtils pathUtils = new PathUtils();
     private Configuration config;
@@ -44,7 +48,7 @@ public class GlobalOptions {
     public Configuration config() {
         if(config == null) {
             config = openConfig()
-                    .orElseGet(() -> Configuration.defaultConfig());
+                    .orElseGet(() -> Configuration.defaultConfig(properties));
         }
         return config;
     }
@@ -52,7 +56,7 @@ public class GlobalOptions {
     private Optional<Configuration> openConfig() {
         return configPath()
                 .flatMap(this::openStream)
-                .flatMap(in -> Try.of(() -> new ConfigurationParser().parse(in))
+                .flatMap(in -> Try.of(() -> new ConfigurationParser().parse(in, properties))
                         .onFailure(t -> center.push(t))
                         .toJavaOptional());
     }
