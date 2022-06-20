@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GlobalOptionsTest {
     @Test
@@ -16,6 +15,9 @@ public class GlobalOptionsTest {
         assertNotNull(config);
         assertEquals(0L, config.properties().count());
         assertEquals(7L, config.rules().count());
+
+        var config2 = opts.config();
+        assertTrue(config == config2);
     }
     @Test
     public void testConfigPath() {

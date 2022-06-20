@@ -6,12 +6,10 @@ import jp.cafebabe.birthmarks.config.ConfigurationParser;
 import jp.cafebabe.pochi.cli.messages.MessageCenter;
 import picocli.CommandLine.Option;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -27,7 +25,7 @@ public class GlobalOptions {
     private boolean versionFlag;
 
     @Option(names = {"-P", "--property"}, description = "specify the property key and its value")
-    private Map<String, String> properties;
+    private Map<String, String> properties = new HashMap<>();
 
     private PathUtils pathUtils = new PathUtils();
     private Configuration config;
