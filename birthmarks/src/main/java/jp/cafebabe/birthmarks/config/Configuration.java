@@ -3,7 +3,6 @@ package jp.cafebabe.birthmarks.config;
 import io.vavr.control.Try;
 import jp.cafebabe.birthmarks.comparators.Pair;
 
-import java.io.StringWriter;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -41,9 +40,13 @@ public class Configuration {
         return properties.getOrDefault(key, defaultValue);
     }
 
-    public static Configuration defaultConfig() {
+    public static Configuration defaultConfig(Map<String, String> properties) {
         return Try.of(() -> new ConfigurationParser()
-                        .parse(Configuration.class.getResourceAsStream("/resources/config.json")))
+                        .parse(Configuration.class.getResourceAsStream("/resources/config.json"), properties))
                 .get();
+    }
+
+    public static Configuration defaultConfig() {
+        return defaultConfig(Map.of());
     }
 }

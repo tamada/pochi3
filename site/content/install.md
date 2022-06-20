@@ -10,7 +10,7 @@ For macOS user, **pochi** supports homebrew installation.
 
 ```sh
 $ brew tap tamada/brew
-$ brew install tamada/brew/pochi
+$ brew install tamada/brew/pochi3
 ```
 
 {{< gototop >}}
@@ -20,8 +20,8 @@ $ brew install tamada/brew/pochi
 For building yourself, clone the source code from GitHub, and build it with [Maven](https://maven.apache.org/).
 
 ```sh
-$ git clone https://github.com/tamada/pochi.git
-$ cd pochi
+$ git clone https://github.com/tamada/pochi3.git
+$ cd pochi3
 $ gradle build
 ```
 
@@ -47,10 +47,10 @@ Then, add the dependencies of your `pom.xml`.
 
 | groupId            | artifactId   | version           |
 |--------------------|--------------|-------------------|
-|`jp.cafebabe.pochi` | `kunai2`     | `{{< version >}}` |
+|`jp.cafebabe.pochi` | `clpond`     | `{{< version >}}` |
 |`jp.cafebabe.pochi` | `pochi-core` | `{{< version >}}` |
 |`jp.cafebabe.pochi` | `pochi-api`  | `{{< version >}}` |
-|`jp.cafebabe.pochi` | `pochi-cmd`  | `{{< version >}}` |
+|`jp.cafebabe.pochi` | `pochi-cli`  | `{{< version >}}` |
 
 
 ## :briefcase: Requirements

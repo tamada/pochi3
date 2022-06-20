@@ -7,10 +7,10 @@ title: ":fork_and_knife: Usage"
 ```sh
 Usage: pochi [-hV] [-c=<configPath>] [COMMAND]
 Java Birthmarking Toolkit
-  -c, --config=<configPath>
-                  specify the configuration file.
-  -h, --help      print this message.
-  -V, --version   print version and exit.
+  -c, --config=<configPath>     specify the configuration file.
+  -P, --property <KEY=VALUE>    specify the property key and value. 
+  -h, --help                    print this message.
+  -V, --version                 print version and exit.
 Commands:
   help     Displays help information about the specified command.
   compare  compares the given birthmarks by a round-robin.
