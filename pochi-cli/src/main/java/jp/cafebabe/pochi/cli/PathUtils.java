@@ -21,15 +21,15 @@ public class PathUtils {
     private Path findPochiHome() {
         var home = Path.of(System.getenv("HOME"));
         return Stream.concat(pochiHomeFromSysEnvProperty().stream(),
-                        Stream.of(home.resolve(Path.of(".pochi")), Path.of("/usr/local/opt/pochi"),
-                                Path.of("/opt/homebrew/opt/pochi"), Path.of(".")))
+                        Stream.of(home.resolve(Path.of(".config/pochi3")), Path.of("/usr/local/opt/pochi3"),
+                                Path.of("/opt/homebrew/opt/pochi3"), Path.of(".")))
                 .filter(Files::exists)
                 .findFirst().get();
     }
 
     private Optional<Path> pochiHomeFromSysEnvProperty() {
-        var pochiHome = Optional.ofNullable(System.getenv("POCHI_HOME"));
-        var home = pochiHome.or(() -> Optional.ofNullable(System.getProperty("pochi.home")))
+        var pochiHome = Optional.ofNullable(System.getenv("POCHI3_HOME"));
+        var home = pochiHome.or(() -> Optional.ofNullable(System.getProperty("pochi3.home")))
                 .map(Path::of);
         return home;
     }

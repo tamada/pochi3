@@ -1,5 +1,6 @@
 package jp.cafebabe.pochi.cli;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -26,14 +27,15 @@ public class GlobalOptionsTest {
     }
 
     @Test
+    @Disabled("Installing pochi3 affects the test results")
     public void testPochiHome() {
         GlobalOptions opts = new GlobalOptions();
-        assertEquals(Path.of("/opt/homebrew/opt/pochi"), opts.pochiHome());
+        assertEquals(Path.of(System.getenv("HOME"), ".config/pochi3"), opts.pochiHome());
     }
 
     @Test
     public void testPochiHomeBySysProperty() {
-        execWithSysProp("pochi.home", "../birthmarks/src/main/resources/resources", () -> {
+        execWithSysProp("pochi3.home", "../birthmarks/src/main/resources/resources", () -> {
             GlobalOptions opts = new GlobalOptions();
             assertEquals(Path.of("../birthmarks/src/main/resources/resources"), opts.pochiHome());
         });
