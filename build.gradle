@@ -13,12 +13,18 @@ plugins {
     id 'pochi.java-conventions'
     id 'jacoco'
     id 'jacoco-report-aggregation'
+    id 'test-report-aggregation'
     id 'com.github.kt3k.coveralls' version '2.12.0'
 }
 
 evaluationDependsOnChildren()
 
 dependencies {
+    implementation project(':clpond')
+    implementation project(':birthmarks')
+    implementation project(':pochi-core')
+    implementation project(':pochi-cli')
+
     jacocoAggregation project(':clpond')
     jacocoAggregation project(':birthmarks')
     jacocoAggregation project(':pochi-core')
@@ -34,7 +40,8 @@ reporting {
 }
 
 tasks.named('check') {
-    dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+    dependsOn tasks.named('testCodeCoverageReport', JacocoReport),
+        tasks.named('testAggregateTestReport', TestReport)
 }
 
 coveralls {
