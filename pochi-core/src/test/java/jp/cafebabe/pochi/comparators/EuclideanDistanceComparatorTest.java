@@ -15,7 +15,7 @@ public class EuclideanDistanceComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("euclidean distance similarity", builder.description());
+        assertEquals("euclidean distance similarity (vector)", builder.description());
         assertEquals(MinkowskiDistanceComparator.EUCLIDEAN, builder.type());
     }
 

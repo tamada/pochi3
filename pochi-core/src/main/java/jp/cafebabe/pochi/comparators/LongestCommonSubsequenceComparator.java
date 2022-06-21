@@ -30,7 +30,7 @@ public class LongestCommonSubsequenceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "longest common subsequence similarity";
+            return "longest common subsequence similarity (list)";
         }
     }
 

@@ -29,7 +29,7 @@ public class JaccardIndexComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "jaccard index";
+            return "jaccard index (set)";
         }
     }
 

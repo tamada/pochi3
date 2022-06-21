@@ -15,7 +15,7 @@ public class JaccardIndexComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("jaccard index", builder.description());
+        assertEquals("jaccard index (set)", builder.description());
         assertEquals(JaccardIndexComparator.TYPE, builder.type());
     }
 

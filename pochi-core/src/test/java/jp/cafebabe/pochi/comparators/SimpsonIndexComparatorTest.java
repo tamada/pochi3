@@ -15,7 +15,7 @@ public class SimpsonIndexComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("simpson index", builder.description());
+        assertEquals("simpson index (set)", builder.description());
         assertEquals(SimpsonIndexComparator.TYPE, builder.type());
     }
 

@@ -33,7 +33,7 @@ public class ChebyshevDistanceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "chebyshev distance similarity";
+            return "chebyshev distance similarity (vector)";
         }
     }
 

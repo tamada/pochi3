@@ -15,7 +15,7 @@ public class LongestCommonSubsequenceComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("longest common subsequence similarity", builder.description());
+        assertEquals("longest common subsequence similarity (list)", builder.description());
         assertEquals(LongestCommonSubsequenceComparator.TYPE, builder.type());
     }
 

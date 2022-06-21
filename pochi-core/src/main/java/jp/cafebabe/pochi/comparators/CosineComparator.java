@@ -28,7 +28,7 @@ public class CosineComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "cosine similarity";
+            return "cosine similarity (vector)";
         }
     }
 

@@ -16,7 +16,7 @@ public class CosineComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("cosine similarity", builder.description());
+        assertEquals("cosine similarity (vector)", builder.description());
         assertEquals(CosineComparator.TYPE, builder.type());
     }
 

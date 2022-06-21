@@ -30,7 +30,7 @@ public class SimpsonIndexComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "simpson index";
+            return "simpson index (set)";
         }
     }
 

@@ -12,29 +12,35 @@ buildscript {
 plugins {
     id 'pochi.java-conventions'
     id 'jacoco'
+    id 'jacoco-report-aggregation'
     id 'com.github.kt3k.coveralls' version '2.12.0'
 }
 
 evaluationDependsOnChildren()
 
-jacocoTestReport {
-    dependsOn subprojects.jacocoTestReport
+dependencies {
+    jacocoAggregation project(':clpond')
+    jacocoAggregation project(':birthmarks')
+    jacocoAggregation project(':pochi-core')
+    jacocoAggregation project(':pochi-cli')
+}
 
-    doLast {
-        executionData fileTree(project.buildDir.absolutePath).include("jacoco/*.exec")
-        classDirectories.setFrom files(project.sourceSets.main.output)
-        sourceDirectories.setFrom files(project.sourceSets.main.allSource.srcDirs)
-
-        reports {
-            xml.enabled(true)
-            html.enabled(true)
+reporting {
+    reports {
+        testCodeCoverageReport(JacocoCoverageReport) {
+            testType = TestSuiteType.UNIT_TEST
         }
     }
 }
 
+tasks.named('check') {
+    dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+}
+
 coveralls {
     sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
-    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+//    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+    jacocoReportPath = "${buildDir}/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml"
 }
 
 // https://discuss.gradle.org/t/how-to-aggregate-subproject-jars-distributions-in-a-root-project-with-base-plugin-only/9798

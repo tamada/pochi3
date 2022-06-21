@@ -15,7 +15,7 @@ public class DiceIndexComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("dice index", builder.description());
+        assertEquals("dice index (set)", builder.description());
         assertEquals(DiceIndexComparator.TYPE, builder.type());
     }
 

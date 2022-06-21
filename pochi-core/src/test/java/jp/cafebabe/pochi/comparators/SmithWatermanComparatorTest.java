@@ -15,7 +15,7 @@ public class SmithWatermanComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("smith-waterman similarity", builder.description());
+        assertEquals("smith-waterman similarity (list)", builder.description());
         assertEquals(SmithWatermanComparator.TYPE, builder.type());
     }
 
