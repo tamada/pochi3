@@ -1,5 +1,7 @@
 package jp.cafebabe.clpond.sink;
 
+import io.vavr.API;
+import io.vavr.Predicates;
 import io.vavr.control.Try;
 
 import java.io.IOException;
@@ -15,8 +17,8 @@ import java.util.Optional;
 
 class DataSinkHelper {
     public static FileSystem buildFileSystem(Path path){
-        Map<String, String> environment = new HashMap<>();
-        environment.put("create", "true");
+        Map<String, String> environment = Map.of(
+                "create", "true", "encoding", "utf-8");
         return buildFileSystem(path, environment).get();
     }
 
@@ -26,7 +28,9 @@ class DataSinkHelper {
     }
 
     private static FileSystem newFileSystem(Path path, Map<String, String> environment) throws IOException {
-        URI uri = URI.create("jar:file:" + path.toAbsolutePath());
+        URI uri = Try.of(() -> new URI("jar", path.toUri().toString(), null))
+                .toEither()
+                .getOrElseThrow(use -> new IOException(use));
         return FileSystems.newFileSystem(uri, environment);
     }
 

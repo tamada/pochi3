@@ -12,7 +12,8 @@ public record ClassName(String name) implements Serializable {
     }
 
     public ClassName(String name){
-        this.name = name.replace('/', '.');
+        this.name = name.replace('/', '.')
+                .replace('\\', '.');
     }
 
     public String fqdnName() {
