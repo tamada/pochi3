@@ -19,7 +19,7 @@ public class PathUtils {
     }
 
     private Path findPochiHome() {
-        var home = Path.of(System.getenv("HOME"));
+        var home = Path.of(System.getProperty("user.home"));
         return Stream.concat(pochiHomeFromSysEnvProperty().stream(),
                         Stream.of(home.resolve(Path.of(".config/pochi3")), Path.of("/usr/local/opt/pochi3"),
                                 Path.of("/opt/homebrew/opt/pochi3"), Path.of(".")))
