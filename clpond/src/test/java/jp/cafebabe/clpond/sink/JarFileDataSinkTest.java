@@ -18,7 +18,6 @@ public class JarFileDataSinkTest {
     @Test
     public void testCreatedJarFile() throws Exception{
         Path path = Paths.get("src/test/resources/hello/target/classes/");
-        System.out.printf("path: %s (%s), %s%n", path, Files.exists(path), Path.of(".").toAbsolutePath());
         try(DataSource source = DataSourceBuilder.instance().build(path);
             DataSink sink = new JarFileDataSink(Paths.get("hoge.jar"))){
                 sink.consume(source);
