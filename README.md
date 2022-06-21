@@ -1,5 +1,8 @@
 # pochi3
 
+[![build](https://github.com/tamada/pochi3/actions/workflows/build.yaml/badge.svg)](https://github.com/tamada/pochi3/actions/workflows/build.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/tamada/pochi3/badge.svg?branch=main)](https://coveralls.io/github/tamada/pochi3?branch=main)
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi/blob/master/LICENSE)
 [![Version](https://img.shields.io/badge/Version-3.0.0-green.svg)](https://github.com/tamada/pochi/releases/tag/v3.0.0)
 

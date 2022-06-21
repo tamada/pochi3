@@ -75,8 +75,6 @@ $d(A, B)$ is the result of LCS between $A$ and $B$.
 
 #### Smith-Waterman
 
-
-
 ### Set birthmarks
 
 #### Dice index

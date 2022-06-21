@@ -15,7 +15,7 @@ public class EditDistanceComparatorTest {
 
     @Test
     public void testBuilder() {
-        assertEquals("edit distance similarity", builder.description());
+        assertEquals("edit distance similarity (list)", builder.description());
         assertEquals(EditDistanceComparator.TYPE, builder.type());
     }
 

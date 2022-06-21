@@ -42,7 +42,7 @@ public class MinkowskiDistanceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "euclidean distance similarity";
+            return "euclidean distance similarity (vector)";
         }
     }
 
@@ -59,7 +59,7 @@ public class MinkowskiDistanceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "manhattan distance similarity";
+            return "manhattan distance similarity (vector)";
         }
     }
 

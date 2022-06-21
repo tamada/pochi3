@@ -30,7 +30,7 @@ public class EditDistanceComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "edit distance similarity";
+            return "edit distance similarity (list)";
         }
     }
 

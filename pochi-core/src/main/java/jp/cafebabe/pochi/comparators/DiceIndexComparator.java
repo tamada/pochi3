@@ -41,7 +41,7 @@ public class DiceIndexComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "dice index";
+            return "dice index (set)";
         }
     }
 }

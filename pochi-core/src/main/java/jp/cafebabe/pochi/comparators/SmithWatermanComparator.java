@@ -30,7 +30,7 @@ public class SmithWatermanComparator extends AbstractComparator {
 
         @Override
         public String description() {
-            return "smith-waterman similarity";
+            return "smith-waterman similarity (list)";
         }
     }
 
