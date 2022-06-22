@@ -1,4 +1,4 @@
-# Targets for build/libs/clpod-3.0.0.jar
+# Targets for build/libs/clpond-3.0.0-alpha-1.jar
 jp.cafebabe.clpond.sink.WarFileDataSink,jp.cafebabe.clpond.source.factories.WarFileDataSourceBuilder
 jp.cafebabe.clpond.source.WarFileDataSource,jp.cafebabe.clpond.source.factories.WarFileDataSourceBuilder
 jp.cafebabe.clpond.source.factories.ClassFileDataSourceBuilder,jp.cafebabe.clpond.source.factories.WarFileDataSourceBuilder
