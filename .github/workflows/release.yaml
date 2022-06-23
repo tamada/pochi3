@@ -1,0 +1,84 @@
+name: publish
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    # This workflow only run when branch whose name starts with 'release/b' was merged through pull request.
+    if: startsWith(github.head_ref, 'release/v') && github.event.pull_request.merged == true
+    outputs:
+      tag: ${{ steps.vars.outputs.tag }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Git Tag name
+        id: vars
+        run: |
+          echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF (${GITHUB_HEAD_REF##*/v})"
+          echo "::set-output name=tag::${GITHUB_HEAD_REF##*/v}"
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.vars.outputs.tag }}
+          release_name: Release v${{ steps.vars.outputs.tag }}
+          draft: false
+          prerelease: false
+
+  site:
+    runs-on: ubuntu-latest
+    needs: setup
+    outputs:
+      tag: ${{ needs.setup.outputs.tag }}
+      upload_url: ${{ needs.setup.outputs.upload_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
+      # build site will setup the feature release.
+
+  publish:
+    needs: site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup variable
+        id: vars
+        shell: bash
+        run: |
+          DIR=$(echo "pochi3-${{ needs.site.outputs.tag }}")
+          echo "::set-output name=dir::$DIR"
+
+      - name: Build with Gradle and Create Assets
+        run: |
+          ./gradlew --info build
+          DIR=${{ steps.vars.outputs.dir }}
+          mkdir -p dist/$DIR/{bin,libs}
+          cp build/libs/*.jar dist/$DIR/libs/
+          cp -r README.md LICENSE examples dist/$DIR/
+          tar cvfz dist/$DIR.tar.gz -C dist/ $DIR
+          
+      - name: Upload release assets
+        id: upload-release-assets
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: dist/${{ steps.vars.outputs.dir }}.tar.gz
+          asset_name: ${{ steps.vars.outputs.dir }}.tar.gz
+          asset_content_type: application/x-gzip
+          upload_url: ${{ needs.site.outputs.upload_url }}
