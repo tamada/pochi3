@@ -46,11 +46,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "::set-output name=related_pr_count::$(gh pr list --search \"in:title ${{ steps.vars.outputs.branch }}\" | wc -l)"
+          result=$(gh pr list --search "in:title ${{ steps.vars.outputs.branch }}" | wc -l)
+          echo "::set-output name=related_pr_count::${result}"
 
       - name: Create pull request
         if: ${{ steps.pr.outputs.related_pr_count == 0 }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run:
-          gh pr create --base main --head ${{ steps.vars.outputs.branch }} --title "${{ steps.vars.outputs.branch }}"
+          gh pr create --base main --head ${{ steps.vars.outputs.branch }} --title "${{ steps.vars.outputs.branch }}" --body ""
