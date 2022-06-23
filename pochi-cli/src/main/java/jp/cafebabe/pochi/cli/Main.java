@@ -7,13 +7,6 @@ public class Main {
     public int run(String[] args) {
         var pochi = new Pochi();
         return new CommandLine(pochi)
-                .addSubcommand("help", new HelpCommand())
-                .addSubcommand("compare", new CompareCommand())
-                .addSubcommand("extract", new ExtractCommand())
-                .addSubcommand("info", new InfoCommand())
-                .addSubcommand("run", new RunCommand())
-                .addSubcommand("perform", new PerformCommand())
-                .addSubcommand("shell", new ShellCommand())
                 .setCaseInsensitiveEnumValuesAllowed(true)
                 .execute(args);
     }

@@ -66,13 +66,17 @@ jobs:
       - name: Build with Gradle and Create Assets
         run: |
           ./gradlew --info build
+          ./bin/gen_completion.sh
+
           DIR=${{ steps.vars.outputs.dir }}
           mkdir -p dist/$DIR/{bin,libs}
+          cp bin/pochi3 dist/$DIR/bin
           cp build/libs/*.jar dist/$DIR/libs/
-          cp -r README.md LICENSE examples dist/$DIR/
+          cp -r README.md LICENSE examples build/generated/completions dist/$DIR/
           tar cvfz dist/$DIR.tar.gz -C dist/ $DIR
+          (cd dist ; zip -r -9 $DIR.zip $DIR)
           
-      - name: Upload release assets
+      - name: Upload tar+gz assets
         id: upload-release-assets
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -81,4 +85,15 @@ jobs:
           asset_path: dist/${{ steps.vars.outputs.dir }}.tar.gz
           asset_name: ${{ steps.vars.outputs.dir }}.tar.gz
           asset_content_type: application/x-gzip
+          upload_url: ${{ needs.site.outputs.upload_url }}
+
+      - name: Upload zip assets
+        id: upload-release-assets
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: dist/${{ steps.vars.outputs.dir }}.zip
+          asset_name: ${{ steps.vars.outputs.dir }}.zip
+          asset_content_type: application/zip
           upload_url: ${{ needs.site.outputs.upload_url }}
