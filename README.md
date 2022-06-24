@@ -3,8 +3,8 @@
 [![build](https://github.com/tamada/pochi3/actions/workflows/build.yaml/badge.svg)](https://github.com/tamada/pochi3/actions/workflows/build.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/tamada/pochi3/badge.svg?branch=main)](https://coveralls.io/github/tamada/pochi3?branch=main)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi/blob/master/LICENSE)
-[![Version](https://img.shields.io/badge/Version-v3.0.0-alpha-1-green.svg)](https://github.com/tamada/pochi/releases/tag/v3.0.0-alpha-1)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi3/blob/main/LICENSE)
+[![Version](https://img.shields.io/badge/Version-v3.0.0-alpha-2-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-2)
 
 Detecting the stolen software from enormous amount of software.
 

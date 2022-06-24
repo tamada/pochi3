@@ -3,6 +3,7 @@ package jp.cafebabe.pochi.cli;
 import jp.cafebabe.birthmarks.config.Configuration;
 import jp.cafebabe.pochi.cli.messages.MessageCenter;
 import jp.cafebabe.pochi.cli.messages.Publisher;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model.CommandSpec;
@@ -10,7 +11,18 @@ import picocli.CommandLine.Spec;
 
 import java.util.concurrent.Callable;
 
-@Command(name="pochi", versionProvider = VersionProvider.class, description = "The Birthmarking Toolkit for the JVM platform.")
+@Command(name="pochi",
+        versionProvider = VersionProvider.class,
+        description = "The Birthmarking Toolkit for the JVM platform.",
+        subcommands = {
+            CommandLine.HelpCommand.class,
+            CompareCommand.class,
+            ExtractCommand.class,
+            InfoCommand.class,
+            PerformCommand.class,
+            RunCommand.class
+        }
+)
 public class Pochi implements Callable<Integer>, Publisher {
     private MessageCenter center = new MessageCenter();
 

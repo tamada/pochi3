@@ -24,7 +24,6 @@ jobs:
         run: |
           git config --global user.name  "GitHub Actions"
           git config --global user.email "action@github.com"
-          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
           git worktree add site/public gh-pages
 
       - name: Update version
@@ -42,7 +41,17 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ steps.vars.outputs.branch }}
 
+      - name: Is pull request exists?
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          result=$(gh pr list --search "in:title ${{ steps.vars.outputs.branch }}" | wc -l)
+          echo "::set-output name=related_pr_count::${result}"
+
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          title: ${{ steps.vars.outputs.branch }}
+        if: ${{ steps.pr.outputs.related_pr_count == 0 }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:
+          gh pr create --base main --head ${{ steps.vars.outputs.branch }} --title "${{ steps.vars.outputs.branch }}" --body ""

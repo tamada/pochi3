@@ -1,0 +1,10 @@
+#! /bin/sh
+
+POCHI3_HOME=$(cd $(dirname $0); pwd)/..
+
+module_path=$POCHI3_HOME/libs
+if [ -d ~/.config/pochi/libs ]; then
+  module_path=$module_path:~/.config/pochi/libs
+fi
+
+java -p $module_path -m jp.cafebabe.pochi.cli/jp.cafebabe.pochi.cli.Main "$@"
