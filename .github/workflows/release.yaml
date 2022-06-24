@@ -63,6 +63,12 @@ jobs:
           DIR=$(echo "pochi3-${{ needs.site.outputs.tag }}")
           echo "::set-output name=dir::$DIR"
 
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: zulu
+
       - name: Build with Gradle and Create Assets
         run: |
           ./gradlew --info build
