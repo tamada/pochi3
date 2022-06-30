@@ -15,6 +15,7 @@ plugins {
     id 'jacoco-report-aggregation'
     id 'test-report-aggregation'
     id 'com.github.kt3k.coveralls' version '2.12.0'
+    id 'com.google.cloud.tools.jib' version '3.2.1'
 }
 
 evaluationDependsOnChildren()
@@ -63,3 +64,48 @@ task copyFiles(type: Copy) {
 
 build.finalizedBy copyFiles
 
+jib {
+    from {
+        image = 'gcr.io/distroless/java17-debian11'
+        platforms {
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
+            platform {
+                architecture = "amd64"
+                os = "linux"
+            }
+        }
+    }
+    to {
+        image = 'ghcr.io/tamada/pochi3'
+        tags = [ "${version}", "${version}-distroless", "distroless", "latest" ]
+    }
+
+    extraDirectories {
+        paths {
+            path {
+                from = file("build/libs")
+                into = "/opt/pochi3/libs"
+            }
+        }
+    }
+    container {
+        environment = [
+            "HOME": '/app',
+            "POCHI3_VERSION": "${version}".toString(),
+            "POCHI3_HOME": '/opt/pochi3',
+        ]
+        labels = [
+            "org.opencontainers.image.authors": "Haruaki Tamada <tamada@users.noreply.github.com>",
+            "org.opencontainers.image.url": "https://github.com/tamada/pochi3",
+            "org.opencontainers.image.documentation": "Detecting software theft, the birthmarking toolkit for the Java platform.",
+            "org.opencontainers.image.version": "${version}",
+        ]
+        user = "nonroot"
+        creationTime = "USE_CURRENT_TIMESTAMP"
+        workingDirectory = "/app"
+        entrypoint = [ "java", "-p", "/opt/pochi3/libs", "-m", "jp.cafebabe.pochi.cli/jp.cafebabe.pochi.cli.Main" ]
+    }
+}
