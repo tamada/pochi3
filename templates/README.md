@@ -54,10 +54,10 @@ docker run -it --rm -v $PWD:/app ghcr.io/tamada/pochi3:latest <arguments of poch
 Following tas are available.
 Each image supports `arm64` and `amd64` platform.
 
-* `3.0.0-alpha-4`
-  * `3.0.0-alpha-4-distroless`, `3.0.0-alpha-4`, `distroless`, `latest`
-  * `3.0.0-alpha-4-fullgrl` `fullgrl`
-  * `3.0.0-alpha-4-minimalgrl`, `minimalgrl`
+* `${VERSION}`
+  * `${VERSION}-distroless`, `${VERSION}`, `distroless`, `latest`
+  * `${VERSION}-fullgrl` `fullgrl`
+  * `${VERSION}-minimalgrl`, `minimalgrl`
 
 * `distroless` uses google distroless java image for the base image.
 * The base image of `fullgrl` is [GraalVM community edition container images](https://github.com/graalvm/container).
