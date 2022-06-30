@@ -80,7 +80,7 @@ jib {
     }
     to {
         image = 'ghcr.io/tamada/pochi3'
-        tags = [ "${version}", "${version}_distroless", "latest" ]
+        tags = [ "${version}", "${version}-distroless", "distroless", "latest" ]
     }
 
     extraDirectories {

@@ -13,7 +13,7 @@ format: Docker
 
 environment:
   "HOME": '/app'
-  "POCHI3_VERSION": "3.0.0-alpha-4"
+  "POCHI3_VERSION": "${VERSION}"
   "POCHI3_HOME": '/opt/pochi3'
 
 labels:
@@ -21,7 +21,7 @@ labels:
   "org.opencontainers.image.url": "https://github.com/tamada/pochi3"
   "org.opencontainers.image.soruce": "https://github.com/tamada/pochi3/blob/main/dockers/jib.yaml"
   "org.opencontainers.image.documentation": "Detecting software theft, the birthmarking toolkit for the Java platform."
-  "org.opencontainers.image.version": "3.0.0-alpha-4"
+  "org.opencontainers.image.version": "${VERSION}"
 
 user: "nonroot"
 workingDirectory: "/app"

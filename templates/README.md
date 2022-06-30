@@ -43,4 +43,27 @@ Commands:
 
 ### Script file
 
+### :whale: Docker
+
+pochi3 supports running on the docker image.
+
+```shell
+docker run -it --rm -v $PWD:/app ghcr.io/tamada/pochi3:latest <arguments of pochi3>
+```
+
+Following tas are available.
+Each image supports `arm64` and `amd64` platform.
+
+* `3.0.0-alpha-4`
+  * `3.0.0-alpha-4-distroless`, `3.0.0-alpha-4`, `distroless`, `latest`
+  * `3.0.0-alpha-4-fullgrl` `fullgrl`
+  * `3.0.0-alpha-4-minimalgrl`, `minimalgrl`
+
+* `distroless` uses google distroless java image for the base image.
+* The base image of `fullgrl` is [GraalVM community edition container images](https://github.com/graalvm/container).
+* `minimalgrl` shrinks GraalVM by `jlink` for pochi3.
+
+The main difference between them are:
+* GraalVM supports to run JavaScript for script engine,
+* We try to minimize the image size,
 
