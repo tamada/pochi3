@@ -16,7 +16,8 @@ LABEL org.opencontainers.image.authors="Haruaki Tamada <tamada@users.noreply.git
       org.opencontainers.image.source="https://raw.githubusercontent.com/tamada/pochi3/blob/main/dockers/minimalgrl/Dockerfile" \
       org.opencontainers.image.version="${VERSION}"
 
-RUN  adduser --no-create-home appuser
+RUN  echo '/bin/false' > /etc/shells \
+  && adduser --shell /bin/false --disabled-login --disabled-password --no-create-home appuser
 
 COPY --from=builder /opt/minigrl /opt/minigrl
 
