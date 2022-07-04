@@ -19,7 +19,7 @@ environment:
 labels:
   "org.opencontainers.image.authors": "Haruaki Tamada <tamada@users.noreply.github.com>"
   "org.opencontainers.image.url": "https://github.com/tamada/pochi3"
-  "org.opencontainers.image.soruce": "https://github.com/tamada/pochi3/blob/main/dockers/jib.yaml"
+  "org.opencontainers.image.soruce": "https://github.com/tamada/pochi3/blob/main/dockers/graal.yaml"
   "org.opencontainers.image.documentation": "Detecting software theft, the birthmarking toolkit for the Java platform."
   "org.opencontainers.image.version": "${VERSION}"
 
