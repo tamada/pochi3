@@ -6,7 +6,7 @@ public class VersionProvider implements IVersionProvider {
     @Override
     public String[] getVersion() {
         return new String[] {
-            "3.0.0-alpha-10",
+            "3.0.0-alpha-11",
         };
     }
 }
