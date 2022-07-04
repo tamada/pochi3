@@ -23,6 +23,12 @@ jobs:
           tag=$(gh release view --json tagName --jq .tagName)
           echo "::set-output name=tag::${tag##v}"
 
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: zulu
+
       # docker image
       - name: Docker Buildx
         uses: docker/setup-buildx-action@v2
