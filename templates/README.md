@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi3/blob/main/LICENSE)
 [![Version](https://img.shields.io/badge/Version-v${VERSION_DH}-green.svg)](https://github.com/tamada/pochi3/releases/tag/v${VERSION})
 
+[![DOI](https://zenodo.org/badge/499123744.svg)](https://zenodo.org/badge/latestdoi/499123744)
+
 Detecting the stolen software from enormous amount of software.
 
 ## :speaking_head: Overview
