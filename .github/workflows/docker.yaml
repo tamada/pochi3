@@ -55,11 +55,10 @@ jobs:
             ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimalgrl
             ghcr.io/tamada/pochi3:minimalgrl
 
+      # build images with jib-gradle. tags are specified in build.gradle
       - name: Build and Push Docker Images with jib
         run: |
-          # build images with jib-gradle
-          # tags are specified in build.gradle
-          ./gradlew --debug --stacktrace build jib \ 
+          ./gradlew --debug --stacktrace build jib \  
               -Djib.to.auth.username=tamada \
               -Djib.to.auth.password="${{ secrets.GITHUB_TOKEN }}"
 
@@ -67,7 +66,7 @@ jobs:
           curl -LO https://github.com/GoogleContainerTools/jib/releases/download/v0.10.0-cli/jib-jre-0.10.0.zip
           unzip jib-jre-0.10.0.zip
           ./jib-jre-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \
-              --to-password ${{ secrets.GITHUB_TOKEN }} \
+              --to-password "${{ secrets.GITHUB_TOKEN }}" \
               --to-username tamada \
               --target="ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-fullgrl" \
               --additional-tags=fullgrl \
