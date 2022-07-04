@@ -14,7 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-
       # We assume the form of tag names are like 1.2.3 (semantic versioning).
       - name: Git Tag name
         id: vars
@@ -60,9 +59,9 @@ jobs:
         run: |
           # build images with jib-gradle
           # tags are specified in build.gradle
-          ./gradlew --info build jib \ 
+          ./gradlew --debug --stacktrace build jib \ 
               -Djib.to.auth.username=tamada \
-              -Djib.to.auth.password=${{ secrets.GITHUB_TOKEN }}
+              -Djib.to.auth.password="${{ secrets.GITHUB_TOKEN }}"
 
           # build images with jib-cli
           curl -LO https://github.com/GoogleContainerTools/jib/releases/download/v0.10.0-cli/jib-jre-0.10.0.zip
@@ -70,7 +69,7 @@ jobs:
           ./jib-jre-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \
               --to-password ${{ secrets.GITHUB_TOKEN }} \
               --to-username tamada \
-              --target=ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-fullgrl \
+              --target="ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-fullgrl" \
               --additional-tags=fullgrl \
               --parameter=VERSION=${{ steps.vars.outputs.tag }}
                      
