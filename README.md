@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/tamada/pochi3/badge.svg?branch=main)](https://coveralls.io/github/tamada/pochi3?branch=main)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi3/blob/main/LICENSE)
-[![Version](https://img.shields.io/badge/Version-v3.0.0--alpha--8-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-8)
+[![Version](https://img.shields.io/badge/Version-v3.0.0--alpha--9-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-9)
 
 Detecting the stolen software from enormous amount of software.
 
@@ -54,10 +54,10 @@ docker run -it --rm -v $PWD:/app ghcr.io/tamada/pochi3:latest <arguments of poch
 Following tas are available.
 Each image supports `arm64` and `amd64` platform.
 
-* `3.0.0-alpha-8`
-  * `3.0.0-alpha-8-distroless`, `3.0.0-alpha-8`, `distroless`, `latest`
-  * `3.0.0-alpha-8-fullgrl` `fullgrl`
-  * `3.0.0-alpha-8-minimalgrl`, `minimalgrl`
+* `3.0.0-alpha-9`
+  * `3.0.0-alpha-9-distroless`, `3.0.0-alpha-9`, `distroless`, `latest`
+  * `3.0.0-alpha-9-fullgrl` `fullgrl`
+  * `3.0.0-alpha-9-minimalgrl`, `minimalgrl`
 
 * `distroless` uses google distroless java image for the base image.
 * The base image of `fullgrl` is [GraalVM community edition container images](https://github.com/graalvm/container).
