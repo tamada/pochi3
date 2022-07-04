@@ -58,7 +58,8 @@ jobs:
       # build images with jib-gradle. tags are specified in build.gradle
       - name: Build and Push Docker Images with jib
         run: |
-          ./gradlew --debug --stacktrace build jib \  
+          ./gradlew build
+          ./gradlew --debug --stacktrace jib \  
               -Djib.to.auth.username=tamada \
               -Djib.to.auth.password="${{ secrets.GITHUB_TOKEN }}"
 
