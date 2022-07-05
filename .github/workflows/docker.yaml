@@ -71,6 +71,7 @@ jobs:
               --to-username tamada \
               --target="ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-distroless" \
               --additional-tags=${{ steps.vars.outputs.tag }},distroless,latest \
+              --verbosity=debug \
               --parameter=VERSION=${{ steps.vars.outputs.tag }} \
               --parameter=BASE_IMAGE=gcr.io/distroless/java17-debian11
 
@@ -79,5 +80,6 @@ jobs:
               --to-username tamada \
               --target="ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-fullgrl" \
               --additional-tags=fullgrl \
+              --verbosity=debug \
               --parameter=VERSION=${{ steps.vars.outputs.tag }} \
               --parameter=BASE_IMAGE=ghcr.io/graalvm/jdk:ol8-java17-22.1.0
