@@ -36,5 +36,5 @@ layers:
   entries:
     - name: "pochi3"
       files:
-        - src: "build/libs"
-          dest: "/opt/pochi3/libs"
+        - src: "build/libs/"
+          dest: "/opt/pochi3/libs/"
