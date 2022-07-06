@@ -65,8 +65,11 @@ jobs:
         run: |
           curl -LO https://github.com/GoogleContainerTools/jib/releases/download/v0.10.0-cli/jib-jre-0.10.0.zip
           unzip jib-jre-0.10.0.zip
+          ls build
+          ./gradlew build
+          ls build
 
-          ./jib-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \
+         ./jib-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \
               --to-password "${{ secrets.GITHUB_TOKEN }}" \
               --to-username tamada \
               --target="ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-distroless" \
