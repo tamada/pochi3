@@ -8,8 +8,15 @@ RUN ["jlink", "--compress=2", \
 
 FROM debian:bullseye-slim
 
-RUN adduser --no-create-home --disabled-password --disabled-login nonroot
+ARG VERSION="3.0.0-alpha-22"
 
+LABEL org.opencontainers.image.authors="Haruaki Tamada <tamada@users.noreply.github.com>" \
+      org.opencontainers.image.url="https://github.com/tamada/pochi3" \
+      org.opencontainers.image.documentation="Detecting software theft, the birthmarking toolkit for the Java platform." \
+      org.opencontainers.image.source="https://raw.githubusercontent.com/tamada/pochi3/blob/main/dockers/minimalgrl/Dockerfile" \
+      org.opencontainers.image.version="${VERSION}"
+
+RUN adduser --no-create-home --disabled-password --disabled-login nonroot
 COPY --from=builder /opt/minimaljre /opt/minijre
 ADD build/libs /opt/pochi3/libs
 
