@@ -8,7 +8,7 @@ RUN ["jlink", "--compress=2", \
 
 FROM debian:bullseye-slim
 
-ARG VERSION="3.0.0-alpha-21"
+ARG VERSION="3.0.0-alpha-22"
 
 LABEL org.opencontainers.image.authors="Haruaki Tamada <tamada@users.noreply.github.com>" \
       org.opencontainers.image.url="https://github.com/tamada/pochi3" \
