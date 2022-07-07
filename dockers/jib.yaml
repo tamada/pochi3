@@ -16,6 +16,8 @@ environment:
   "POCHI3_VERSION": "${VERSION}"
   "POCHI3_HOME": '/opt/pochi3'
 
+creation_time: ${CURRENT_EPOCH}
+
 labels:
   "org.opencontainers.image.authors": "Haruaki Tamada <tamada@users.noreply.github.com>"
   "org.opencontainers.image.url": "https://github.com/tamada/pochi3"

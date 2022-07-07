@@ -61,12 +61,22 @@ jobs:
             ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimalgrl
             ghcr.io/tamada/pochi3:minimalgrl
 
+      - name: Build and Push Docker Images
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          file: dockers/minimaljre/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimaljre
+            ghcr.io/tamada/pochi3:minimaljre
+
       - name: Build and Push Docker Images with jib
         run: |
           curl -LO https://github.com/GoogleContainerTools/jib/releases/download/v0.10.0-cli/jib-jre-0.10.0.zip
           unzip jib-jre-0.10.0.zip
           ./gradlew build
-          ls build
+          EPOCH=$(date +%s)
 
           ./jib-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \
             --to-password "${{ secrets.GITHUB_TOKEN }}" \
@@ -75,7 +85,8 @@ jobs:
             --additional-tags=${{ steps.vars.outputs.tag }},distroless,latest \
             --verbosity=debug \
             --parameter=VERSION=${{ steps.vars.outputs.tag }} \
-            --parameter=BASE_IMAGE=gcr.io/distroless/java17-debian11
+            --parameter=BASE_IMAGE=gcr.io/distroless/java17-debian11 \
+            --parameter=CURRENT_EPOCH=${EPOCH}
 
           ./jib-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \
             --to-password "${{ secrets.GITHUB_TOKEN }}" \
@@ -84,4 +95,5 @@ jobs:
             --additional-tags=fullgrl \
             --verbosity=debug \
             --parameter=VERSION=${{ steps.vars.outputs.tag }} \
-            --parameter=BASE_IMAGE=ghcr.io/graalvm/jdk:ol8-java17-22.1.0
+            --parameter=BASE_IMAGE=ghcr.io/graalvm/jdk:ol8-java17-22.1.0 \
+            --parameter=CURRENT_EPOCH=${EPOCH}
