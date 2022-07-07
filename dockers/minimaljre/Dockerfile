@@ -6,7 +6,7 @@ RUN jlink --module-path /opt/java/openjdk/jmods --compress=2 \
 
 FROM debian:bullseye-slim
 
-ARG VERSION="3.0.0-alpha-23"
+ARG VERSION="3.0.0-alpha-24"
 
 LABEL org.opencontainers.image.authors="Haruaki Tamada <tamada@users.noreply.github.com>" \
       org.opencontainers.image.url="https://github.com/tamada/pochi3" \
