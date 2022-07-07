@@ -21,8 +21,22 @@ The new features of **pochi3** comparing to the previous version of **pochi**.
 
 * Supports cli interface for extracting/comparing the birthmarks,
 * Defines the format of birthmarks to handle the birthmarks from other languages, and platforms,
-* Reorganizing the class libraries,
-* Introduce new comparing and pairing algorithms, 
+* Reorganizing the class libraries, and
+* Introduce new comparing and pairing algorithms.
+
+## Requirements
+
+* Java 17
+  * Used modules are:
+    * `java.base`, `java.scripting`, `java.logging`, `java.desktop`, `java.sql`, `java.xml`, and `jdk.zipfs`.
+  * With GraalVM, the following modules are used (for using JavaScript engine):
+    * `org.graalvm.js.scriptengine`, `org.graalvm.sdk`, and `org.graalvm.truffe`.
+* Dependencies
+  * ASM 9.2
+  * Vavr 0.10.4
+  * picocli 4.6.3
+  * Gson 2.9.0
+  * Groovy 4.0.1
 
 ## :runner: Usage
 
@@ -60,12 +74,14 @@ Each image supports `arm64` and `amd64` platform.
   * `${VERSION}-distroless`, `${VERSION}`, `distroless`, `latest`
   * `${VERSION}-fullgrl` `fullgrl`
   * `${VERSION}-minimalgrl`, `minimalgrl`
+  * `${VERSION}-minimaljre`, `minimaljre`
 
-* `distroless` uses google distroless java image for the base image.
-* The base image of `fullgrl` is [GraalVM community edition container images](https://github.com/graalvm/container).
-* `minimalgrl` shrinks GraalVM by `jlink` for pochi3.
+* `distroless` uses [google distroless java image](https://github.com/GoogleContainerTools/distroless/blob/main/java/README.md) for the base image.
+* `fullgrl` installs `pochi3` into the base image of [GraalVM community edition container images](https://github.com/graalvm/container).
+* `minimalgrl` shrinks GraalVM by `jlink` for `pochi3`.
+* `minimaljre` shrinks OpenJDK by `jlink` for `pochi3`.
 
 The main difference between them are:
-* GraalVM supports to run JavaScript for script engine,
-* We try to minimize the image size,
 
+* GraalVM supports to run JavaScript for script engine,
+* We try to minimize the image size
