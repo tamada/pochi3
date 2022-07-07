@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'jp.cafebabe.pochi'
-version = '3.0.0-alpha-23'
+version = '3.0.0-alpha-25'
 
 repositories {
     mavenCentral()
