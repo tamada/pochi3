@@ -51,6 +51,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build pochi3
+        run: ./gradlew build
+
       - name: Build and Push Docker Images
         uses: docker/build-push-action@v3
         with:
@@ -75,7 +78,6 @@ jobs:
         run: |
           curl -LO https://github.com/GoogleContainerTools/jib/releases/download/v0.10.0-cli/jib-jre-0.10.0.zip
           unzip jib-jre-0.10.0.zip
-          ./gradlew build
           EPOCH=$(date +%s)
 
           ./jib-0.10.0/bin/jib build --build-file ./dockers/jib.yaml \

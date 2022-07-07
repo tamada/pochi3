@@ -1,14 +1,12 @@
 FROM ghcr.io/graalvm/jdk:ol8-java17-22.1.0 as builder
 
-ARG VERSION="3.0.0-alpha-4"
-
 RUN jlink --module-path $JAVA_HOME/jmods --compress=2 \
     --add-modules java.base,java.scripting,java.logging,java.desktop,java.sql,java.xml,jdk.zipfs,org.graalvm.js.scriptengine,org.graalvm.sdk,org.graalvm.truffle \
     --no-header-files --no-man-pages --output /opt/minigrl
 
 FROM ubuntu:cosmic
 
-ARG VERSION="3.0.0-alpha-4"
+ARG VERSION="3.0.0-alpha-21"
 
 LABEL org.opencontainers.image.authors="Haruaki Tamada <tamada@users.noreply.github.com>" \
       org.opencontainers.image.url="https://github.com/tamada/pochi3" \
@@ -20,6 +18,7 @@ RUN  echo '/bin/false' > /etc/shells \
   && adduser --shell /bin/false --disabled-login --disabled-password --no-create-home appuser
 
 COPY --from=builder /opt/minigrl /opt/minigrl
+ADD build/libs /opt/pochi3/libs
 
 ENV POCHI3_HOME=/opt/pochi3
 ENV JAVA_HOME=/opt/minigrl

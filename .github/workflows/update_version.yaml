@@ -31,7 +31,7 @@ jobs:
           VDH=$(echo "${{ steps.vars.outputs.tag }}" | sed 's/-/--/g')
           sed -e 's/\${VERSION}/${{ steps.vars.outputs.tag }}/g' -e "s/\${VERSION_DH}/${VDH}/g" templates/README.md > README.md
           echo 'v${{ steps.vars.outputs.tag }}' > site/layouts/shortcodes/version.html
-          for i in dockers/*/Dockerfile ; do sed 's/ARG VERSION = .*/ARG VERSION = "${{ steps.vars.outputs.tag  }}"/g' $i > a ; mv a $i ; done
+          for i in dockers/*/Dockerfile ; do sed 's/ARG VERSION=.*/ARG VERSION="${{ steps.vars.outputs.tag  }}"/g' $i > a ; mv a $i ; done
           sed -e "s/version = '.*'/version = '${{ steps.vars.outputs.tag }}'/g" buildSrc/src/main/groovy/pochi.java-conventions.gradle > a
           mv a buildSrc/src/main/groovy/pochi.java-conventions.gradle
           sed -e 's/${VERSION}/${{ steps.vars.outputs.tag }}/g' templates/VersionProvider.java > pochi-cli/src/main/java/jp/cafebabe/pochi/cli/VersionProvider.java
