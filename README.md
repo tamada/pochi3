@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/tamada/pochi3/badge.svg?branch=main)](https://coveralls.io/github/tamada/pochi3?branch=main)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi3/blob/main/LICENSE)
-[![Version](https://img.shields.io/badge/Version-v3.0.0--alpha--19-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-19)
+[![Version](https://img.shields.io/badge/Version-v3.0.0--alpha--20-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-20)
 
 [![DOI](https://zenodo.org/badge/499123744.svg)](https://zenodo.org/badge/latestdoi/499123744)
 
@@ -21,8 +21,22 @@ The new features of **pochi3** comparing to the previous version of **pochi**.
 
 * Supports cli interface for extracting/comparing the birthmarks,
 * Defines the format of birthmarks to handle the birthmarks from other languages, and platforms,
-* Reorganizing the class libraries,
-* Introduce new comparing and pairing algorithms, 
+* Reorganizing the class libraries, and
+* Introduce new comparing and pairing algorithms.
+
+## Requirements
+
+* Java 17
+  * Used modules are:
+    * `java.base`, `java.scripting`, `java.logging`, `java.desktop`, `java.sql`, `java.xml`, and `jdk.zipfs`.
+  * With GraalVM, the following modules are used (for using JavaScript engine):
+    * `org.graalvm.js.scriptengine`, `org.graalvm.sdk`, and `org.graalvm.truffe`.
+* Dependencies
+  * ASM 9.2
+  * Vavr 0.10.4
+  * picocli 4.6.3
+  * Gson 2.9.0
+  * Groovy 4.0.1
 
 ## :runner: Usage
 
@@ -56,16 +70,18 @@ docker run -it --rm -v $PWD:/app ghcr.io/tamada/pochi3:latest <arguments of poch
 Following tas are available.
 Each image supports `arm64` and `amd64` platform.
 
-* `3.0.0-alpha-19`
-  * `3.0.0-alpha-19-distroless`, `3.0.0-alpha-19`, `distroless`, `latest`
-  * `3.0.0-alpha-19-fullgrl` `fullgrl`
-  * `3.0.0-alpha-19-minimalgrl`, `minimalgrl`
+* `3.0.0-alpha-20`
+  * `3.0.0-alpha-20-distroless`, `3.0.0-alpha-20`, `distroless`, `latest`
+  * `3.0.0-alpha-20-fullgrl` `fullgrl`
+  * `3.0.0-alpha-20-minimalgrl`, `minimalgrl`
+  * `3.0.0-alpha-20-minimaljre`, `minimaljre`
 
-* `distroless` uses google distroless java image for the base image.
-* The base image of `fullgrl` is [GraalVM community edition container images](https://github.com/graalvm/container).
-* `minimalgrl` shrinks GraalVM by `jlink` for pochi3.
+* `distroless` uses [google distroless java image](https://github.com/GoogleContainerTools/distroless/blob/main/java/README.md) for the base image.
+* `fullgrl` installs `pochi3` into the base image of [GraalVM community edition container images](https://github.com/graalvm/container).
+* `minimalgrl` shrinks GraalVM by `jlink` for `pochi3`.
+* `minimaljre` shrinks OpenJDK by `jlink` for `pochi3`.
 
 The main difference between them are:
-* GraalVM supports to run JavaScript for script engine,
-* We try to minimize the image size,
 
+* GraalVM supports to run JavaScript for script engine,
+* We try to minimize the image size
