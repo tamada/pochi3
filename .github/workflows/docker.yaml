@@ -36,14 +36,6 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -53,26 +45,6 @@ jobs:
 
       - name: Build pochi3
         run: ./gradlew build
-
-      - name: Build and Push Docker Images
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          file: dockers/minimalgrl/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimalgrl
-            ghcr.io/tamada/pochi3:minimalgrl
-
-      - name: Build and Push Docker Images
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          file: dockers/minimaljre/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimaljre
-            ghcr.io/tamada/pochi3:minimaljre
 
       - name: Build and Push Docker Images with jib
         run: |
@@ -99,3 +71,23 @@ jobs:
             --parameter=VERSION=${{ steps.vars.outputs.tag }} \
             --parameter=BASE_IMAGE=ghcr.io/graalvm/jdk:ol8-java17-22.1.0 \
             --parameter=CURRENT_EPOCH=${EPOCH}
+
+      - name: Build and Push Docker Images of Minimal GraalVM
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          file: dockers/minimalgrl/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimalgrl
+            ghcr.io/tamada/pochi3:minimalgrl
+
+      - name: Build and Push Docker Images of Minimal JRE
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          file: dockers/minimaljre/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ghcr.io/tamada/pochi3:${{ steps.vars.outputs.tag }}-minimaljre
+            ghcr.io/tamada/pochi3:minimaljre
