@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/tamada/pochi3/badge.svg?branch=main)](https://coveralls.io/github/tamada/pochi3?branch=main)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tamada/pochi3/blob/main/LICENSE)
-[![Version](https://img.shields.io/badge/Version-v3.0.0--alpha--24-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-24)
+[![Version](https://img.shields.io/badge/Version-v3.0.0--alpha--25-green.svg)](https://github.com/tamada/pochi3/releases/tag/v3.0.0-alpha-25)
 
 [![DOI](https://zenodo.org/badge/499123744.svg)](https://zenodo.org/badge/latestdoi/499123744)
 
@@ -70,11 +70,11 @@ docker run -it --rm -v $PWD:/app ghcr.io/tamada/pochi3:latest <arguments of poch
 Following tas are available.
 Each image supports `arm64` and `amd64` platform.
 
-* `3.0.0-alpha-24`
-  * `3.0.0-alpha-24-distroless`, `3.0.0-alpha-24`, `distroless`, `latest`
-  * `3.0.0-alpha-24-fullgrl` `fullgrl`
-  * `3.0.0-alpha-24-minimalgrl`, `minimalgrl`
-  * `3.0.0-alpha-24-minimaljre`, `minimaljre`
+* `3.0.0-alpha-25`
+  * `3.0.0-alpha-25-distroless`, `3.0.0-alpha-25`, `distroless`, `latest`
+  * `3.0.0-alpha-25-fullgrl` `fullgrl`
+  * `3.0.0-alpha-25-minimalgrl`, `minimalgrl`
+  * `3.0.0-alpha-25-minimaljre`, `minimaljre`
 
 * `distroless` uses [google distroless java image](https://github.com/GoogleContainerTools/distroless/blob/main/java/README.md) for the base image.
 * `fullgrl` installs `pochi3` into the base image of [GraalVM community edition container images](https://github.com/graalvm/container).
